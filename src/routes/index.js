@@ -7,10 +7,10 @@ export const createRoutes = () => ({
     component: Layout,
     indexRoute: { component: Home },
     childRoutes: [
-        {
-            path: 'index',
-            component: Home
-        }
+        {path: 'index', component: Home},
+        {path: '/data-list', childRoutes: [
+            {path: 'list', component: List}
+        ]}
     ]
 })
 

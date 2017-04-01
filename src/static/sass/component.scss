@@ -12,7 +12,7 @@
     font-size: $font-size * 3;
   }
 }
-
+// list title
 .zby-list-title {
   padding: 0 40px;
   @include font-dpr(14px);
@@ -28,5 +28,60 @@
 
   &.right {
     text-align: right;
+  }
+}
+
+
+// List
+.zby-list-box {
+  background-color: #fff;
+  padding: 0 40px;
+  display: -webkit-flex;
+  display: flex;
+  line-height: 100px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+
+  &.with-subtitle {
+    padding-right: 80px;
+  }
+
+  &.with-icon {
+    position: relative;
+    padding-right: 80px;
+  }
+
+  .zby-list-item {
+    display: inline-block;
+    flex: 1;
+    color: #333;
+    @include font-dpr(16px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    vertical-align: top;
+  }
+
+  .subtitle {
+    max-width: 25%;
+    color: #999;
+    @include font-dpr(14px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    vertical-align: top;
+  }
+
+  .icon {
+    position: absolute;
+    display: block;
+    right: 30px;
+    top: 0;
+    font-size: 48px;
+    line-height: 100px;
+    color: #999;
   }
 }
