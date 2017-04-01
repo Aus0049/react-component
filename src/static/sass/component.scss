@@ -13,16 +13,20 @@
   }
 }
 
-body {
+.list-title {
+  padding: 0 40px;
+  @include font-dpr(14px);
+  line-height: 80px;
   overflow: hidden;
-  background-color: #f8f8fb;
-  color: #666;
-}
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  vertical-align: top;
 
-// 首页样式
-.home {
-  .title {
-    padding-left: 40px;
+  &.center {
+    text-align: center;
+  }
+
+  &.right {
+    text-align: right;
   }
 }
-
