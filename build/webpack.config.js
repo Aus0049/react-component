@@ -138,9 +138,6 @@ webpackConfig.sassLoader = {
 webpackConfig.postcss = [
    px2rem({remUnit: 75})
 ];
-
-// File loaders
-/* eslint-disable */
 webpackConfig.module.loaders.push(
   { test: /\.woff(\?.*)?$/,  loader: 'url?name=fonts/[name].[ext]' },
   { test: /\.woff2(\?.*)?$/, loader: 'url?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2' },
@@ -151,14 +148,6 @@ webpackConfig.module.loaders.push(
   { test: /\.swf(\?.*)?$/,   loader: 'file?prefix=swf/&name=[path][name].[ext]&limit=10000&mimetype=application/swf'},
   { test: /\.(png|jpg|gif)$/,    loader: 'url?limit=8192&name=[name]_[hash:8].[ext]' }
 )
-/* eslint-enable */
-
-// ------------------------------------
-// Finalize Configuration
-// ------------------------------------
-// when we don't know the public path (we know it only when HMR is enabled [in development]) we
-// need to use the extractTextPlugin to fix this issue:
-// http://stackoverflow.com/questions/34133808/webpack-ots-parsing-error-loading-fonts/34133809#34133809
 if (!__DEV__) {
   debug('Apply ExtractTextPlugin to CSS loaders.')
   webpackConfig.module.loaders.filter((loader) =>

@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+// px2rem并没有自动实现该功能 还是手动加上吧
+@mixin font-dpr($font-size){
+  font-size: $font-size;
+
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+  }
+
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+  }
+}
+
+body {
+  overflow: hidden;
+  background-color: #f8f8fb;
+  color: #666;
+}
+
+.home {
+  .title {
+    padding-left: 50px;
+  }
+}
