@@ -5,7 +5,7 @@ import React from 'react'
 
 class ListTitle extends React.Component {
     getClassName () {
-        let className = "list-title";
+        let className = "zby-list-title";
         let {align} = this.props;
 
         if(align){
