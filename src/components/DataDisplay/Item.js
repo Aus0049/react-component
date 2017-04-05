@@ -41,12 +41,12 @@ class Item extends React.Component {
     }
     render () {
         let subtitleDOM = this.getSubTitleDOM();
-        let className = this.getClassName();
+        let classNames = this.getClassName();
         let iconDOM = this.getIconDOM();
-        let {onClick} = this.props;
+        let {subtitle, icon, multipleLine, disabled, className, onClick, ...resProps} = this.props;
 
         return (
-            <div className={className} onClick={onClick}>
+            <div className={classNames} onClick={onClick} {...resProps}>
                 <div className="zby-item">{this.props.children}</div>
                 {subtitleDOM}
                 {iconDOM}
