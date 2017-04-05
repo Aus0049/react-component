@@ -26,7 +26,17 @@ class ListBox extends React.Component {
                 <ListTitle title="添加副标题" />
                 <List>
                     <Item subtitle="副标题在右" icon="horizontal">基本标题</Item>
-                    <Item subtitle="副标题在下" icon="horizontal">基本标题</Item>
+                    <Item subtitle="副标题在下" icon="vertical" multipleLine>基本标题</Item>
+                </List>
+
+                <ListTitle title="点击事件" />
+                <List>
+                    <Item subtitle="副标题在右" icon="horizontal" onClick={()=>{alert("点击成功")}}>基本标题</Item>
+                </List>
+
+                <ListTitle title="禁止点击" />
+                <List>
+                    <Item subtitle="副标题在右" icon="horizontal" disabled>基本标题</Item>
                 </List>
             </div>
         )

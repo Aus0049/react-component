@@ -6,19 +6,17 @@ import React from 'react'
 class Item extends React.Component {
     getClassName () {
         let cn = "zby-list-item";
-        let {subtitle, icon, className} = this.props;
+        let {subtitle, icon, className, multipleLine, disabled} = this.props;
 
-        if(subtitle){
-            cn += " with-subtitle";
-        }
+        if(subtitle) cn += " with-subtitle";
 
-        if(icon){
-            cn += " with-icon";
-        }
+        if(multipleLine) cn += " multiple";
 
-        if(className){
-            cn += " " + className;
-        }
+        if(icon) cn += " with-icon";
+
+        if(disabled) cn += " disabled";
+
+        if(className) cn += " " + className;
 
         return cn;
     }
@@ -34,6 +32,8 @@ class Item extends React.Component {
         if(!icon) return;
 
         if (icon == "horizontal") return <i className="icon fa fa-angle-right"></i>;
+
+        if (icon == "vertical") return <i className="icon fa fa-angle-down"></i>;
 
         iconDOM = <i className="icon fa fa-angle-down"></i>;
 

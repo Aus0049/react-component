@@ -64,6 +64,31 @@
       padding-right: 40px;
     }
 
+    &.multiple {
+      padding: 25px 0 25px 0;
+      display: block;
+
+      .zby-item {
+        display: block;
+        line-height: 50px;
+      }
+
+      .subtitle {
+        display: block;
+        max-width: 100%;
+        margin-top: 10px;
+        line-height: 40px;
+      }
+
+      .icon {
+        line-height: 150px;
+      }
+    }
+
+    &.disabled {
+      color: #bbb;
+    }
+
     .zby-item {
       display: inline-block;
       flex: 1;
