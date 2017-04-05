@@ -36,52 +36,61 @@
 .zby-list-box {
   background-color: #fff;
   padding: 0 40px;
-  display: -webkit-flex;
-  display: flex;
   line-height: 100px;
   -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 
-  &.with-subtitle {
-    padding-right: 80px;
-  }
-
-  &.with-icon {
-    position: relative;
-    padding-right: 80px;
-  }
-
   .zby-list-item {
-    display: inline-block;
-    flex: 1;
-    color: #333;
+    display: -webkit-flex;
+    display: flex;
+    border-bottom: 1px solid #ccc;
     @include font-dpr(16px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space:nowrap;
-    vertical-align: top;
-  }
+    color: #333;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 
-  .subtitle {
-    max-width: 25%;
-    color: #999;
-    @include font-dpr(14px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space:nowrap;
-    vertical-align: top;
-  }
+    &:last-of-type {
+      border: none;
+    }
 
-  .icon {
-    position: absolute;
-    display: block;
-    right: 30px;
-    top: 0;
-    font-size: 48px;
-    line-height: 100px;
-    color: #999;
+    &.with-subtitle {
+      padding-right: 40px;
+    }
+
+    &.with-icon {
+      position: relative;
+      padding-right: 40px;
+    }
+
+    .zby-item {
+      display: inline-block;
+      flex: 1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space:nowrap;
+      vertical-align: top;
+    }
+
+    .subtitle {
+      max-width: 25%;
+      color: #999;
+      @include font-dpr(14px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space:nowrap;
+      vertical-align: top;
+    }
+
+    .icon {
+      position: absolute;
+      display: block;
+      right: -10px;
+      top: 0;
+      font-size: 48px;
+      line-height: 100px;
+      color: #999;
+    }
   }
 }

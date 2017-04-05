@@ -11,8 +11,8 @@ class Home extends React.Component {
             <div className="home">
                 <h1 className="title">React 组件库</h1>
                 <ListTitle title="数据展示" />
-                <List subtitle="aaa" icon="horizontal" onClick={()=>{Tools.linkTo("/data-display/list")}}>
-                    <Item>标题</Item>
+                <List>
+                    <Item subtitle="aaa" icon="horizontal" onClick={()=>{Tools.linkTo("/data-display/list")}}>标题</Item>
                 </List>
             </div>
         )

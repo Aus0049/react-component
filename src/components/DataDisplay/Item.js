@@ -4,10 +4,53 @@
 import React from 'react'
 
 class Item extends React.Component {
+    getClassName () {
+        let cn = "zby-list-item";
+        let {subtitle, icon, className} = this.props;
+
+        if(subtitle){
+            cn += " with-subtitle";
+        }
+
+        if(icon){
+            cn += " with-icon";
+        }
+
+        if(className){
+            cn += " " + className;
+        }
+
+        return cn;
+    }
+    getSubTitleDOM () {
+        let {subtitle} = this.props;
+
+        if (subtitle) return <span className="subtitle">{subtitle}</span>;
+    }
+    getIconDOM () {
+        let {icon} = this.props;
+        let iconDOM;
+
+        if(!icon) return;
+
+        if (icon == "horizontal") return <i className="icon fa fa-angle-right"></i>;
+
+        iconDOM = <i className="icon fa fa-angle-down"></i>;
+
+        return iconDOM;
+    }
     render () {
+        let subtitleDOM = this.getSubTitleDOM();
+        let className = this.getClassName();
+        let iconDOM = this.getIconDOM();
+        let {onClick} = this.props;
 
         return (
-            <div className="zby-list-item">{this.props.children}</div>
+            <div className={className} onClick={onClick}>
+                <div className="zby-item">{this.props.children}</div>
+                {subtitleDOM}
+                {iconDOM}
+            </div>
         )
     }
 }
