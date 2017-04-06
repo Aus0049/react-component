@@ -6,6 +6,18 @@ import classNames from 'classnames'
 import Touchable from 'rc-touchable'
 
 class Item extends React.Component {
+    static defaultProps = {
+        multiple: false,
+        disabled: false
+    };
+    static propTypes = {
+        subtitle: React.PropTypes.string, // 列表项的副标题 可选
+        icon: React.PropTypes.string, // 列表项的icon 可选 枚举 horizontal/vertical
+        multiple: React.PropTypes.bool, // 列表项是否多行显示 默认否
+        onClick: React.PropTypes.func, // 列表项点击回调事件
+        onLongPress: React.PropTypes.func, // 长按回调事件
+        disabled: React.PropTypes.bool // 列表项不可点击 默认值false
+    };
     getClassName () {
         let {subtitle, icon, className, multipleLine, disabled} = this.props;
 
@@ -45,7 +57,7 @@ class Item extends React.Component {
         return iconDOM;
     }
     render () {
-        const {subtitle, icon, multipleLine, disabled, className, onPress, onLongPress, ...resProps} = this.props;
+        const {subtitle, icon, multipleLine, disabled, className, onClick, onLongPress, ...resProps} = this.props;
         const subtitleDOM = this.getSubTitleDOM();
         const classNames = this.getClassName();
         const iconDOM = this.getIconDOM();
@@ -54,7 +66,7 @@ class Item extends React.Component {
             <Touchable
                 activeClassName="zby-list-item-tap-active"
                 disabled={disabled}
-                onPress={onPress}
+                onPress={onClick}
                 onLongPress={onLongPress}>
                 <div className="zby-list-item" {...resProps}>
                     <div className={classNames}>

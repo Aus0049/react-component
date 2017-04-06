@@ -12,7 +12,7 @@ class Home extends React.Component {
                 <h1 className="title">React 组件库</h1>
                 <ListTitle title="数据展示" />
                 <List>
-                    <Item subtitle="aaa" icon="horizontal" onClick={()=>{Tools.linkTo("/data-display/list")}}>标题</Item>
+                    <Item subtitle="List" icon="horizontal" onClick={()=>{Tools.linkTo("/data-display/list")}}>列表项</Item>
                 </List>
             </div>
         )

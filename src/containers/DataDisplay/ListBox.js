@@ -31,7 +31,7 @@ class ListBox extends React.Component {
 
                 <ListTitle title="点击事件" />
                 <List>
-                    <Item subtitle="请点击" icon="horizontal" onPress={()=>{alert("点击成功")}}>基本标题</Item>
+                    <Item subtitle="请点击" icon="horizontal" onClick={()=>{alert("点击成功")}}>基本标题</Item>
                     <Item subtitle="请长按" icon="horizontal" onLongPress={()=>{alert("长按成功")}}>基本标题</Item>
                 </List>
 
