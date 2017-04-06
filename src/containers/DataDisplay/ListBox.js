@@ -4,6 +4,7 @@
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
+import Touchable from '../../components/Gesture/Touchable'
 import Tools from '../../components/Tools/Tools'
 
 const Item = List.Item;
@@ -38,6 +39,7 @@ class ListBox extends React.Component {
                 <List>
                     <Item subtitle="副标题在右" icon="horizontal" disabled>基本标题</Item>
                 </List>
+                <Touchable />
             </div>
         )
     }
