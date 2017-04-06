@@ -92,6 +92,7 @@
     "postcss-plugin-px2rem": "^0.7.0",
     "postcss-px2rem": "^0.3.0",
     "postcss-pxtorem": "^4.0.0",
+    "rc-touchable": "^1.0.13",
     "react": "^15.4.2",
     "react-addons": "^0.9.1-deprecated",
     "react-addons-css-transition-group": "^15.4.2",

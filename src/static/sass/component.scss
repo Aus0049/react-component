@@ -35,7 +35,6 @@
 // List
 .zby-list-box {
   background-color: #fff;
-  padding: 0 40px;
   line-height: 100px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -43,79 +42,89 @@
   border-bottom: 1px solid #ccc;
 
   .zby-list-item {
-    display: -webkit-flex;
-    display: flex;
-    border-bottom: 1px solid #ccc;
-    @include font-dpr(16px);
-    color: #333;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    padding: 0 40px;
 
     &:last-of-type {
-      border: none;
+      .zby-item-box {
+        border: none;
+      }
     }
 
-    &.with-subtitle {
-      padding-right: 40px;
+    &.zby-list-item-tap-active {
+      background-color: #ddd;
     }
 
-    &.with-icon {
-      position: relative;
-      padding-right: 40px;
-    }
+    .zby-item-box {
+      display: -webkit-flex;
+      display: flex;
+      border-bottom: 1px solid #ccc;
+      @include font-dpr(16px);
+      color: #333;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
 
-    &.multiple {
-      padding: 25px 0 25px 0;
-      display: block;
+      &.with-subtitle {
+        padding-right: 40px;
+      }
+
+      &.with-icon {
+        position: relative;
+        padding-right: 40px;
+      }
+
+      &.multiple {
+        padding: 25px 0 25px 0;
+        display: block;
+
+        .zby-item {
+          display: block;
+          line-height: 50px;
+        }
+
+        .subtitle {
+          display: block;
+          max-width: 100%;
+          margin-top: 10px;
+          line-height: 40px;
+        }
+
+        .icon {
+          line-height: 150px;
+        }
+      }
+
+      &.disabled {
+        color: #bbb;
+      }
 
       .zby-item {
-        display: block;
-        line-height: 50px;
+        display: inline-block;
+        flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space:nowrap;
+        vertical-align: top;
       }
 
       .subtitle {
-        display: block;
-        max-width: 100%;
-        margin-top: 10px;
-        line-height: 40px;
+        max-width: 25%;
+        color: #999;
+        @include font-dpr(14px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space:nowrap;
+        vertical-align: top;
       }
 
       .icon {
-        line-height: 150px;
+        position: absolute;
+        display: block;
+        right: -10px;
+        top: 0;
+        font-size: 48px;
+        line-height: 100px;
+        color: #999;
       }
-    }
-
-    &.disabled {
-      color: #bbb;
-    }
-
-    .zby-item {
-      display: inline-block;
-      flex: 1;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space:nowrap;
-      vertical-align: top;
-    }
-
-    .subtitle {
-      max-width: 25%;
-      color: #999;
-      @include font-dpr(14px);
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space:nowrap;
-      vertical-align: top;
-    }
-
-    .icon {
-      position: absolute;
-      display: block;
-      right: -10px;
-      top: 0;
-      font-size: 48px;
-      line-height: 100px;
-      color: #999;
     }
   }
 }

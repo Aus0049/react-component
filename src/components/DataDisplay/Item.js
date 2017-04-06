@@ -2,19 +2,19 @@
  * Created by Aus on 2017/4/1.
  */
 import React from 'react'
+import classNames from 'classnames'
+import Touchable from 'rc-touchable'
 
 class Item extends React.Component {
     getClassName () {
-        let cn = "zby-list-item";
         let {subtitle, icon, className, multipleLine, disabled} = this.props;
 
-        if(subtitle) cn += " with-subtitle";
-
-        if(multipleLine) cn += " multiple";
-
-        if(icon) cn += " with-icon";
-
-        if(disabled) cn += " disabled";
+        let cn = classNames(['zby-item-box', {
+            'with-subtitle': subtitle,
+            'multiple': multipleLine,
+            'with-icon': icon,
+            'disabled': disabled
+        }]);
 
         if(className) cn += " " + className;
 
@@ -45,17 +45,25 @@ class Item extends React.Component {
         return iconDOM;
     }
     render () {
-        const {subtitle, icon, multipleLine, disabled, className, onClick, ...resProps} = this.props;
+        const {subtitle, icon, multipleLine, disabled, className, onPress, onLongPress, ...resProps} = this.props;
         const subtitleDOM = this.getSubTitleDOM();
         const classNames = this.getClassName();
         const iconDOM = this.getIconDOM();
 
         return (
-            <div className={classNames} onClick={onClick} {...resProps}>
-                <div className="zby-item">{this.props.children}</div>
-                {subtitleDOM}
-                {iconDOM}
-            </div>
+            <Touchable
+                activeClassName="zby-list-item-tap-active"
+                disabled={disabled}
+                onPress={onPress}
+                onLongPress={onLongPress}>
+                <div className="zby-list-item" {...resProps}>
+                    <div className={classNames}>
+                        <div className="zby-item">{this.props.children}</div>
+                        {subtitleDOM}
+                        {iconDOM}
+                    </div>
+                </div>
+            </Touchable>
         )
     }
 }

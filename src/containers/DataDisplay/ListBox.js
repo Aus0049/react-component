@@ -4,7 +4,6 @@
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
-import Touchable from '../../components/Gesture/Touchable'
 import Tools from '../../components/Tools/Tools'
 
 const Item = List.Item;
@@ -32,14 +31,14 @@ class ListBox extends React.Component {
 
                 <ListTitle title="点击事件" />
                 <List>
-                    <Item subtitle="副标题在右" icon="horizontal" onClick={()=>{alert("点击成功")}}>基本标题</Item>
+                    <Item subtitle="请点击" icon="horizontal" onPress={()=>{alert("点击成功")}}>基本标题</Item>
+                    <Item subtitle="请长按" icon="horizontal" onLongPress={()=>{alert("长按成功")}}>基本标题</Item>
                 </List>
 
                 <ListTitle title="禁止点击" />
                 <List>
                     <Item subtitle="副标题在右" icon="horizontal" disabled>基本标题</Item>
                 </List>
-                <Touchable />
             </div>
         )
     }
