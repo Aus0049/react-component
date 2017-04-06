@@ -26,24 +26,29 @@ class Item extends React.Component {
         if (subtitle) return <span className="subtitle">{subtitle}</span>;
     }
     getIconDOM () {
-        let {icon} = this.props;
+        const {icon} = this.props;
         let iconDOM;
 
         if(!icon) return;
 
-        if (icon == "horizontal") return <i className="icon fa fa-angle-right"></i>;
-
-        if (icon == "vertical") return <i className="icon fa fa-angle-down"></i>;
+        switch (icon) {
+            case "horizontal":
+                // 水平向右的箭头
+                return <i className="icon fa fa-angle-right"></i>;
+            case "vertical":
+                // 垂直向下的箭头
+                return <i className="icon fa fa-angle-down"></i>;
+        }
 
         iconDOM = <i className="icon fa fa-angle-down"></i>;
 
         return iconDOM;
     }
     render () {
-        let subtitleDOM = this.getSubTitleDOM();
-        let classNames = this.getClassName();
-        let iconDOM = this.getIconDOM();
-        let {subtitle, icon, multipleLine, disabled, className, onClick, ...resProps} = this.props;
+        const {subtitle, icon, multipleLine, disabled, className, onClick, ...resProps} = this.props;
+        const subtitleDOM = this.getSubTitleDOM();
+        const classNames = this.getClassName();
+        const iconDOM = this.getIconDOM();
 
         return (
             <div className={classNames} onClick={onClick} {...resProps}>

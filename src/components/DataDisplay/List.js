@@ -4,6 +4,7 @@
 import React from 'react'
 import Item from './Item'
 
+// 用于包裹item的外层组件
 class List extends React.Component {
     getClassName () {
         let cn = "zby-list-box";
@@ -16,7 +17,7 @@ class List extends React.Component {
         return cn;
     }
     render () {
-        let className = this.getClassName();
+        const className = this.getClassName();
 
         return (
             <div className={className}>
