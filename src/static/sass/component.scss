@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+$viColor: #00b4a5;
+$darkViColor: #009486;
+
 // px2rem并没有自动实现该功能 还是手动加上吧
 @mixin font-dpr($font-size){
   font-size: $font-size;
@@ -126,5 +129,29 @@
         color: #999;
       }
     }
+  }
+}
+
+// Button
+.zby-button {
+  display: block;
+  margin: 10px 0;
+  height: 100px;
+  border-radius: 10px;
+  text-align: center;
+  line-height: 100px;
+  font-size: 32px;
+  opacity: 1;
+
+  &.button-default {
+    background-color: $viColor;
+
+    .zby-button-text {
+      color: #fff;
+    }
+  }
+
+  .zby-button-text {
+    text-decoration: none;
   }
 }

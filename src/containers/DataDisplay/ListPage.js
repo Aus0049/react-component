@@ -7,7 +7,7 @@ import List from '../../components/DataDisplay/List'
 
 const Item = List.Item;
 
-class ListBox extends React.Component {
+class ListPage extends React.Component {
     render () {
         return (
             <div className="page list">
@@ -43,4 +43,4 @@ class ListBox extends React.Component {
     }
 }
 
-export default ListBox
+export default ListPage

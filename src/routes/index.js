@@ -1,8 +1,8 @@
 // 路由入口文件
 import Layout from '../layout/index'
 import Home from '../containers/Home'
-import Button from '../containers/DataEntry/Button'
-import List from '../containers/DataDisplay/ListBox'
+import Button from '../containers/DataEntry/ButtonPage'
+import List from '../containers/DataDisplay/ListPage'
 
 export const createRoutes = () => ({
     path: '/',
