@@ -15,6 +15,20 @@ $darkViColor: #009486;
     font-size: $font-size * 3;
   }
 }
+
+// *
+a {
+  background: transparent;
+  text-decoration: none;
+
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 // list title
 .zby-list-title {
   padding: 0 40px;
@@ -135,23 +149,36 @@ $darkViColor: #009486;
 // Button
 .zby-button {
   display: block;
-  margin: 10px 0;
+  margin: 20px 0;
   height: 100px;
   border-radius: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
   text-align: center;
   line-height: 100px;
   font-size: 32px;
+  overflow: hidden;
+  clear: both;
+  outline: none;
   opacity: 1;
 
-  &.button-default {
+  &.primary {
     background-color: $viColor;
+
+    &.zby-button-active {
+      background-color: $darkViColor;
+    }
 
     .zby-button-text {
       color: #fff;
     }
   }
 
+  &.zby-button-active {
+    background-color: #ddd;
+  }
+
   .zby-button-text {
-    text-decoration: none;
+    color: #000;
   }
 }
