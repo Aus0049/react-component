@@ -17,7 +17,9 @@ class ButtonPage extends React.Component {
                 <ListTitle title="基本" />
                 <div className="button-box">
                     <Button>default 按钮</Button>
+                    <Button disabled>disabled 按钮</Button>
                     <Button primary>primary 按钮</Button>
+                    <Button primary disabled>primary disabled 按钮</Button>
                 </div>
             </div>
         )
