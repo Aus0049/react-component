@@ -23,6 +23,14 @@ class ButtonPage extends React.Component {
                     <Button primary iconClass="fa-circle-o-notch fa-spin">带icon 按钮</Button>
                     <Button ghost>幽灵 按钮</Button>
                     <Button ghost disabled>disabled 幽灵 按钮</Button>
+                    <Button primary onClick={()=>{alert("click")}}>点击事件</Button>
+                </div>
+
+                <ListTitle title="行内按钮" />
+                <div className="button-box">
+                    <Button inline>行内 按钮</Button>
+                    <Button inline primary>行内primary 按钮</Button>
+                    <Button inline ghost>行内幽灵 按钮</Button>
                 </div>
             </div>
         )
