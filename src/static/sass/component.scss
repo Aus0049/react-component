@@ -175,6 +175,13 @@ a {
     line-height: 50px;
   }
 
+  &.group {
+    display: inline-block;
+    padding: 0 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+  }
+
   &.disabled {
     background-color: $lightGray;
 

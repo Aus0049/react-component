@@ -26,6 +26,12 @@ class ButtonPage extends React.Component {
                     <Button primary onClick={()=>{alert("click")}}>点击事件</Button>
                 </div>
 
+                <ListTitle title="按钮组按钮" />
+                <div className="button-box">
+                    <Button primary group>按钮组 按钮</Button>
+                    <Button ghost group>按钮组 按钮</Button>
+                </div>
+
                 <ListTitle title="行内按钮" />
                 <div className="button-box">
                     <Button inline>行内 按钮</Button>

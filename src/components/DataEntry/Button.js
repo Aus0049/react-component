@@ -8,10 +8,11 @@ import Touchable from 'rc-touchable'
 // button 组件
 class Button extends React.Component {
     getClassName () {
-        let {inline, primary, ghost, disabled} = this.props;
+        let {inline, group, primary, ghost, disabled} = this.props;
 
         return classNames(['zby-button',{
             'inline': inline,
+            'group': group,
             'primary': primary && !disabled,
             'ghost': ghost && !disabled,
             'disabled': disabled && !primary,
