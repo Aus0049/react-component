@@ -11,7 +11,7 @@ class Item extends React.Component {
         disabled: false
     };
     static propTypes = {
-        subtitle: React.PropTypes.string, // 列表项的副标题 可选
+        subtitle: React.PropTypes.node, // 列表项的副标题 可选
         icon: React.PropTypes.string, // 列表项的icon 可选 枚举 horizontal/vertical
         multiple: React.PropTypes.bool, // 列表项是否多行显示 默认否
         onClick: React.PropTypes.func, // 列表项点击回调事件

@@ -159,6 +159,7 @@ a {
   outline: none;
   opacity: 1;
 
+  -webkit-transition: opacity .5s;
   transition: opacity .5s;
 
   &.inline {
@@ -181,7 +182,7 @@ a {
   &.disabled {
     background-color: $lightGray;
 
-    .zby-button-text {
+    .zby-button-text, .fa {
       color: $darkGray;
     }
   }
@@ -189,6 +190,20 @@ a {
   &.primary {
     background-color: $viColor;
     border: none;
+
+    &.disabled {
+      background-color: $viColor;
+      border: none;
+      opacity: .5;
+
+      &.zby-button-active {
+        background-color: $darkViColor;
+      }
+
+      .zby-button-text, .fa {
+        color: #fff;
+      }
+    }
 
     &.zby-button-active {
       background-color: $darkViColor;
@@ -203,6 +218,16 @@ a {
     background-color: transparent;
     border: 1px solid $viColor;
 
+    &.disabled {
+      background-color: $lightGray;
+      border: none;
+      opacity: .8;
+
+      .zby-button-text, .fa {
+        color: $darkGray;
+      }
+    }
+
     &.zby-button-active {
       background-color: $viColor;
       .zby-button-text, .fa {
@@ -212,20 +237,6 @@ a {
 
     .zby-button-text, .fa {
       color: $viColor;
-    }
-  }
-
-  &.primary-disabled {
-    background-color: $viColor;
-    border: none;
-    opacity: .5;
-
-    &.zby-button-active {
-      background-color: $darkViColor;
-    }
-
-    .zby-button-text, .fa {
-      color: #fff;
     }
   }
 
