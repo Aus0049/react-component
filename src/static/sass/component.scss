@@ -50,7 +50,6 @@ a {
   }
 }
 
-
 // List
 .zby-list-box {
   background-color: #fff;
@@ -176,25 +175,43 @@ a {
 
   &.primary {
     background-color: $viColor;
+    border: none;
 
     &.zby-button-active {
       background-color: $darkViColor;
     }
 
-    .zby-button-text {
+    .zby-button-text, .fa {
       color: #fff;
+    }
+  }
+
+  &.ghost {
+    background-color: transparent;
+    border: 1px solid $viColor;
+
+    &.zby-button-active {
+      background-color: $viColor;
+      .zby-button-text, .fa {
+        color: #fff;
+      }
+    }
+
+    .zby-button-text, .fa {
+      color: $viColor;
     }
   }
 
   &.primary-disabled {
     background-color: $viColor;
+    border: none;
     opacity: .5;
 
     &.zby-button-active {
       background-color: $darkViColor;
     }
 
-    .zby-button-text {
+    .zby-button-text, .fa {
       color: #fff;
     }
   }
@@ -204,6 +221,13 @@ a {
   }
 
   .zby-button-text {
+    display: inline-block;
+    color: #000;
+  }
+
+  .fa {
+    display: inline-block;
+    margin-right: 10px;
     color: #000;
   }
 }

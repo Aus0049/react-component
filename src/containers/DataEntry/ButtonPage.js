@@ -20,6 +20,9 @@ class ButtonPage extends React.Component {
                     <Button disabled>disabled 按钮</Button>
                     <Button primary>primary 按钮</Button>
                     <Button primary disabled>primary disabled 按钮</Button>
+                    <Button primary iconClass="fa-circle-o-notch fa-spin">带icon 按钮</Button>
+                    <Button ghost>幽灵 按钮</Button>
+                    <Button ghost disabled>disabled 幽灵 按钮</Button>
                 </div>
             </div>
         )
