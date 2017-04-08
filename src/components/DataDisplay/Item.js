@@ -64,7 +64,7 @@ class Item extends React.Component {
 
         return (
             <Touchable
-                activeClassName="zby-list-item-tap-active"
+                activeClassName={onClick && !disabled ? "zby-list-item-tap-active" : ''}
                 disabled={disabled}
                 onPress={onClick}
                 onLongPress={onLongPress}>

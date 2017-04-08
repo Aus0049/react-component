@@ -34,10 +34,16 @@ class ButtonPage extends React.Component {
 
                 <ListTitle title="行内按钮" />
                 <div className="button-box">
-                    <Button inline>行内 按钮</Button>
-                    <Button inline primary>行内primary 按钮</Button>
-                    <Button inline ghost>行内幽灵 按钮</Button>
+                    <Button inline>行内按钮</Button>
+                    <Button inline primary>行内primary按钮</Button>
+                    <Button inline ghost>行内幽灵按钮</Button>
                 </div>
+
+                <ListTitle title="结合List使用" />
+                <List>
+                    <Item subtitle={<Button inline ghost>行内 按钮</Button>}>副标题嵌入button</Item>
+                    <Item subtitle={<Button inline primary>行内 按钮</Button>} multipleLine>副标题嵌入button</Item>
+                </List>
             </div>
         )
     }

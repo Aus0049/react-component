@@ -81,10 +81,6 @@ a {
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
 
-      &.with-subtitle {
-        padding-right: 40px;
-      }
-
       &.with-icon {
         position: relative;
         padding-right: 40px;
@@ -125,7 +121,7 @@ a {
       }
 
       .subtitle {
-        max-width: 25%;
+        max-width: 30%;
         color: #999;
         @include font-dpr(14px);
         overflow: hidden;
@@ -167,12 +163,12 @@ a {
 
   &.inline {
     display: inline-block;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin: 0 10px;
     padding: 0 20px;
     height: auto;
     font-size: 28px;
     line-height: 50px;
+    vertical-align: middle;
   }
 
   &.group {
