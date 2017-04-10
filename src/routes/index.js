@@ -17,6 +17,6 @@ export const createRoutes = () => ({
             {path: 'list', component: List}
         ]}
     ]
-})
+});
 
 export default createRoutes
