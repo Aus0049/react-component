@@ -4,13 +4,21 @@
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const Item = List.Item;
 
 class ListPage extends React.Component {
     render () {
         return (
-            <div className="page list">
+            <ReactCSSTransitionGroup
+                component="div"
+                className="page list"
+                transitionName="todo"
+                transitionAppear={true}
+                transitionAppearTimeout={500}
+                transitionEnterTimeout={500}
+                transitionLeaveTimeout={500}>
                 <h1 className="title">List</h1>
 
                 <ListTitle title="基本" />
@@ -38,7 +46,7 @@ class ListPage extends React.Component {
                 <List>
                     <Item subtitle="副标题在右" icon="horizontal" disabled>基本标题</Item>
                 </List>
-            </div>
+            </ReactCSSTransitionGroup>
         )
     }
 }

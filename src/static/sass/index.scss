@@ -42,3 +42,53 @@ body {
 .button-box {
   padding: 0 40px;
 }
+
+// 进出场动画
+// 飞入
+.slide-in-appear {
+  opacity: 0.01;
+  transform: translate3D(100%, 0, 0);
+  transition: all 300ms ease-in;
+
+  &.slide-in-appear-active {
+    opacity: 1;
+    transform: translate3D(0, 0, 0);
+  }
+}
+.slide-in-enter {
+  opacity: 0.01;
+  transform: translate3D(100%, 0, 0);
+  transition: all 500ms ease-in;
+
+  &.slide-in-enter-active {
+    opacity: 1;
+    transform: translate3D(0, 0, 0);
+  }
+}
+//.todo-appear {
+//  opacity: 0.01;
+//  transform: translateY(-50px);
+//}
+//.todo-appear.todo-appear-active {
+//  opacity: 1;
+//  transform: translateY(0px);
+//  transition: all 500ms ease-in;
+//}
+//.todo-enter {
+//  opacity: 0.01;
+//  transform: translateY(-50px);
+//}
+//.todo-enter.todo-enter-active {
+//  opacity: 1;
+//  transform: translateY(0px);
+//  transition: all 500ms ease-in;
+//}
+//.todo-leave {
+//  opacity: 1;
+//  transform: translateY(0px);
+//}
+//.todo-leave.todo-leave-active {
+//  opacity: 0.01;
+//  transform: translateY(-50px);
+//  transition: all 300ms ease-in;
+//}
