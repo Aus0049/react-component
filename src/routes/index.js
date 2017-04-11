@@ -2,6 +2,7 @@
 import Layout from '../layout/index'
 import Home from '../containers/Home'
 import Button from '../containers/DataEntry/ButtonPage'
+import Switch from '../containers/DataEntry/SwitchPage'
 import List from '../containers/DataDisplay/ListPage'
 
 export const createRoutes = () => ({
@@ -11,7 +12,8 @@ export const createRoutes = () => ({
     childRoutes: [
         {path: 'index', component: Home},
         {path: '/data-entry', childRoutes: [
-            {path: 'button', component: Button}
+            {path: 'button', component: Button},
+            {path: 'switch', component: Switch}
         ]},
         {path: '/data-display', childRoutes: [
             {path: 'list', component: List}

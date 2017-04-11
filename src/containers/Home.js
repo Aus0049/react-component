@@ -13,6 +13,7 @@ class Home extends React.Component {
                 <ListTitle title="数据输入" />
                 <List>
                     <Item subtitle="Button" icon="horizontal" onClick={()=>{Tools.linkTo("/data-entry/button")}}>按钮</Item>
+                    <Item subtitle="Switch" icon="horizontal" onClick={()=>{Tools.linkTo("/data-entry/switch")}}>滑动按钮</Item>
                 </List>
                 <ListTitle title="数据展示" />
                 <List>
