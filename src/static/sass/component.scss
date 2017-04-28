@@ -299,6 +299,10 @@ a {
         }
       }
     }
+
+    &.disabled {
+      opacity: .3;
+    }
   }
 
   &.android {
@@ -320,7 +324,16 @@ a {
 
       &.on {
         &:after {
-          transform: translate(90%);
+          transform: translate(85%);
+        }
+      }
+    }
+
+    &.disabled {
+      &.on, &.off {
+        background-color: $lightGray;
+        &:after {
+          background-color: $darkGray;
         }
       }
     }

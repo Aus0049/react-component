@@ -50,7 +50,7 @@ class Switch extends React.Component {
     }
     getClassName () {
         const checked = this.props.checked != undefined ? this.props.checked : this.state.checked;
-        const {theme} = this.props;
+        const {theme, disabled} = this.props;
         const {focus} = this.state;
 
         return classNames(['zby-switch-box', {
@@ -58,7 +58,8 @@ class Switch extends React.Component {
             'android': theme == 'android',
             'on' : checked,
             'off' : !checked,
-            'focus': focus
+            'focus': focus,
+            'disabled': disabled
         }]);
     }
     render () {
