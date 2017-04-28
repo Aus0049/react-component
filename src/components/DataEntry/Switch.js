@@ -38,8 +38,11 @@ class Switch extends React.Component {
     }
     getClassName () {
         const checked = this.props.checked != undefined ? this.props.checked : this.state.checked;
+        const {theme} = this.props;
 
         return classNames(['zby-switch-box', {
+            'iOS': theme == 'iOS',
+            'android': theme == 'android',
             'on' : checked,
             'off' : !checked
         }]);
@@ -58,12 +61,14 @@ class Switch extends React.Component {
 }
 
 Switch.propTypes = {
+    theme: React.PropTypes.String, // 主题 枚举 iOS风格和Android风格
     checked: React.PropTypes.bool,
     defaultChecked: React.PropTypes.bool,
     onChange: React.PropTypes.func,
 };
 
 Switch.defaultProps = {
+    theme: "iOS",
     defaultChecked: true,
     onChange: empty,
 };

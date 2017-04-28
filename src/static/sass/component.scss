@@ -260,12 +260,9 @@ a {
 .zby-switch-box {
   position: relative;
   display: inline-block;
-  width: 100px;
-  height: 60px;
-  border: 2px solid #e5e5e5;
+  width: 120px;
   border-radius: 30px;
   vertical-align: middle;
-  //overflow: hidden;
   // 清除浏览器默认样式
   -webkit-appearance:none;
   appearance: none;
@@ -273,37 +270,78 @@ a {
 
   transition: all .3s;
 
-  -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.3) inset;
-  box-shadow: 0 2px 5px rgba(0,0,0,.3) inset;
+  &.iOS {
+    height: 60px;
+    border: 2px solid #e5e5e5;
+
+    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.3) inset;
+    box-shadow: 0 2px 5px rgba(0,0,0,.3) inset;
+
+    &:after {
+      width: 60px;
+      height: 60px;
+      left: 1px;
+      top: 1px;
+      background-color: #fff;
+
+      -webkit-box-shadow: 0 8px 20px rgba(0,0,0,.3);
+      box-shadow: 0 8px 20px rgba(0,0,0,.3);
+    }
+  }
+
+  &.android {
+    height: 60px;
+    background-color: $viColor;
+
+    &:after {
+      width: 52px;
+      height: 52px;
+      left: 4px;
+      top: 4px;
+      background-color: #fff;
+
+      //-webkit-box-shadow: 0 8px 20px rgba(0,0,0,.3);
+      //box-shadow: 0 8px 20px rgba(0,0,0,.3);
+    }
+  }
 
   &.off {
-    background-color: #fff;
+    &.iOS {
+      background-color: #fff;
+    }
+
+    &.android {
+      background-color: $darkGray;
+    }
+
     &:after {
       transform: translate(0%);
     }
   }
 
   &.on {
-    background-color: #4dd865;
-    &:after {
-      transform: translate(65%);
+    &.iOS {
+      background-color: #4dd865;
+
+      &:after {
+        transform: translate(95%);
+      }
+    }
+
+    &.android {
+      background-color: $viColor;
+
+      &:after {
+        transform: translate(112%);
+      }
     }
   }
 
   &:after {
     content: '';
     position: absolute;
-    left: 1px;
-    top: 1px;
-    width: 60px;
-    height: 60px;
     border-radius: 30px;
-    background-color: #fff;
     z-index: 3;
-
     transition: all .3s;
-
-    -webkit-box-shadow: 0 8px 20px rgba(0,0,0,.3);
-    box-shadow: 0 8px 20px rgba(0,0,0,.3);
   }
 }
