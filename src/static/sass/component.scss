@@ -262,17 +262,33 @@ a {
   display: inline-block;
   width: 100px;
   height: 60px;
-  background-color: #4dd865;
   border: 2px solid #e5e5e5;
   border-radius: 30px;
   vertical-align: middle;
-  overflow: hidden;
+  //overflow: hidden;
   // 清除浏览器默认样式
   -webkit-appearance:none;
   appearance: none;
   z-index: 2;
 
   transition: all .3s;
+
+  -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.3) inset;
+  box-shadow: 0 2px 5px rgba(0,0,0,.3) inset;
+
+  &.off {
+    background-color: #fff;
+    &:after {
+      transform: translate(0%);
+    }
+  }
+
+  &.on {
+    background-color: #4dd865;
+    &:after {
+      transform: translate(65%);
+    }
+  }
 
   &:after {
     content: '';
@@ -281,13 +297,13 @@ a {
     top: 1px;
     width: 60px;
     height: 60px;
-    border-radius: 50%;
+    border-radius: 30px;
     background-color: #fff;
     z-index: 3;
 
     transition: all .3s;
 
-    -webkit-box-shadow: 4px 4px 8px rgba(0,0,0,.21);
-    box-shadow: 4px 4px 8px rgba(0,0,0,.21);
+    -webkit-box-shadow: 0 8px 20px rgba(0,0,0,.3);
+    box-shadow: 0 8px 20px rgba(0,0,0,.3);
   }
 }

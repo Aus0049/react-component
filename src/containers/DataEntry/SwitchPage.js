@@ -8,7 +8,13 @@ import Switch from '../../components/DataEntry/Switch'
 
 const Item = List.Item;
 
-class ButtonPage extends React.Component {
+class SwitchPage extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            switch1: true
+        }
+    }
     render () {
         return (
             <div className="page switch">
@@ -16,11 +22,11 @@ class ButtonPage extends React.Component {
 
                 <ListTitle title="基本" />
                 <List>
-                    <Item subtitle={<Switch/>}>开启状态</Item>
+                    <Item subtitle={<Switch defaultChecked={this.state.switch1} />}>{this.state.switch1 ? '开启' : '关闭'}状态</Item>
                 </List>
             </div>
         )
     }
 }
 
-export default ButtonPage
+export default SwitchPage
