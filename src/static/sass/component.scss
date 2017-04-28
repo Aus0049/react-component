@@ -287,6 +287,18 @@ a {
       -webkit-box-shadow: 0 8px 20px rgba(0,0,0,.3);
       box-shadow: 0 8px 20px rgba(0,0,0,.3);
     }
+
+    &.focus {
+      &:after {
+        width: 70px;
+      }
+
+      &.on {
+        &:after {
+          transform: translate(68%);
+        }
+      }
+    }
   }
 
   &.android {
@@ -299,9 +311,18 @@ a {
       left: 4px;
       top: 4px;
       background-color: #fff;
+    }
 
-      //-webkit-box-shadow: 0 8px 20px rgba(0,0,0,.3);
-      //box-shadow: 0 8px 20px rgba(0,0,0,.3);
+    &.focus {
+      &:after {
+        width: 60px;
+      }
+
+      &.on {
+        &:after {
+          transform: translate(90%);
+        }
+      }
     }
   }
 

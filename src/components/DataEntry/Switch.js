@@ -21,7 +21,19 @@ class Switch extends React.Component {
         }
 
         this.state = {
-            checked: checked
+            checked: checked,
+            focus: false
+        }
+    }
+    handleTouch (id) {
+        if('start' == id){
+            this.setState({
+                focus: true
+            });
+        } else {
+            this.setState({
+                focus: false
+            });
         }
     }
     toggle () {
@@ -39,12 +51,14 @@ class Switch extends React.Component {
     getClassName () {
         const checked = this.props.checked != undefined ? this.props.checked : this.state.checked;
         const {theme} = this.props;
+        const {focus} = this.state;
 
         return classNames(['zby-switch-box', {
             'iOS': theme == 'iOS',
             'android': theme == 'android',
             'on' : checked,
-            'off' : !checked
+            'off' : !checked,
+            'focus': focus
         }]);
     }
     render () {
@@ -54,14 +68,18 @@ class Switch extends React.Component {
             <Touchable
                 onPress={this.toggle.bind(this)}
                 disabled={this.props.disabled}>
-                <div className={className}></div>
+                <div
+                    className={className}
+                    onTouchStart={this.handleTouch.bind(this, 'start')}
+                    onTouchEnd={this.handleTouch.bind(this, 'end')}>
+                </div>
             </Touchable>
         )
     }
 }
 
 Switch.propTypes = {
-    theme: React.PropTypes.String, // 主题 枚举 iOS风格和Android风格
+    theme: React.PropTypes.string, // 主题 枚举 iOS风格和Android风格
     checked: React.PropTypes.bool,
     defaultChecked: React.PropTypes.bool,
     onChange: React.PropTypes.func,
