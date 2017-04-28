@@ -15,6 +15,12 @@ class SwitchPage extends React.Component {
             switch1: true
         }
     }
+    handleChange (id, checked) {
+        console.log('切换选中');
+        let state = {};
+        state[id] = checked;
+        this.setState(state);
+    }
     render () {
         return (
             <div className="page switch">
@@ -22,7 +28,8 @@ class SwitchPage extends React.Component {
 
                 <ListTitle title="基本" />
                 <List>
-                    <Item subtitle={<Switch defaultChecked={this.state.switch1} />}>{this.state.switch1 ? '开启' : '关闭'}状态</Item>
+                    <Item subtitle={<Switch defaultChecked={this.state.switch1} />}>不受控组件</Item>
+                    <Item subtitle={<Switch checked={this.state.switch1} onChange={this.handleChange.bind(this, 'switch1')} />}>受控组件：{this.state.switch1 ? '开启' : '关闭'}</Item>
                 </List>
             </div>
         )

@@ -25,7 +25,7 @@ class Switch extends React.Component {
         }
     }
     toggle () {
-        const checked = !this.state.checked;
+        const checked = !(this.props.checked != undefined ? this.props.checked : this.state.checked);
         this.setChecked(checked);
     }
     setChecked (checked) {
@@ -37,7 +37,8 @@ class Switch extends React.Component {
         this.props.onChange(checked);
     }
     getClassName () {
-        const {checked} = this.state;
+        const checked = this.props.checked != undefined ? this.props.checked : this.state.checked;
+
         return classNames(['zby-switch-box', {
             'on' : checked,
             'off' : !checked
