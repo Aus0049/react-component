@@ -62,8 +62,20 @@ class Switch extends React.Component {
             'disabled': disabled
         }]);
     }
+    getAttachedDOM () {
+        const {attachedText} = this.props;
+
+        if(!attachedText || attachedText.length != 2){return;}
+
+        return  [
+            <span className='attachedTextTrue'>{attachedText[0]}</span>,
+            <span className='attachedTextFalse'>{attachedText[1]}</span>
+        ];
+
+    }
     render () {
         const className = this.getClassName();
+        const attachedDOM = this.getAttachedDOM();
 
         return (
             <Touchable
@@ -73,6 +85,7 @@ class Switch extends React.Component {
                     className={className}
                     onTouchStart={this.handleTouch.bind(this, 'start')}
                     onTouchEnd={this.handleTouch.bind(this, 'end')}>
+                    {attachedDOM}
                 </div>
             </Touchable>
         )
@@ -83,6 +96,7 @@ Switch.propTypes = {
     theme: React.PropTypes.string, // 主题 枚举 iOS风格和Android风格
     checked: React.PropTypes.bool,
     defaultChecked: React.PropTypes.bool,
+    attachedText: React.PropTypes.array,
     onChange: React.PropTypes.func,
 };
 

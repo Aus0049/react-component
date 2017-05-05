@@ -378,4 +378,32 @@ a {
     z-index: 3;
     transition: all .3s;
   }
+
+  .attachedTextTrue {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    font-size: 28px;
+    text-align: center;
+    line-height: 60px;
+    opacity: .5;
+
+    transform: translate(-100%, 0);
+  }
+
+  .attachedTextFalse {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    font-size: 28px;
+    text-align: center;
+    line-height: 60px;
+    opacity: .5;
+
+    //transform: translate(-100%, 0);
+  }
 }
