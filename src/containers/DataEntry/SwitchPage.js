@@ -38,6 +38,7 @@ class SwitchPage extends React.Component {
                     <Item subtitle={<Switch defaultChecked={this.state.switch2} theme="android" />}>不受控组件</Item>
                     <Item subtitle={<Switch checked={this.state.switch2} theme="android" onChange={this.handleChange.bind(this, 'switch2')} />}>受控组件：{this.state.switch2 ? '开启' : '关闭'}</Item>
                 </List>
+
                 <ListTitle title="禁止🚫" />
                 <List>
                     <Item subtitle={<Switch defaultChecked={false} disabled={true} />}>iOS关闭状态</Item>
@@ -45,6 +46,7 @@ class SwitchPage extends React.Component {
                     <Item subtitle={<Switch defaultChecked={true} theme="android" disabled={true} />}>安卓关闭状态</Item>
                     <Item subtitle={<Switch defaultChecked={true} theme="android" disabled={true} />}>安卓开启状态</Item>
                 </List>
+
                 <ListTitle title="带文字" />
                 <List>
                     <Item subtitle={<Switch defaultChecked={false} attachedText={['开', '关']} />}>iOS关闭状态</Item>
