@@ -68,8 +68,8 @@ class Switch extends React.Component {
         if(!attachedText || attachedText.length != 2){return;}
 
         return  [
-            <span className='attachedTextTrue'>{attachedText[0]}</span>,
-            <span className='attachedTextFalse'>{attachedText[1]}</span>
+            <span key='a-t' className='attachedTextTrue'>{attachedText[0]}</span>,
+            <span key='a-f' className='attachedTextFalse'>{attachedText[1]}</span>
         ];
 
     }

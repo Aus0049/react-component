@@ -48,7 +48,7 @@ class SwitchPage extends React.Component {
                 <ListTitle title="带文字" />
                 <List>
                     <Item subtitle={<Switch defaultChecked={false} attachedText={['开', '关']} />}>iOS关闭状态</Item>
-                    <Item subtitle={<Switch defaultChecked={true} theme="android" />}>安卓关闭状态</Item>
+                    <Item subtitle={<Switch defaultChecked={true} attachedText={['ON', 'OFF']} theme="android" />}>安卓关闭状态</Item>
                 </List>
             </div>
         )
