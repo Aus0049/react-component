@@ -3,6 +3,7 @@
  */
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
+import Picker from '../../components/DataEntry/Picker'
 import List from '../../components/DataDisplay/List'
 
 const Item = List.Item;
@@ -15,7 +16,9 @@ class PickerPage extends React.Component {
 
                 <ListTitle title="基本" />
                 <List>
-                    <Item >单列选择</Item>
+                    <Picker>
+                        <Item >单列选择</Item>
+                    </Picker>
                 </List>
             </div>
         );
