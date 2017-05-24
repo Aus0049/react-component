@@ -5,6 +5,9 @@ import React from 'react'
 
 // 选择器组件
 class PickerView extends React.Component {
+    componentDidMount () {
+        // 初次加载时候 初始化绑定事件
+    }
     render () {
         return (
             <div className="zby-picker-view-box">
