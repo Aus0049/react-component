@@ -9,7 +9,7 @@ import Touchable from 'rc-touchable'
 class Picker extends React.Component {
     render () {
         return (
-            <div className="zby-picker-box">
+            <div className="zby-picker-box ">
                 {this.props.children}
             </div>
         )
