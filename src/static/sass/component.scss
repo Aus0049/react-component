@@ -436,3 +436,68 @@ a {
     //transform: translate(-100%, 0);
   }
 }
+
+// PickerView
+.zby-picker-view-box {
+  display: flex;
+  align-items: center;
+  //background-color: #000;
+
+  .zby-picker-view-item {
+    flex: 1;
+
+    .zby-picker-view-list {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+
+      .zby-picker-view-window {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background-image:
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4)),
+                linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4));
+        background-position: top, bottom;
+        background-size: 100% 166px;
+        background-repeat: no-repeat;
+        z-index: 3;
+      }
+
+      .zby-picker-view-indicator {
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+        height: 68px;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
+        transform: translate(0, -50%);
+        z-index: 3;
+      }
+
+      .zby-picker-view-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        padding: 166px 0;
+        z-index: 1;
+
+        .zby-picker-view-col {
+          font-size: 34px;
+          color: #000;
+          text-align: center;
+          line-height: 68px;
+
+          &.selected {
+            font-size: 38px;
+          }
+        }
+      }
+    }
+  }
+}

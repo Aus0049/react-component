@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
-import Picker from '../../components/DataEntry/Picker'
+import PickerView from '../../components/DataEntry/PickerView'
 import List from '../../components/DataDisplay/List'
 
 const Item = List.Item;
@@ -14,12 +14,14 @@ class PickerPage extends React.Component {
             <div className="page switch">
                 <h1 className="title">Picker</h1>
 
-                <ListTitle title="基本" />
-                <List>
-                    <Picker>
-                        <Item >单列选择</Item>
-                    </Picker>
-                </List>
+                {/*<ListTitle title="基本" />*/}
+                {/*<List>*/}
+                    {/*<Picker>*/}
+                        {/*<Item >单列选择</Item>*/}
+                    {/*</Picker>*/}
+                {/*</List>*/}
+
+                <PickerView />
             </div>
         );
     }
