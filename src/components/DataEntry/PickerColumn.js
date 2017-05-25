@@ -23,12 +23,22 @@ class PickerColumn extends React.Component {
         let {data, value, index} = this.props;
         let result = [];
 
-        const dataArray = this.getDataArray(data, value);
+        const dataArray = this.getDataArray(data, value, index);
 
         return result;
     }
-    getDataArray () {
+    getDataArray (data, value, index) {
+        let result = [];
 
+        if(index == 0){
+            for(let i of data){
+                result.push({label: i.label, value: i.value});
+            }
+        } else {
+
+        }
+
+        return result;
     }
     render () {
         let cols = this.getCols();

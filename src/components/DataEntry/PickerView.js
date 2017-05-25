@@ -8,7 +8,7 @@ import PickerColumn from './PickerColumn'
 // 选择器组件
 class PickerView extends React.Component {
     componentDidMount () {
-        this.bindScrollEvent();
+        // this.bindScrollEvent();
     }
     bindScrollEvent () {
         // 绑定滚动的事件
@@ -32,22 +32,41 @@ class PickerView extends React.Component {
         zscroller.scroller.setSnapSize(0, 68);
     }
     getColumns () {
-        let result = [];
+        // let result = [];
         let {col, data, value} = this.props;
 
-        const dataArray = this.getDataArray(data, value);
+        const result = this.getColumnsData(data, value, [], 0);
+        console.log(result);
 
-        for(let i = 0; i < col; i++){
-            result.push(<PickerColumn value={value} data={data} index={i}/>);
+        // for(let i = 0; i < col; i++){
+        //     result.push(<PickerColumn value={value} data={data} index={i}/>);
+        // }
+        //
+        // return result;
+    }
+    getColumnsData (tree, value, hasFind, deep) {
+        // 遍历tree
+        let has;
+        let array = [];
+        for(let i = 0; i < tree.length; i++){
+            array.push({label: tree[i].label, value: tree[i].value});
+            if(tree[i].value == value[deep]) {
+                has = i;
+            }
         }
 
-        return result;
-    }
-    getDataArray (data, value) {
-        // 根据data 和 value 解析出各个column需要的数组
-        let result = [];
+        // 判断有没有找到
+        // 没找到return
+        // 找到了 没有下一集 也return
+        // 有下一级 则递归
+        if(has == undefined) return hasFind;
 
-        return result;
+        hasFind.push(array);
+        if(tree[has].children) {
+            this.getColumnsData(tree[has].children, value, hasFind, deep+1);
+        }
+
+        return hasFind;
     }
     render () {
         const columns = this.getColumns();
