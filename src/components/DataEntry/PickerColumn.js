@@ -96,6 +96,7 @@ class PickerColumn extends React.Component {
         // 根据value 和 index 获取到对应的data
         let {data, value, index} = this.props;
         let result = [];
+        // console.log(data);
 
         for(let i = 0; i < data.length; i++){
             result.push(<div key={index + "-" + i} className={classNames(['zby-picker-view-col', {'selected': data[i].value == value}])}>{data[i].label}</div>);

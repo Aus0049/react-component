@@ -5,6 +5,7 @@ import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
 import Switch from '../../components/DataEntry/Switch'
+import Tools from '../../components/Tools/Tools'
 
 const Item = List.Item;
 
@@ -25,7 +26,10 @@ class SwitchPage extends React.Component {
     render () {
         return (
             <div className="page switch">
-                <h1 className="title">Switch</h1>
+                <h1 className="title">
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    Switch
+                </h1>
 
                 <ListTitle title="iOS风格" />
                 <List>

@@ -5,6 +5,7 @@ import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Tools from '../../components/Tools/Tools'
 
 const Item = List.Item;
 
@@ -19,7 +20,10 @@ class ListPage extends React.Component {
                 transitionAppearTimeout={500}
                 transitionEnterTimeout={500}
                 transitionLeaveTimeout={500}>
-                <h1 className="title">List</h1>
+                <h1 className="title">
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    List
+                </h1>
 
                 <ListTitle title="基本" />
                 <List>

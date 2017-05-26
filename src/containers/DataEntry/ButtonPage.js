@@ -5,6 +5,7 @@ import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
 import Button from '../../components/DataEntry/Button'
+import Tools from '../../components/Tools/Tools'
 
 const Item = List.Item;
 
@@ -12,7 +13,10 @@ class ButtonPage extends React.Component {
     render () {
         return (
             <div className="page button">
-                <h1 className="title">Button</h1>
+                <h1 className="title">
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    Button
+                </h1>
 
                 <ListTitle title="基本" />
                 <div className="button-box">

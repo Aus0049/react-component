@@ -23,29 +23,48 @@ class PickerView extends React.Component {
         // 子组件column发生变化的回调函数
         // 每次值发生变化 都要判断整个值数组的新值
         let {defaultSelectedValue} = this.state;
-        let {data, onChange} = this.props;
+        let {data, cascade, onChange} = this.props;
         let oldValue = defaultSelectedValue.slice();
         oldValue[index] = newValue;
 
-        const newState = this.getNewValue(data, oldValue, [], 0);
+        if(cascade){
+            // 如果级联的情况下
+            const newState = this.getNewValue(data, oldValue, [], 0);
 
-        this.setState({
-            defaultSelectedValue: newState
-        });
+            this.setState({
+                defaultSelectedValue: newState
+            });
 
-        // 如果有回调
-        if(onChange){
-            onChange(newState);
+            // 如果有回调
+            if(onChange){
+                onChange(newState);
+            }
+        } else {
+            // 不级联 单纯改对应数据
+            this.setState({
+                defaultSelectedValue: oldValue
+            });
+
+            // 如果有回调
+            if(onChange){
+                onChange(oldValue);
+            }
         }
     }
     getColumns () {
         let result = [];
-        let {col, data} = this.props;
+        let {col, data, cascade} = this.props;
         let {defaultSelectedValue} = this.state;
 
         if(defaultSelectedValue.length == 0) return;
 
-        let array = this.getColumnsData(data, defaultSelectedValue, [], 0);
+        let array;
+
+        if(cascade){
+            array = this.getColumnsData(data, defaultSelectedValue, [], 0);
+        } else {
+            array = data;
+        }
 
         for(let i = 0; i < col; i++){
             result.push(<PickerColumn
@@ -114,5 +133,18 @@ class PickerView extends React.Component {
         )
     }
 }
+
+PickerView.propTypes = {
+    col: React.PropTypes.number,
+    data: React.PropTypes.array,
+    value: React.PropTypes.array,
+    cascade: React.PropTypes.bool,
+    onChange: React.PropTypes.func
+};
+
+PickerView.defaultProps = {
+    col: 1,
+    cascade: true
+};
 
 export default PickerView
