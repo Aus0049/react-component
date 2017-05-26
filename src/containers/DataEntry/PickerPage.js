@@ -15,6 +15,9 @@ class PickerPage extends React.Component {
             value1: ['fruit', 'watermelon']
         }
     }
+    handleChange (newValue) {
+        console.log(newValue);
+    }
     render () {
         const {value1} = this.state;
         const array1 = [
@@ -40,17 +43,13 @@ class PickerPage extends React.Component {
             <div className="page switch">
                 <h1 className="title">Picker</h1>
 
-                {/*<ListTitle title="基本" />*/}
-                {/*<List>*/}
-                    {/*<Picker>*/}
-                        {/*<Item >单列选择</Item>*/}
-                    {/*</Picker>*/}
-                {/*</List>*/}
+                <ListTitle title="基本" />
 
                 <PickerView
                     col={2}
                     data={array1}
-                    value={value1}/>
+                    value={value1}
+                    onChange={this.handleChange.bind(this)}/>
             </div>
         );
     }

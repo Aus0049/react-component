@@ -23,7 +23,7 @@ class PickerView extends React.Component {
         // 子组件column发生变化的回调函数
         // 每次值发生变化 都要判断整个值数组的新值
         let {defaultSelectedValue} = this.state;
-        let {data} = this.props;
+        let {data, onChange} = this.props;
         let oldValue = defaultSelectedValue.slice();
         oldValue[index] = newValue;
 
@@ -32,6 +32,11 @@ class PickerView extends React.Component {
         this.setState({
             defaultSelectedValue: newState
         });
+
+        // 如果有回调
+        if(onChange){
+            onChange(newState);
+        }
     }
     getColumns () {
         let result = [];
