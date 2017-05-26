@@ -11,12 +11,13 @@ class PickerColumn extends React.Component {
         // 绑定事件
         this.bindScrollEvent();
         // 列表滚到对应位置
+        this.scrollToPosition();
     }
     bindScrollEvent () {
         // 绑定滚动的事件
-        let content = this.refs.content;
+        const content = this.refs.content;
         // getBoundingClientRect js原生方法
-        const height = this.refs.indicator.getBoundingClientRect().height;
+        this.itemHeight = this.refs.indicator.getBoundingClientRect().height;
 
         // 最后还是用了何一鸣的zscroll插件
         // 但是这个插件并没有太多的文档介绍 gg
@@ -35,7 +36,33 @@ class PickerColumn extends React.Component {
 
         // 设置每个格子的高度 这样滚动结束 自动滚到对应格子上
         // 单位必须是px 所以要动态取一下
-        this.zscroller.scroller.setSnapSize(0, height);
+        this.zscroller.scroller.setSnapSize(0, this.itemHeight);
+    }
+    scrollToPosition () {
+        // 滚动到选中的位置
+        let {data, value} = this.props;
+
+        data.map((item)=>{
+            if(item.value == value){
+                this.selectByIndex();
+                return;
+            }
+        });
+
+        for(let i = 0; i < data.length; i++){
+            if(data[i].value == value){
+                this.selectByIndex(i);
+                return;
+            }
+        }
+
+        this.selectByIndex(0);
+    }
+    selectByIndex (index) {
+        // 滚动到index对应的位置
+        let top = this.itemHeight * index;
+
+        this.zscroller.scroller.scrollTo(0, top);
     }
     getCols () {
         // 根据value 和 index 获取到对应的data
