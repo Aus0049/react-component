@@ -13,6 +13,10 @@ class PickerColumn extends React.Component {
         // 列表滚到对应位置
         this.scrollToPosition();
     }
+    componentDidUpdate() {
+        this.zscroller.reflow();
+        this.scrollToPosition();
+    }
     componentWillUnmount() {
         this.zscroller.destroy();
     }
@@ -45,18 +49,22 @@ class PickerColumn extends React.Component {
     scrollingComplete () {
         // 滚动结束 判断当前选中值
         const { top } = this.zscroller.scroller.getValues();
-        const {data} = this.props;
+        const {data, value, index, onValueChange} = this.props;
 
-        let index = top / this.itemHeight;
-        const floor = Math.floor(index);
-        if (index - floor > 0.5) {
-            index = floor + 1;
+        let currentIndex = top / this.itemHeight;
+        const floor = Math.floor(currentIndex);
+        if (currentIndex - floor > 0.5) {
+            currentIndex = floor + 1;
         } else {
-            index = floor;
+            currentIndex = floor;
         }
 
-        const selectedValue = data[index].value;
-        console.log(selectedValue);
+        const selectedValue = data[currentIndex].value;
+
+        if(selectedValue != value){
+            // 值发生变化 通知父组件
+            onValueChange(selectedValue, index);
+        }
     }
     scrollToPosition () {
         // 滚动到选中的位置
