@@ -13,6 +13,9 @@ class PickerColumn extends React.Component {
         // 列表滚到对应位置
         this.scrollToPosition();
     }
+    componentWillUnmount() {
+        this.zscroller.destroy();
+    }
     bindScrollEvent () {
         // 绑定滚动的事件
         const content = this.refs.content;
@@ -22,6 +25,7 @@ class PickerColumn extends React.Component {
         // 最后还是用了何一鸣的zscroll插件
         // 但是这个插件并没有太多的文档介绍 gg
         // 插件demo地址：http://yiminghe.me/zscroller/examples/demo.html
+        let t = this;
         this.zscroller = new ZScroller(content, {
             scrollbars: false,
             scrollingX: false,
@@ -30,13 +34,29 @@ class PickerColumn extends React.Component {
             minVelocityToKeepDecelerating: 0.5,
             scrollingComplete () {
                 // 滚动结束 回调
-                console.log(11);
+                t.scrollingComplete();
             }
         });
 
         // 设置每个格子的高度 这样滚动结束 自动滚到对应格子上
         // 单位必须是px 所以要动态取一下
         this.zscroller.scroller.setSnapSize(0, this.itemHeight);
+    }
+    scrollingComplete () {
+        // 滚动结束 判断当前选中值
+        const { top } = this.zscroller.scroller.getValues();
+        const {data} = this.props;
+
+        let index = top / this.itemHeight;
+        const floor = Math.floor(index);
+        if (index - floor > 0.5) {
+            index = floor + 1;
+        } else {
+            index = floor;
+        }
+
+        const selectedValue = data[index].value;
+        console.log(selectedValue);
     }
     scrollToPosition () {
         // 滚动到选中的位置
