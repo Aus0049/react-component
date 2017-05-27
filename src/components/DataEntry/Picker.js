@@ -3,13 +3,15 @@
  */
 import React from 'react'
 import PickerView from './PickerView'
+import Touchable from 'rc-touchable'
 
 // 选择器组件
 class Picker extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            defaultValue: undefined
+            defaultValue: undefined,
+            show: false
         }
     }
     componentDidMount () {
@@ -30,25 +32,19 @@ class Picker extends React.Component {
             onChange(newValue);
         }
     }
-    getPickerView () {
-        const {col, data, cascade} = this.props;
-        const {defaultValue} = this.state;
+    handleClick () {
+        let {show} = this.props;
 
-        if(defaultValue != undefined){
-            return <PickerView
-                col={col}
-                data={data}
-                value={defaultValue}
-                cascade={cascade}
-                onChange={this.handleChange.bind(this)}>
-            </PickerView>;
-        }
+        this.setState({
+            show: !show
+        });
     }
-    render () {
+    getPopupDOM () {
+        const {show} = this.state;
         const pickerViewDOM = this.getPickerView();
 
-        return (
-            <div className="zby-picker-box">
+        if(show){
+            return <div>
                 <div className="zby-picker-popup-mask"></div>
                 <div className="zby-picker-popup-wrap">
                     <div className="zby-picker-popup-header">
@@ -66,7 +62,33 @@ class Picker extends React.Component {
                         {pickerViewDOM}
                     </div>
                 </div>
-                {this.props.children}
+            </div>
+        }
+    }
+    getPickerView () {
+        const {col, data, cascade} = this.props;
+        const {defaultValue, show} = this.state;
+
+        if(defaultValue != undefined && show){
+            return <PickerView
+                col={col}
+                data={data}
+                value={defaultValue}
+                cascade={cascade}
+                onChange={this.handleChange.bind(this)}>
+            </PickerView>;
+        }
+    }
+    render () {
+        const popupDOM = this.getPopupDOM();
+
+        return (
+            <div className="zby-picker-box">
+                {popupDOM}
+                <Touchable
+                    onPress={this.handleClick.bind(this)}>
+                    {this.props.children}
+                </Touchable>
             </div>
         )
     }

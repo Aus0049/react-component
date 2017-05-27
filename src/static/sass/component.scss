@@ -490,11 +490,15 @@ a {
         transform: translateY(0);
 
         .zby-picker-view-col {
+          height: 68px;
+          padding: 0 10px;
           font-size: 34px;
           color: #000;
           text-align: center;
           line-height: 68px;
-          height: 68px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space:nowrap;
 
           &.selected {
             font-size: 38px;
