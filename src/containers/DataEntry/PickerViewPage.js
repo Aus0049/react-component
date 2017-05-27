@@ -6,7 +6,7 @@ import ListTitle from '../../components/DataDisplay/ListTitle'
 import PickerView from '../../components/DataEntry/PickerView'
 import Tools from '../../components/Tools/Tools'
 
-class PickerPage extends React.Component {
+class PickerViewPage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -57,10 +57,10 @@ class PickerPage extends React.Component {
         ];
 
         return (
-            <div className="page switch">
+            <div className="page picker-view">
                 <h1 className="title">
                     <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
-                    Picker
+                    PickerView
                 </h1>
 
                 <ListTitle title="默认级联" />
@@ -84,4 +84,4 @@ class PickerPage extends React.Component {
     }
 }
 
-export default PickerPage;
+export default PickerViewPage;

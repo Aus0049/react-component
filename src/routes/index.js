@@ -3,7 +3,7 @@ import Layout from '../layout/index'
 import Home from '../containers/Home'
 import Button from '../containers/DataEntry/ButtonPage'
 import Switch from '../containers/DataEntry/SwitchPage'
-import Picker from '../containers/DataEntry/PickerPage'
+import Picker from '../containers/DataEntry/PickerViewPage'
 import List from '../containers/DataDisplay/ListPage'
 
 export const createRoutes = () => ({
