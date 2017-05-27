@@ -504,3 +504,48 @@ a {
     }
   }
 }
+
+// Picker
+.zby-picker-box {
+  .zby-picker-popup-mask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: rgba(0,0,0,.4);
+  }
+
+  .zby-picker-popup-wrap {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: #fff;
+
+    .zby-picker-popup-header {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+
+      .zby-picker-popup-item {
+        padding: 10px 30px;
+        height: 60px;
+        font-size: 34px;
+        line-height: 60px;
+        color: #000;
+        text-align: center;
+
+        &.zby-header-title {
+          flex: 1;
+        }
+
+        &.zby-header-left,
+        &.zby-header-right {
+          color: $viColor;
+        }
+      }
+    }
+  }
+}
