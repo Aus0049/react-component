@@ -17,7 +17,14 @@ class PickerPage extends React.Component {
         }
     }
     handleChange (newValue) {
-        console.log("change");
+        console.log("value change");
+        console.log(newValue);
+        this.setState({
+            areaValue: newValue
+        });
+    }
+    handlePickerChange (newValue) {
+        console.log("picker change");
         console.log(newValue);
     }
     render () {
@@ -66,7 +73,8 @@ class PickerPage extends React.Component {
                         col={3}
                         data={areaArray}
                         value={areaValue}
-                        onChange={this.handleChange.bind(this)}>
+                        onChange={this.handleChange.bind(this)}
+                        onPickerChange={this.handlePickerChange.bind(this)}>
                         <Item subtitle={areaValue.join('')} icon="horizontal">地区选择器</Item>
                     </Picker>
                 </List>
