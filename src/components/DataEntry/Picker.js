@@ -8,11 +8,27 @@ import Touchable from 'rc-touchable'
 
 // 选择器组件
 class Picker extends React.Component {
+    static defaultProps = {
+        col: 1,
+        cancelText: "取消",
+        confirmText: "确定",
+        cascade: true
+    };
+    static propTypes = {
+        col: React.PropTypes.number,
+        data: React.PropTypes.array,
+        value: React.PropTypes.array,
+        cancelText: React.PropTypes.string,
+        title: React.PropTypes.string,
+        confirmText: React.PropTypes.string,
+        cascade: React.PropTypes.bool,
+        onChange: React.PropTypes.func
+    };
     constructor (props) {
         super(props);
         this.state = {
             defaultValue: undefined,
-            animation: "in",
+            animation: "out",
             show: false
         }
     }
@@ -133,23 +149,5 @@ class Picker extends React.Component {
         )
     }
 }
-
-Picker.propTypes = {
-    col: React.PropTypes.number,
-    data: React.PropTypes.array,
-    value: React.PropTypes.array,
-    cancelText: React.PropTypes.string,
-    title: React.PropTypes.string,
-    confirmText: React.PropTypes.string,
-    cascade: React.PropTypes.bool,
-    onChange: React.PropTypes.func
-};
-
-Picker.defaultProps = {
-    col: 1,
-    cancelText: "取消",
-    confirmText: "确定",
-    cascade: true
-};
 
 export default Picker

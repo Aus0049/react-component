@@ -6,6 +6,17 @@ import PickerColumn from './PickerColumn'
 
 // 选择器组件
 class PickerView extends React.Component {
+    static defaultProps = {
+        col: 1,
+        cascade: true
+    };
+    static propTypes = {
+        col: React.PropTypes.number,
+        data: React.PropTypes.array,
+        value: React.PropTypes.array,
+        cascade: React.PropTypes.bool,
+        onChange: React.PropTypes.func
+    };
     constructor (props) {
         super(props);
         this.state = {
@@ -133,18 +144,5 @@ class PickerView extends React.Component {
         )
     }
 }
-
-PickerView.propTypes = {
-    col: React.PropTypes.number,
-    data: React.PropTypes.array,
-    value: React.PropTypes.array,
-    cascade: React.PropTypes.bool,
-    onChange: React.PropTypes.func
-};
-
-PickerView.defaultProps = {
-    col: 1,
-    cascade: true
-};
 
 export default PickerView
