@@ -10,7 +10,7 @@ class PickerColumn extends React.Component {
     static propTypes = {
         index: React.PropTypes.number,
         data: React.PropTypes.array,
-        value: React.PropTypes.array,
+        value: React.PropTypes.string,
         onValueChange: React.PropTypes.func
     };
     componentDidMount () {
