@@ -22,12 +22,14 @@ class Picker extends React.Component {
         title: React.PropTypes.string,
         confirmText: React.PropTypes.string,
         cascade: React.PropTypes.bool,
-        onChange: React.PropTypes.func
+        onChange: React.PropTypes.func,
+        onCancel: React.PropTypes.func
     };
     constructor (props) {
         super(props);
         this.state = {
             defaultValue: undefined,
+            selectedValue: undefined,
             animation: "out",
             show: false
         }
@@ -36,7 +38,8 @@ class Picker extends React.Component {
         // picker 当做一个非受控组件
         let {value} = this.props;
         this.setState({
-            defaultValue: value
+            defaultValue: value,
+            selectedValue: value
         });
     }
     handleClickOpen (e) {
@@ -82,6 +85,20 @@ class Picker extends React.Component {
             onPickerChange(newValue);
         }
     }
+    handleCancel () {
+        const {defaultValue} = this.state;
+        const {onCancel} = this.props;
+
+        this.handleClickClose();
+
+        this.setState({
+            selectedValue: defaultValue
+        });
+
+        if(onCancel){
+            onCancel();
+        }
+    }
     handleConfirm () {
         // 点击确认之后的回调
         const {defaultValue} = this.state;
@@ -98,13 +115,13 @@ class Picker extends React.Component {
         if(show){
             return <div>
                 <Touchable
-                    onPress={this.handleClickClose.bind(this)}>
+                    onPress={this.handleCancel.bind(this)}>
                     <div className={classNames(['zby-picker-popup-mask', {'hide': animation == "out"}])}></div>
                 </Touchable>
                 <div className={classNames(['zby-picker-popup-wrap', {'popup': animation == "in"}])}>
                     <div className="zby-picker-popup-header">
                         <Touchable
-                            onPress={this.handleClickClose.bind(this)}>
+                            onPress={this.handleCancel.bind(this)}>
                             <span className="zby-picker-popup-item zby-header-left">{cancelText}</span>
                         </Touchable>
                         <span className="zby-picker-popup-item zby-header-title">{title}</span>
