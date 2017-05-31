@@ -7,6 +7,12 @@ import classNames from 'classnames'
 
 // picker-view 中的列
 class PickerColumn extends React.Component {
+    static propTypes = {
+        index: React.PropTypes.number,
+        data: React.PropTypes.array,
+        value: React.PropTypes.array,
+        onValueChange: React.PropTypes.func
+    };
     componentDidMount () {
         // 绑定事件
         this.bindScrollEvent();
