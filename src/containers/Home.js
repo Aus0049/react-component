@@ -14,6 +14,7 @@ class Home extends React.Component {
                 <List>
                     <Item subtitle="Button" icon="horizontal" onClick={()=>{Tools.linkTo("/data-entry/button")}}>按钮</Item>
                     <Item subtitle="Switch" icon="horizontal" onClick={()=>{Tools.linkTo("/data-entry/switch")}}>滑动按钮</Item>
+                    <Item subtitle="DatePicker" icon="horizontal" onClick={()=>{Tools.linkTo("/data-entry/date-picker")}}>日期选择器</Item>
                     <Item subtitle="Picker" icon="horizontal" onClick={()=>{Tools.linkTo("/data-entry/picker")}}>选择器</Item>
                     <Item subtitle="PickerView" icon="horizontal" onClick={()=>{Tools.linkTo("/data-entry/picker-view")}}>选择器</Item>
                 </List>

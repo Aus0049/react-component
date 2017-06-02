@@ -3,6 +3,7 @@ import Layout from '../layout/index'
 import Home from '../containers/Home'
 import Button from '../containers/DataEntry/ButtonPage'
 import Switch from '../containers/DataEntry/SwitchPage'
+import DatePicker from '../containers/DataEntry/DatePickerPage'
 import Picker from '../containers/DataEntry/PickerPage'
 import PickerView from '../containers/DataEntry/PickerViewPage'
 import List from '../containers/DataDisplay/ListPage'
@@ -16,6 +17,7 @@ export const createRoutes = () => ({
         {path: '/data-entry', childRoutes: [
             {path: 'button', component: Button},
             {path: 'switch', component: Switch},
+            {path: 'date-picker', component: DatePicker},
             {path: 'picker', component: Picker},
             {path: 'picker-view', component: PickerView},
         ]},
