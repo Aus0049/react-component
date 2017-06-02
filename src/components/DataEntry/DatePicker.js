@@ -7,6 +7,12 @@ import PickerView from './PickerView'
 import Touchable from 'rc-touchable'
 import moment from 'moment'
 
+const monthArray = [
+    {label: "1月", value: 0},{label: "2月", value: 1},{label: "3月", value: 2},{label: "4月", value: 3},
+    {label: "5月", value: 4},{label: "6月", value: 5},{label: "7月", value: 6},{label: "8月", value: 7},
+    {label: "9月", value: 8},{label: "10月", value: 9},{label: "11月", value: 10},{label: "12月", value: 11}
+];
+
 // 日期时间选择器
 class DatePicker extends React.Component {
     static defaultProps = {
@@ -89,9 +95,29 @@ class DatePicker extends React.Component {
 
         if (this.props.onChange) this.props.onChange(defaultValue);
     }
+    checkDaysByYearMonth (value) {
+        const month = value.month();
+        // 判断大小月
+        if([1,3,5,7,8,10,12].indexOf(month) >= 0){
+            // 大月 31天
+            return 31;
+        } else if ([4,6,9,11].indexOf(month) >= 0) {
+            // 小月 30天
+            return 31;
+        } else {
+            // 2月 判断是否闰年
+            if(moment([value.year()]).isLeapYear()){
+                // 闰年 29天
+                return 29;
+            }
+
+            return 28;
+        }
+    }
     getDateByMode (mode) {
         let result = [];
         let todayMoment = moment();
+        let {value} = this.props;
 
         switch (mode) {
             case "date":
@@ -103,8 +129,16 @@ class DatePicker extends React.Component {
                 for(let i = currentYear - 5; i < currentYear + 5; i++){
                     yearArray.push({label: i + "年", value: i});
                 }
-                console.log(yearArray);
 
+                // 准备日 根据值判断当月有多少天
+                const daysMax = this.checkDaysByYearMonth(value);
+
+                let dayArray = [];
+                for(let i = 1; i < daysMax + 1; i++){
+                    dayArray.push({label: i + "日", value: i});
+                }
+
+                result = [yearArray, monthArray, dayArray];
                 break;
         }
 
@@ -116,6 +150,7 @@ class DatePicker extends React.Component {
         const {mode} = this.props;
 
         const data = this.getDateByMode(mode);
+        console.log(data);
     }
     getPopupDOM () {
         const {show, animation} = this.state;
