@@ -59,12 +59,21 @@ a {
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 
+  // 下边线
+  div:not(:last-child) {
+    .zby-list-item {
+      .zby-item-box {
+        border-bottom: 1px solid #ccc;
+      }
+    }
+  }
+
   .zby-list-item {
     padding: 0 40px;
 
     &:last-of-type {
       .zby-item-box {
-        border: none;
+        border-bottom: none;
       }
     }
 
@@ -75,10 +84,10 @@ a {
     .zby-item-box {
       display: -webkit-flex;
       display: flex;
-      border-bottom: 1px solid #ccc;
       font-size: 32px;
       color: #333;
       -webkit-box-sizing: border-box;
+      border-bottom: 1px solid #ccc;
       box-sizing: border-box;
 
       &.with-icon {
