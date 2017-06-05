@@ -13,16 +13,27 @@ const monthArray = [
     {label: "9月", value: "8"},{label: "10月", value: "9"},{label: "11月", value: "10"},{label: "12月", value: "11"}
 ];
 
+const hourArray = [
+    {label: "0点", value: "0"},{label: "1点", value: "1"},{label: "2点", value: "2"},{label: "3点", value: "3"},
+    {label: "4点", value: "4"},{label: "5点", value: "5"},{label: "6点", value: "6"},{label: "7点", value: "7"},
+    {label: "8点", value: "8"},{label: "9点", value: "9"},{label: "10点", value: "10"},{label: "11点", value: "11"},
+    {label: "12点", value: "12"},{label: "13点", value: "13"},{label: "14点", value: "14"},{label: "15点", value: "15"},
+    {label: "16点", value: "16"},{label: "17点", value: "17"},{label: "18点", value: "18"},{label: "19点", value: "19"},
+    {label: "20点", value: "20"},{label: "21点", value: "21"},{label: "22点", value: "22"},{label: "23点", value: "23"}
+];
+
 // 日期时间选择器
 class DatePicker extends React.Component {
     static defaultProps = {
         mode: "date",
-        value: moment()
+        value: moment(),
+        timeStep: 5
     };
     static propTypes = {
         mode: React.PropTypes.string, // 模式：枚举类型：日期date 时间time 日期时间datetime 年year 月moth 默认是date
         value: React.PropTypes.object, // moment类型
         title: React.PropTypes.string, // 标题
+        timeStep: React.PropTypes.number, // time模式下 时间的步长 值为60的约数如1，2，3，4，5，6，10，12，15，20，30，60
     };
     constructor (props) {
         super(props);
@@ -55,9 +66,16 @@ class DatePicker extends React.Component {
                     newValue[2] = newMaxDate + "";
                 }
 
-                let newMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2])]);
+                let newDateMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2])]);
                 this.setState({
-                    selectedValue: newMoment
+                    selectedValue: newDateMoment
+                });
+                break;
+            case "time":
+                // 时间切换
+                let newTimeMoment = moment(`${newValue[0]}:${newValue[1]}`, "HH:mm");
+                this.setState({
+                    selectedValue: newTimeMoment
                 });
                 break;
         }
@@ -167,6 +185,20 @@ class DatePicker extends React.Component {
 
                 result = [yearArray, monthArray, dayArray];
                 break;
+            case "time":
+                // 时间其实是一个固定的数组 和一个根据步长算出来的数组
+                const {timeStep} = this.props;
+
+                let timeArray = [];
+
+                const length = 60 / timeStep;
+
+                for(let i = 0; i < length; i++){
+                    timeArray.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                }
+
+                result = [hourArray, timeArray];
+                break;
         }
 
         return result;
@@ -185,6 +217,14 @@ class DatePicker extends React.Component {
                     col={3}
                     data={data}
                     value={[selectedValue.year() + '', selectedValue.month() + '', selectedValue.date() + '']}
+                    cascade={false}
+                    onChange={this.handlePickerViewChange.bind(this)}>
+                </PickerView>;
+            } else if (mode == "time") {
+                return <PickerView
+                    col={2}
+                    data={data}
+                    value={[selectedValue.hour() + '', selectedValue.minute() + '']}
                     cascade={false}
                     onChange={this.handlePickerViewChange.bind(this)}>
                 </PickerView>;
