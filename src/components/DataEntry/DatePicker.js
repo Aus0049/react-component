@@ -49,10 +49,10 @@ class DatePicker extends React.Component {
             case "date":
                 // 检验新日期是否合法
                 // 年月一定合法 主要就是检验日
-                const newMaxDate = this.checkDaysByYearMonth(moment(newValue[0] + "-" + (newValue[1] + 1), "YYYY-MM"));
+                const newMaxDate = this.checkDaysByYearMonth(moment(newValue[0] + "-" + (Number.parseInt(newValue[1]) + 1), "YYYY-MM"));
 
-                if(newValue[3] > newMaxDate){
-                    newValue[3] = newMaxDate + "";
+                if(newValue[2] > newMaxDate){
+                    newValue[2] = newMaxDate + "";
                 }
 
                 let newMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2])]);
