@@ -78,7 +78,7 @@ class Picker extends React.Component {
         let {onPickerChange} = this.props;
 
         this.setState({
-            defaultValue: newValue
+            selectedValue: newValue
         });
 
         if(onPickerChange){
@@ -101,11 +101,15 @@ class Picker extends React.Component {
     }
     handleConfirm () {
         // 点击确认之后的回调
-        const {defaultValue} = this.state;
+        const {selectedValue} = this.state;
 
         this.handleClickClose();
 
-        if (this.props.onChange) this.props.onChange(defaultValue);
+        this.setState({
+           defaultChecked: selectedValue
+        });
+
+        if (this.props.onChange) this.props.onChange(selectedValue);
     }
     getPopupDOM () {
         const {show, animation} = this.state;
@@ -140,13 +144,13 @@ class Picker extends React.Component {
     }
     getPickerView () {
         const {col, data, cascade} = this.props;
-        const {defaultValue, show} = this.state;
+        const {selectedValue, show} = this.state;
 
-        if(defaultValue != undefined && show){
+        if(selectedValue != undefined && show){
             return <PickerView
                 col={col}
                 data={data}
-                value={defaultValue}
+                value={selectedValue}
                 cascade={cascade}
                 onChange={this.handlePickerViewChange.bind(this)}>
             </PickerView>;
