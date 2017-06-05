@@ -17,6 +17,13 @@ class DatePickerPage extends React.Component {
             dateValue: moment()
         }
     }
+    handleChange (newValue) {
+        console.log("value change");
+        console.log(newValue);
+        this.setState({
+            dateValue: newValue
+        });
+    }
     render () {
         const {dateValue} = this.state;
 
@@ -33,7 +40,8 @@ class DatePickerPage extends React.Component {
                     <DatePicker
                         mode="date"
                         value={dateValue}
-                        title="选择日期">
+                        title="选择日期"
+                        onChange={this.handleChange.bind(this)}>
                         <Item subtitle={dateValue.format('YYYY-MM-DD')} icon="horizontal">级联选择</Item>
                     </DatePicker>
                 </List>

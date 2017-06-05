@@ -110,11 +110,16 @@ class DatePicker extends React.Component {
     }
     handleConfirm () {
         // 点击确认之后的回调
-        const {defaultValue} = this.state;
+        const {selectedValue} = this.state;
 
         this.handleClickClose();
 
-        if (this.props.onChange) this.props.onChange(defaultValue);
+        // 更新默认值
+        this.setState({
+            defaultValue: selectedValue
+        });
+
+        if (this.props.onChange) this.props.onChange(selectedValue);
     }
     checkDaysByYearMonth (value) {
         const month = value.month();
