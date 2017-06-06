@@ -175,32 +175,6 @@ class DatePicker extends React.Component {
             return 28;
         }
     }
-    filterValueByType (array, reference, type, position) {
-        // 过滤数组
-        let standard;
-
-        if(position == "YYYY"){
-            standard = reference.year();
-        } else if (position == "MM") {
-            standard = reference.month();
-        } else if (position == "DD") {
-            standard = reference.date();
-        } else if (position == "HH") {
-            standard = reference.hour();
-        } else if (position == "mm") {
-            standard = reference.minute();
-        }
-
-        return array.filter((item) => {
-            if(type == "min"){
-                if(item >= standard) return true;
-            } else if (type == "max") {
-                if(item <= standard) return true;
-            }
-
-            return false;
-        });
-    }
     getDateByMode (mode) {
         let result = [];
         let todayMoment = moment();
@@ -212,10 +186,24 @@ class DatePicker extends React.Component {
                 // 只有日期
                 // 选取今年的前后5年
                 let yearArray = [];
-                let currentYear = Number.parseInt(todayMoment.format("YYYY"));
+                let currentYear = todayMoment.year();
 
                 for(let i = currentYear - 5; i < currentYear + 5; i++){
-                    yearArray.push({label: i + "年", value: i + ''});
+
+                    if(maxValue && !minValue){
+                        // 上限
+                        if(i <= maxValue.year()){
+                            yearArray.push({label: i + "年", value: i + ''});
+                        }
+                    } else if (!maxValue && minValue) {
+                        if(i >= minValue.year()){
+                            yearArray.push({label: i + "年", value: i + ''});
+                        }
+                    } else if (maxValue && minValue) {
+                        if(i <= maxValue.year() && i >= minValue.year()){
+                            yearArray.push({label: i + "年", value: i + ''});
+                        }
+                    }
                 }
 
                 // 准备日 根据值判断当月有多少天
@@ -225,6 +213,9 @@ class DatePicker extends React.Component {
                 for(let i = 1; i < daysMax + 1; i++){
                     dayArray.push({label: i + "日", value: i + ''});
                 }
+
+                // 根据当前选中值 判断跟最大最小值哪一位需要过滤
+                // this.checkPositionByMaxAndMin(selectedValue, maxValue, minValue, "date");
 
                 result = [yearArray, monthArray, dayArray];
                 break;
