@@ -34,6 +34,8 @@ class DatePicker extends React.Component {
         value: React.PropTypes.object, // moment类型
         title: React.PropTypes.string, // 标题
         timeStep: React.PropTypes.number, // time模式下 时间的步长 值为60的约数如1，2，3，4，5，6，10，12，15，20，30，60
+        maxValue: React.PropTypes.object, // 最大值 <=
+        minValue: React.PropTypes.object // 最小值 >=
     };
     constructor (props) {
         super(props);
@@ -173,10 +175,37 @@ class DatePicker extends React.Component {
             return 28;
         }
     }
+    filterValueByType (array, reference, type, position) {
+        // 过滤数组
+        let standard;
+
+        if(position == "YYYY"){
+            standard = reference.year();
+        } else if (position == "MM") {
+            standard = reference.month();
+        } else if (position == "DD") {
+            standard = reference.date();
+        } else if (position == "HH") {
+            standard = reference.hour();
+        } else if (position == "mm") {
+            standard = reference.minute();
+        }
+
+        return array.filter((item) => {
+            if(type == "min"){
+                if(item >= standard) return true;
+            } else if (type == "max") {
+                if(item <= standard) return true;
+            }
+
+            return false;
+        });
+    }
     getDateByMode (mode) {
         let result = [];
         let todayMoment = moment();
         let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
 
         switch (mode) {
             case "date":
