@@ -15,7 +15,8 @@ class DatePickerPage extends React.Component {
         super(props);
         this.state = {
             dateValue: moment(),
-            timeValue: moment("12:10", "HH:mm")
+            timeValue: moment("12:10", "HH:mm"),
+            datetimeValue: moment()
         }
     }
     handleChange (type, newValue) {
@@ -29,10 +30,14 @@ class DatePickerPage extends React.Component {
             this.setState({
                 timeValue: newValue
             });
+        } else if (type == "datetime") {
+            this.setState({
+                datetimeValue: newValue
+            });
         }
     }
     render () {
-        const {dateValue, timeValue} = this.state;
+        const {dateValue, timeValue, datetimeValue} = this.state;
 
         return (
             <div className="page date-picker">
@@ -58,6 +63,13 @@ class DatePickerPage extends React.Component {
                         timeStep={10}
                         onChange={this.handleChange.bind(this, "time")}>
                         <Item subtitle={timeValue.format('HH:mm')} icon="horizontal">时间选择</Item>
+                    </DatePicker>
+                    <DatePicker
+                        mode="datetime"
+                        value={datetimeValue}
+                        title="选择日期时间"
+                        onChange={this.handleChange.bind(this, "datetime")}>
+                        <Item subtitle={datetimeValue.format('YYYY-MM-DD HH:mm')} icon="horizontal">日期时间选择</Item>
                     </DatePicker>
                 </List>
             </div>

@@ -78,6 +78,20 @@ class DatePicker extends React.Component {
                     selectedValue: newTimeMoment
                 });
                 break;
+            case "datetime":
+                const datetimeMaxDate = this.checkDaysByYearMonth(moment(newValue[0] + "-" + (Number.parseInt(newValue[1]) + 1), "YYYY-MM"));
+
+                if(newValue[2] > datetimeMaxDate){
+                    newValue[2] = datetimeMaxDate + "";
+                }
+
+                let newDateTimeMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2]), Number.parseInt(newValue[3]), Number.parseInt(newValue[4])]);
+                this.setState({
+                    selectedValue: newDateTimeMoment
+                });
+                break;
+
+                break;
         }
     }
     handleClickOpen (e) {
@@ -199,6 +213,31 @@ class DatePicker extends React.Component {
 
                 result = [hourArray, timeArray];
                 break;
+            case "datetime":
+                // 时间日期选择器
+                let yearsArray = [];
+                let recentYear = Number.parseInt(todayMoment.format("YYYY"));
+
+                for(let i = recentYear - 5; i < recentYear + 5; i++){
+                    yearsArray.push({label: i + "年", value: i + ''});
+                }
+
+                // 准备日 根据值判断当月有多少天
+                const dayMax = this.checkDaysByYearMonth(selectedValue);
+
+                let daysArray = [];
+                for(let i = 1; i < dayMax + 1; i++){
+                    daysArray.push({label: i + "日", value: i + ''});
+                }
+
+                let minutesArray = [];
+
+                for(let i = 0; i < 60; i++){
+                    minutesArray.push({label:  i + "分", value: i + ""});
+                }
+
+                result = [yearsArray, monthArray, daysArray, hourArray, minutesArray];
+                break;
         }
 
         return result;
@@ -225,6 +264,14 @@ class DatePicker extends React.Component {
                     col={2}
                     data={data}
                     value={[selectedValue.hour() + '', selectedValue.minute() + '']}
+                    cascade={false}
+                    onChange={this.handlePickerViewChange.bind(this)}>
+                </PickerView>;
+            } else if (mode == "datetime") {
+                return <PickerView
+                    col={5}
+                    data={data}
+                    value={[selectedValue.year() + '', selectedValue.month() + '', selectedValue.date() + '', selectedValue.hour() + '', selectedValue.minute() + '']}
                     cascade={false}
                     onChange={this.handlePickerViewChange.bind(this)}>
                 </PickerView>;
