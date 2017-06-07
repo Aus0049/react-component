@@ -175,49 +175,118 @@ class DatePicker extends React.Component {
             return 28;
         }
     }
+    getYearArray () {
+        // 获取年数组
+        let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+
+        let yearArray = [];
+        let currentYear = selectedValue.year();
+
+        for(let i = currentYear - 5; i < currentYear + 5; i++){
+
+            if(maxValue && !minValue){
+                // 上限
+                if(i <= maxValue.year()){
+                    yearArray.push({label: i + "年", value: i + ''});
+                }
+            } else if (!maxValue && minValue) {
+                if(i >= minValue.year()){
+                    yearArray.push({label: i + "年", value: i + ''});
+                }
+            } else if (maxValue && minValue) {
+                if(i <= maxValue.year() && i >= minValue.year()){
+                    yearArray.push({label: i + "年", value: i + ''});
+                }
+            }
+        }
+
+        return yearArray;
+    }
+    getMonthArray () {
+        let result = monthArray.concat();
+        let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+
+        if(maxValue && !minValue){
+            // 上限
+           if(selectedValue.year() == maxValue.year()){
+               result = monthArray.filter((item) => {
+                   if(maxValue.month() >= Number.parseInt(item.value)) return true;
+               });
+           }
+        } else if (!maxValue && minValue) {
+            if(selectedValue.year() == minValue.year()){
+                result = monthArray.filter((item) => {
+                    if(minValue.month() <= Number.parseInt(item.value)) return true;
+                });
+            }
+        } else if (maxValue && minValue) {
+            result = monthArray.filter((item) => {
+                if(maxValue.month() >= Number.parseInt(item.value) && Number.parseInt(item.value) <= minValue.month()) return true;
+            });
+        }
+
+        return result;
+    }
+    getDateArray () {
+        let dayArray = [];
+        let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+
+        const daysMax = this.checkDaysByYearMonth(selectedValue);
+
+        for(let i = 1; i < daysMax + 1; i++){
+            if(maxValue && !minValue){
+                // 上限
+                if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
+                    if(i <= maxValue.date()){
+                        dayArray.push({label: i + "日", value: i + ''});
+                    }
+                }
+            } else if (!maxValue && minValue) {
+                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
+                    if(i >= maxValue.date()){
+                        dayArray.push({label: i + "日", value: i + ''});
+                    }
+                }
+            } else if (maxValue && minValue) {
+                if((selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()) || (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month())){
+                    if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
+                        if(i <= maxValue.date()){
+                            dayArray.push({label: i + "日", value: i + ''});
+                        }
+                    } else {
+                        if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
+                            if(i >= maxValue.date()){
+                                dayArray.push({label: i + "日", value: i + ''});
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return dayArray;
+    }
     getDateByMode (mode) {
         let result = [];
         let todayMoment = moment();
         let {selectedValue} = this.state;
-        const {maxValue, minValue} = this.props;
 
         switch (mode) {
             case "date":
                 // 只有日期
                 // 选取今年的前后5年
-                let yearArray = [];
-                let currentYear = todayMoment.year();
+                const dateYearArray = this.getYearArray();
 
-                for(let i = currentYear - 5; i < currentYear + 5; i++){
-
-                    if(maxValue && !minValue){
-                        // 上限
-                        if(i <= maxValue.year()){
-                            yearArray.push({label: i + "年", value: i + ''});
-                        }
-                    } else if (!maxValue && minValue) {
-                        if(i >= minValue.year()){
-                            yearArray.push({label: i + "年", value: i + ''});
-                        }
-                    } else if (maxValue && minValue) {
-                        if(i <= maxValue.year() && i >= minValue.year()){
-                            yearArray.push({label: i + "年", value: i + ''});
-                        }
-                    }
-                }
+                // 判断月 只有年在限制的时候 才限制月
+                const dateMonthArray = this.getMonthArray();
 
                 // 准备日 根据值判断当月有多少天
-                const daysMax = this.checkDaysByYearMonth(selectedValue);
+                const dateDateArray = this.getDateArray();
 
-                let dayArray = [];
-                for(let i = 1; i < daysMax + 1; i++){
-                    dayArray.push({label: i + "日", value: i + ''});
-                }
-
-                // 根据当前选中值 判断跟最大最小值哪一位需要过滤
-                // this.checkPositionByMaxAndMin(selectedValue, maxValue, minValue, "date");
-
-                result = [yearArray, monthArray, dayArray];
+                result = [dateYearArray, dateMonthArray, dateDateArray];
                 break;
             case "time":
                 // 时间其实是一个固定的数组 和一个根据步长算出来的数组
