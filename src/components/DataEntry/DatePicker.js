@@ -222,9 +222,11 @@ class DatePicker extends React.Component {
                 });
             }
         } else if (maxValue && minValue) {
-            result = monthArray.filter((item) => {
-                if(maxValue.month() >= Number.parseInt(item.value) && Number.parseInt(item.value) <= minValue.month()) return true;
-            });
+            if(selectedValue.year() == minValue.year() || selectedValue.year() == maxValue.year()){
+                result = monthArray.filter((item) => {
+                    if(maxValue.month() >= Number.parseInt(item.value) && Number.parseInt(item.value) <= minValue.month()) return true;
+                });
+            }
         }
 
         return result;

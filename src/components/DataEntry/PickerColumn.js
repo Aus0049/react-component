@@ -65,9 +65,13 @@ class PickerColumn extends React.Component {
             currentIndex = floor;
         }
 
-        const selectedValue = data[currentIndex].value;
+        let selectedValue;
 
-        if(selectedValue != value){
+        if(data[currentIndex]) {
+            selectedValue = data[currentIndex].value;
+        }
+
+        if(selectedValue && selectedValue != value){
             // 值发生变化 通知父组件
             onValueChange(selectedValue, index);
         }
