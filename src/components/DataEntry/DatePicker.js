@@ -27,7 +27,7 @@ class DatePicker extends React.Component {
     static defaultProps = {
         mode: "date",
         value: moment(),
-        timeStep: 5
+        timeStep: 1
     };
     static propTypes = {
         mode: React.PropTypes.string, // 模式：枚举类型：日期date 时间time 日期时间datetime 年year 月moth 默认是date
@@ -62,11 +62,7 @@ class DatePicker extends React.Component {
             case "date":
                 // 检验新日期是否合法
                 // 年月一定合法 主要就是检验日
-                const newMaxDate = this.checkDaysByYearMonth(moment(newValue[0] + "-" + (Number.parseInt(newValue[1]) + 1), "YYYY-MM"));
-
-                if(newValue[2] > newMaxDate){
-                    newValue[2] = newMaxDate + "";
-                }
+                newValue = this.checkNewValue(newValue, ["date"]);
 
                 let newDateMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2])]);
                 this.setState({
@@ -155,6 +151,105 @@ class DatePicker extends React.Component {
 
         if (this.props.onChange) this.props.onChange(selectedValue);
     }
+    resetPosition (array, newValue, index) {
+        // 如果比最后一个值大 去最后一个 否则 取第一个
+        // 取第一个
+        if(Number.parseInt(newValue[index]) > Number.parseInt(array[array.length - 1].value)){
+            newValue[index] = array[array.length - 1].value;
+        } else {
+            newValue[index] = array[0].value;
+        }
+
+        return newValue;
+    }
+    checkNewValue (newValue, mode) {
+        // 逐项检查新日期各项 是否在限制条件内
+        // 从月份开始检查
+        const {maxValue, minValue} = this.props;
+
+        if(mode.indexOf("date") >= 0){
+            if(maxValue && !minValue){
+                // 检查月
+                if(Number.parseInt(newValue[0]) == maxValue.year()){
+                    if(Number.parseInt(newValue[1]) > maxValue.month()) {
+                        const array = this.getMonthArray(newValue);
+
+                        newValue = this.resetPosition(array, newValue, 1);
+                    }
+                }
+                // 检查日
+                if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()) {
+                    if(Number.parseInt(newValue[2]) > maxValue.date()) {
+                        const array = this.getDateArray(newValue);
+
+                        newValue = this.resetPosition(array, newValue, 2);
+                    }
+                }
+            } else if (!maxValue && minValue) {
+                if(Number.parseInt(newValue[0]) == minValue.year()){
+                    if(Number.parseInt(newValue[1]) < minValue.month()) {
+                        const array = this.getMonthArray(newValue);
+
+                        newValue = this.resetPosition(array, newValue, 1);
+                    }
+                }
+                if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()) {
+                    if(Number.parseInt(newValue[2]) < minValue.date()) {
+                        const array = this.getDateArray(newValue);
+
+                        newValue = this.resetPosition(array, newValue, 2);
+                    }
+                }
+            } else if (maxValue && minValue) {
+                if(Number.parseInt(newValue[0]) == minValue.year() || Number.parseInt(newValue[0]) == maxValue.year()){
+                    if(Number.parseInt(newValue[0]) == maxValue.year()){
+                        if(Number.parseInt(newValue[1]) > maxValue.month()) {
+                            const array = this.getMonthArray(newValue);
+
+                            newValue = this.resetPosition(array, newValue, 1);
+                        }
+                    } else if(Number.parseInt(newValue[0]) == minValue.year()){
+                        if(Number.parseInt(newValue[1]) < minValue.month()) {
+                            const array = this.getMonthArray(newValue);
+
+                            newValue = this.resetPosition(array, newValue, 1);
+                        }
+                    } else {
+                        if(Number.parseInt(newValue[1]) < minValue.month() || Number.parseInt(newValue[1]) > maxValue.month()) {
+                            const array = this.getMonthArray(newValue);
+
+                            newValue = this.resetPosition(array, newValue, 1);
+                        }
+                    }
+                }
+
+                if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() ||
+                    Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()){
+                    if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month()){
+                        if(Number.parseInt(newValue[2]) < minValue.date()) {
+                            const array = this.getDateArray(newValue);
+
+                            newValue = this.resetPosition(array, newValue, 2);
+                        }
+                    } else if (Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()) {
+                        if(Number.parseInt(newValue[2]) > maxValue.date()) {
+                            const array = this.getDateArray(newValue);
+
+                            newValue = this.resetPosition(array, newValue, 2);
+                        }
+                    } else {
+                        if(Number.parseInt(newValue[2]) > maxValue.date() || Number.parseInt(newValue[2]) < minValue.date()) {
+                            const array = this.getDateArray(newValue);
+
+                            newValue = this.resetPosition(array, newValue, 2);
+                        }
+                    }
+                }
+            }
+        }
+
+        return newValue;
+    }
     checkDaysByYearMonth (value) {
         const month = value.month();
 
@@ -203,10 +298,14 @@ class DatePicker extends React.Component {
 
         return yearArray;
     }
-    getMonthArray () {
+    getMonthArray (newValue) {
         let result = monthArray.concat();
         let {selectedValue} = this.state;
         const {maxValue, minValue} = this.props;
+
+        if(newValue){
+            selectedValue = moment(newValue);
+        }
 
         if(maxValue && !minValue){
             // 上限
@@ -241,10 +340,14 @@ class DatePicker extends React.Component {
 
         return result;
     }
-    getDateArray () {
+    getDateArray (newValue) {
         let dayArray = [];
         let {selectedValue} = this.state;
         const {maxValue, minValue} = this.props;
+
+        if(newValue){
+            selectedValue = moment(newValue);
+        }
 
         const daysMax = this.checkDaysByYearMonth(selectedValue);
 
@@ -291,28 +394,63 @@ class DatePicker extends React.Component {
 
         return dayArray;
     }
-    getHourArray () {
+    getHourArray (connectDate) {
         let result = hourArray.concat();
+        let {selectedValue} = this.state;
         const {maxValue, minValue} = this.props;
 
-        if(maxValue && !minValue){
-            // 上限
-            result = hourArray.filter((item) => {
-                if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-            });
-        } else if (!maxValue && minValue) {
-            result = hourArray.filter((item) => {
-                if(minValue.hour() <= Number.parseInt(item.value)) return true;
-            });
-        } else if (maxValue && minValue) {
-            result = hourArray.filter((item) => {
-                if(maxValue.hour() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.hour()) return true;
-            });
+        if(connectDate) {
+            if(maxValue && !minValue){
+                // 上限 年月日相等
+                if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
+                    result = hourArray.filter((item) => {
+                        if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+                    });
+                }
+            } else if (!maxValue && minValue) {
+                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()){
+                    result = hourArray.filter((item) => {
+                        if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+                    });
+                }
+            } else if (maxValue && minValue) {
+                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() ||
+                    selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
+                    if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()) {
+                        result = hourArray.filter((item) => {
+                            if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+                        });
+                    } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()) {
+                        result = hourArray.filter((item) => {
+                            if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+                        });
+                    } else {
+                        result = hourArray.filter((item) => {
+                            if(maxValue.hour() >= Number.parseInt(item.value) && minValue.hour() <= Number.parseInt(item.value)) return true;
+                        });
+                    }
+                }
+            }
+        } else {
+            if(maxValue && !minValue){
+                // 上限
+                result = hourArray.filter((item) => {
+                    if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+                });
+            } else if (!maxValue && minValue) {
+                result = hourArray.filter((item) => {
+                    if(minValue.hour() <= Number.parseInt(item.value)) return true;
+                });
+            } else if (maxValue && minValue) {
+                result = hourArray.filter((item) => {
+                    if(maxValue.hour() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.hour()) return true;
+                });
+            }
         }
 
         return result;
     }
-    getMinuteArray () {
+    getMinuteArray (connectDate) {
         let result = [];
         let {selectedValue} = this.state;
         const {maxValue, minValue} = this.props;
@@ -320,40 +458,80 @@ class DatePicker extends React.Component {
         const length = 60 / timeStep;
 
         for(let i = 0; i < length; i++){
-            if(maxValue && !minValue){
-                // 上限
-                if(selectedValue.hour() == maxValue.hour()){
-                    if(timeStep * i <= maxValue.minute()){
-                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                    }
-                } else {
-                    result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                }
-            } else if (!maxValue && minValue) {
-                if(selectedValue.hour() == minValue.hour()){
-                    if(timeStep * i >= maxValue.minute()){
-                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                    }
-                } else {
-                    result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                }
-            } else if (maxValue && minValue) {
-                if(selectedValue.hour() == maxValue.hour() || selectedValue.hour() == minValue.hour()){
-                    if(selectedValue.hour() == maxValue.hour()){
+            if(connectDate) {
+                if(maxValue && !minValue){
+                    // 上限
+                    if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
                         if(timeStep * i <= maxValue.minute()){
                             result.push({label: timeStep * i + "分", value: timeStep * i + ""});
                         }
-                    } else if (selectedValue.hour() == minValue.hour()) {
+                    } else {
+                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                    }
+                } else if (!maxValue && minValue) {
+                    if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
                         if(timeStep * i >= minValue.minute()){
                             result.push({label: timeStep * i + "分", value: timeStep * i + ""});
                         }
                     } else {
-                        if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
+                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                    }
+                } else if (maxValue && minValue) {
+                    if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour() ||
+                        selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
+                        if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
+                            if(timeStep * i <= maxValue.minute()){
+                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                            }
+                        } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()) {
+                            if(timeStep * i >= minValue.minute()){
+                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                            }
+                        } else {
+                            if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
+                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                            }
+                        }
+                    } else {
+                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                    }
+                }
+            } else {
+                if(maxValue && !minValue){
+                    // 上限
+                    if(selectedValue.hour() == maxValue.hour()){
+                        if(timeStep * i <= maxValue.minute()){
                             result.push({label: timeStep * i + "分", value: timeStep * i + ""});
                         }
+                    } else {
+                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
                     }
-                } else {
-                    result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                } else if (!maxValue && minValue) {
+                    if(selectedValue.hour() == minValue.hour()){
+                        if(timeStep * i >= minValue.minute()){
+                            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                        }
+                    } else {
+                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                    }
+                } else if (maxValue && minValue) {
+                    if(selectedValue.hour() == maxValue.hour() || selectedValue.hour() == minValue.hour()){
+                        if(selectedValue.hour() == maxValue.hour()){
+                            if(timeStep * i <= maxValue.minute()){
+                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                            }
+                        } else if (selectedValue.hour() == minValue.hour()) {
+                            if(timeStep * i >= minValue.minute()){
+                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                            }
+                        } else {
+                            if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
+                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                            }
+                        }
+                    } else {
+                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                    }
                 }
             }
         }
@@ -362,8 +540,6 @@ class DatePicker extends React.Component {
     }
     getDateByMode (mode) {
         let result = [];
-        let todayMoment = moment();
-        let {selectedValue} = this.state;
 
         switch (mode) {
             case "date":
@@ -381,7 +557,6 @@ class DatePicker extends React.Component {
                 break;
             case "time":
 
-
                 const timeHourArray = this.getHourArray();
 
                 const timeMinuteArray = this.getMinuteArray();
@@ -390,28 +565,17 @@ class DatePicker extends React.Component {
                 break;
             case "datetime":
                 // 时间日期选择器
-                let yearsArray = [];
-                let recentYear = Number.parseInt(todayMoment.format("YYYY"));
+                const datetimeYearArray = this.getYearArray();
 
-                for(let i = recentYear - 5; i < recentYear + 5; i++){
-                    yearsArray.push({label: i + "年", value: i + ''});
-                }
+                const datetimeMonthArray = this.getMonthArray();
 
-                // 准备日 根据值判断当月有多少天
-                const dayMax = this.checkDaysByYearMonth(selectedValue);
+                const datetimeDateArray = this.getDateArray();
 
-                let daysArray = [];
-                for(let i = 1; i < dayMax + 1; i++){
-                    daysArray.push({label: i + "日", value: i + ''});
-                }
+                const datetimeHourArray = this.getHourArray(true);
 
-                let minutesArray = [];
+                const datetimeMinuteArray = this.getMinuteArray(true);
 
-                for(let i = 0; i < 60; i++){
-                    minutesArray.push({label:  i + "分", value: i + ""});
-                }
-
-                result = [yearsArray, monthArray, daysArray, hourArray, minutesArray];
+                result = [datetimeYearArray, datetimeMonthArray, datetimeDateArray, datetimeHourArray, datetimeMinuteArray];
                 break;
         }
 
