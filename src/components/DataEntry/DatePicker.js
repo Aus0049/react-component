@@ -71,6 +71,8 @@ class DatePicker extends React.Component {
                 break;
             case "time":
                 // 时间切换
+                newValue = this.checkNewValue(newValue, ["time"]);
+
                 let newTimeMoment = moment(`${newValue[0]}:${newValue[1]}`, "HH:mm");
                 this.setState({
                     selectedValue: newTimeMoment
@@ -168,86 +170,68 @@ class DatePicker extends React.Component {
         const {maxValue, minValue} = this.props;
 
         if(mode.indexOf("date") >= 0){
-            if(maxValue && !minValue){
-                // 检查月
-                if(Number.parseInt(newValue[0]) == maxValue.year()){
-                    if(Number.parseInt(newValue[1]) > maxValue.month()) {
-                        const array = this.getMonthArray(newValue);
-
-                        newValue = this.resetPosition(array, newValue, 1);
-                    }
-                }
-                // 检查日
-                if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()) {
-                    if(Number.parseInt(newValue[2]) > maxValue.date()) {
-                        const array = this.getDateArray(newValue);
-
-                        newValue = this.resetPosition(array, newValue, 2);
-                    }
-                }
-            } else if (!maxValue && minValue) {
+            if(minValue){
                 if(Number.parseInt(newValue[0]) == minValue.year()){
-                    if(Number.parseInt(newValue[1]) < minValue.month()) {
-                        const array = this.getMonthArray(newValue);
-
+                    const array = this.getMonthArray(newValue.slice(0,2));
+                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
                         newValue = this.resetPosition(array, newValue, 1);
                     }
                 }
-                if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()) {
-                    if(Number.parseInt(newValue[2]) < minValue.date()) {
-                        const array = this.getDateArray(newValue);
 
+                if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month()){
+                    const array = this.getDateArray(newValue.slice(0,2));
+                    if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
                         newValue = this.resetPosition(array, newValue, 2);
                     }
                 }
-            } else if (maxValue && minValue) {
-                if(Number.parseInt(newValue[0]) == minValue.year() || Number.parseInt(newValue[0]) == maxValue.year()){
-                    if(Number.parseInt(newValue[0]) == maxValue.year()){
-                        if(Number.parseInt(newValue[1]) > maxValue.month()) {
-                            const array = this.getMonthArray(newValue);
 
-                            newValue = this.resetPosition(array, newValue, 1);
-                        }
-                    } else if(Number.parseInt(newValue[0]) == minValue.year()){
-                        if(Number.parseInt(newValue[1]) < minValue.month()) {
-                            const array = this.getMonthArray(newValue);
+                if(mode.indexOf("time") >= 0){
 
-                            newValue = this.resetPosition(array, newValue, 1);
-                        }
-                    } else {
-                        if(Number.parseInt(newValue[1]) < minValue.month() || Number.parseInt(newValue[1]) > maxValue.month()) {
-                            const array = this.getMonthArray(newValue);
+                }
+            }
 
-                            newValue = this.resetPosition(array, newValue, 1);
-                        }
+            if(maxValue){
+                if(Number.parseInt(newValue[0]) == maxValue.year()){
+                    const array = this.getMonthArray(newValue.slice(0,2));
+                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+                        newValue = this.resetPosition(array, newValue, 1);
                     }
                 }
 
-                if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() ||
-                    Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()){
-                    if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month()){
-                        if(Number.parseInt(newValue[2]) < minValue.date()) {
-                            const array = this.getDateArray(newValue);
+                if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()){
+                    const array = this.getDateArray(newValue.slice(0,2));
+                    if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
+                        newValue = this.resetPosition(array, newValue, 2);
+                    }
+                }
 
-                            newValue = this.resetPosition(array, newValue, 2);
-                        }
-                    } else if (Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()) {
-                        if(Number.parseInt(newValue[2]) > maxValue.date()) {
-                            const array = this.getDateArray(newValue);
+                if(mode.indexOf("time") >= 0){
 
-                            newValue = this.resetPosition(array, newValue, 2);
-                        }
-                    } else {
-                        if(Number.parseInt(newValue[2]) > maxValue.date() || Number.parseInt(newValue[2]) < minValue.date()) {
-                            const array = this.getDateArray(newValue);
+                }
 
-                            newValue = this.resetPosition(array, newValue, 2);
-                        }
+            }
+        }
+
+        if(mode.indexOf("time") >= 0){
+            // 验证分钟就行
+            if(minValue){
+                if(Number.parseInt(newValue[0]) == minValue.hour()){
+                    const array = this.getMinuteArray(newValue[0]);
+                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+                        newValue = this.resetPosition(array, newValue, 1);
+                    }
+                }
+            }
+
+            if(maxValue){
+                if(Number.parseInt(newValue[0]) == maxValue.hour()){
+                    const array = this.getMinuteArray(newValue[0]);
+                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+                        newValue = this.resetPosition(array, newValue, 1);
                     }
                 }
             }
         }
-
         return newValue;
     }
     checkDaysByYearMonth (value) {
@@ -394,10 +378,14 @@ class DatePicker extends React.Component {
 
         return dayArray;
     }
-    getHourArray (connectDate) {
+    getHourArray (newValue, connectDate) {
         let result = hourArray.concat();
         let {selectedValue} = this.state;
         const {maxValue, minValue} = this.props;
+
+        if(newValue){
+            selectedValue = moment(newValue);
+        }
 
         if(connectDate) {
             if(maxValue && !minValue){
@@ -450,12 +438,16 @@ class DatePicker extends React.Component {
 
         return result;
     }
-    getMinuteArray (connectDate) {
+    getMinuteArray (newValue, connectDate) {
         let result = [];
         let {selectedValue} = this.state;
         const {maxValue, minValue} = this.props;
         const {timeStep} = this.props;
         const length = 60 / timeStep;
+
+        if(newValue){
+            selectedValue = moment(newValue, "HH");
+        }
 
         for(let i = 0; i < length; i++){
             if(connectDate) {
@@ -571,9 +563,9 @@ class DatePicker extends React.Component {
 
                 const datetimeDateArray = this.getDateArray();
 
-                const datetimeHourArray = this.getHourArray(true);
+                const datetimeHourArray = this.getHourArray(undefined, true);
 
-                const datetimeMinuteArray = this.getMinuteArray(true);
+                const datetimeMinuteArray = this.getMinuteArray(undefined, true);
 
                 result = [datetimeYearArray, datetimeMonthArray, datetimeDateArray, datetimeHourArray, datetimeMinuteArray];
                 break;
