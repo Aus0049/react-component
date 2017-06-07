@@ -53,7 +53,7 @@ class DatePickerPage extends React.Component {
                         mode="date"
                         value={dateValue}
                         title="选择日期"
-                        maxValue={moment("2017-06-21", "YYYY-MM-DD")}
+                        maxValue={moment("2018-06-21", "YYYY-MM-DD")}
                         minValue={moment("2015-09-01", "YYYY-MM-DD")}
                         onChange={this.handleChange.bind(this, "date")}>
                         <Item subtitle={dateValue.format('YYYY-MM-DD')} icon="horizontal">日期选择</Item>
@@ -63,6 +63,8 @@ class DatePickerPage extends React.Component {
                         value={timeValue}
                         title="选择时间"
                         timeStep={10}
+                        maxValue={moment("14:30", "HH:mm")}
+                        minValue={moment("10:00", "HH:mm")}
                         onChange={this.handleChange.bind(this, "time")}>
                         <Item subtitle={timeValue.format('HH:mm')} icon="horizontal">时间选择</Item>
                     </DatePicker>

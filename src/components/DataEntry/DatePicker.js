@@ -223,9 +223,19 @@ class DatePicker extends React.Component {
             }
         } else if (maxValue && minValue) {
             if(selectedValue.year() == minValue.year() || selectedValue.year() == maxValue.year()){
-                result = monthArray.filter((item) => {
-                    if(maxValue.month() >= Number.parseInt(item.value) && Number.parseInt(item.value) <= minValue.month()) return true;
-                });
+                if(selectedValue.year() == minValue.year()){
+                    result = monthArray.filter((item) => {
+                        if(minValue.month() <= Number.parseInt(item.value)) return true;
+                    });
+                } else if (selectedValue.year() == maxValue.year()) {
+                    result = monthArray.filter((item) => {
+                        if(maxValue.month() >= Number.parseInt(item.value)) return true;
+                    });
+                } else {
+                    result = monthArray.filter((item) => {
+                        if(maxValue.month() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.month()) return true;
+                    });
+                }
             }
         }
 
@@ -250,7 +260,7 @@ class DatePicker extends React.Component {
                 }
             } else if (!maxValue && minValue) {
                 if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
-                    if(i >= maxValue.date()){
+                    if(i >= minValue.date()){
                         dayArray.push({label: i + "日", value: i + ''});
                     }
                 } else {
@@ -262,8 +272,12 @@ class DatePicker extends React.Component {
                         if(i <= maxValue.date()){
                             dayArray.push({label: i + "日", value: i + ''});
                         }
+                    } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()) {
+                        if(i >= minValue.date()){
+                            dayArray.push({label: i + "日", value: i + ''});
+                        }
                     } else {
-                        if(i >= maxValue.date()){
+                        if(i <= maxValue.date() && i >= minValue.date()){
                             dayArray.push({label: i + "日", value: i + ''});
                         }
                     }
@@ -276,6 +290,75 @@ class DatePicker extends React.Component {
         }
 
         return dayArray;
+    }
+    getHourArray () {
+        let result = hourArray.concat();
+        const {maxValue, minValue} = this.props;
+
+        if(maxValue && !minValue){
+            // 上限
+            result = hourArray.filter((item) => {
+                if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+            });
+        } else if (!maxValue && minValue) {
+            result = hourArray.filter((item) => {
+                if(minValue.hour() <= Number.parseInt(item.value)) return true;
+            });
+        } else if (maxValue && minValue) {
+            result = hourArray.filter((item) => {
+                if(maxValue.hour() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.hour()) return true;
+            });
+        }
+
+        return result;
+    }
+    getMinuteArray () {
+        let result = [];
+        let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+        const {timeStep} = this.props;
+        const length = 60 / timeStep;
+
+        for(let i = 0; i < length; i++){
+            if(maxValue && !minValue){
+                // 上限
+                if(selectedValue.hour() == maxValue.hour()){
+                    if(timeStep * i <= maxValue.minute()){
+                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                    }
+                } else {
+                    result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                }
+            } else if (!maxValue && minValue) {
+                if(selectedValue.hour() == minValue.hour()){
+                    if(timeStep * i >= maxValue.minute()){
+                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                    }
+                } else {
+                    result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                }
+            } else if (maxValue && minValue) {
+                if(selectedValue.hour() == maxValue.hour() || selectedValue.hour() == minValue.hour()){
+                    if(selectedValue.hour() == maxValue.hour()){
+                        if(timeStep * i <= maxValue.minute()){
+                            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                        }
+                    } else if (selectedValue.hour() == minValue.hour()) {
+                        if(timeStep * i >= minValue.minute()){
+                            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                        }
+                    } else {
+                        if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
+                            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                        }
+                    }
+                } else {
+                    result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+                }
+            }
+        }
+
+        return result;
     }
     getDateByMode (mode) {
         let result = [];
@@ -297,18 +380,13 @@ class DatePicker extends React.Component {
                 result = [dateYearArray, dateMonthArray, dateDateArray];
                 break;
             case "time":
-                // 时间其实是一个固定的数组 和一个根据步长算出来的数组
-                const {timeStep} = this.props;
 
-                let timeArray = [];
 
-                const length = 60 / timeStep;
+                const timeHourArray = this.getHourArray();
 
-                for(let i = 0; i < length; i++){
-                    timeArray.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                }
+                const timeMinuteArray = this.getMinuteArray();
 
-                result = [hourArray, timeArray];
+                result = [timeHourArray, timeMinuteArray];
                 break;
             case "datetime":
                 // 时间日期选择器
