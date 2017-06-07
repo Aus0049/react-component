@@ -243,12 +243,16 @@ class DatePicker extends React.Component {
                     if(i <= maxValue.date()){
                         dayArray.push({label: i + "日", value: i + ''});
                     }
+                } else {
+                    dayArray.push({label: i + "日", value: i + ''});
                 }
             } else if (!maxValue && minValue) {
                 if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
                     if(i >= maxValue.date()){
                         dayArray.push({label: i + "日", value: i + ''});
                     }
+                } else {
+                    dayArray.push({label: i + "日", value: i + ''});
                 }
             } else if (maxValue && minValue) {
                 if((selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()) || (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month())){
@@ -257,13 +261,15 @@ class DatePicker extends React.Component {
                             dayArray.push({label: i + "日", value: i + ''});
                         }
                     } else {
-                        if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
-                            if(i >= maxValue.date()){
-                                dayArray.push({label: i + "日", value: i + ''});
-                            }
+                        if(i >= maxValue.date()){
+                            dayArray.push({label: i + "日", value: i + ''});
                         }
                     }
+                } else {
+                    dayArray.push({label: i + "日", value: i + ''});
                 }
+            } else {
+                dayArray.push({label: i + "日", value: i + ''});
             }
         }
 
