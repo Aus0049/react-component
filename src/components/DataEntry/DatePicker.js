@@ -79,11 +79,14 @@ class DatePicker extends React.Component {
                 });
                 break;
             case "datetime":
-                const datetimeMaxDate = this.checkDaysByYearMonth(moment(newValue[0] + "-" + (Number.parseInt(newValue[1]) + 1), "YYYY-MM"));
 
-                if(newValue[2] > datetimeMaxDate){
-                    newValue[2] = datetimeMaxDate + "";
-                }
+                newValue = this.checkNewValue(newValue, ["date", "time"]);
+
+                // const datetimeMaxDate = this.checkDaysByYearMonth(moment(newValue[0] + "-" + (Number.parseInt(newValue[1]) + 1), "YYYY-MM"));
+
+                // if(newValue[2] > datetimeMaxDate){
+                //     newValue[2] = datetimeMaxDate + "";
+                // }
 
                 let newDateTimeMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2]), Number.parseInt(newValue[3]), Number.parseInt(newValue[4])]);
                 this.setState({
@@ -172,7 +175,7 @@ class DatePicker extends React.Component {
         if(mode.indexOf("date") >= 0){
             if(minValue){
                 if(Number.parseInt(newValue[0]) == minValue.year()){
-                    const array = this.getMonthArray(newValue.slice(0,2));
+                    const array = this.getMonthArray(newValue.slice(0,1));
                     if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
                         newValue = this.resetPosition(array, newValue, 1);
                     }
@@ -186,13 +189,18 @@ class DatePicker extends React.Component {
                 }
 
                 if(mode.indexOf("time") >= 0){
-
+                    if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() && Number.parseInt(newValue[2]) == minValue.date()){
+                        const array = this.getHourArray(newValue.slice(0,3), true);
+                        if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
+                            newValue = this.resetPosition(array, newValue, 3);
+                        }
+                    }
                 }
             }
 
             if(maxValue){
                 if(Number.parseInt(newValue[0]) == maxValue.year()){
-                    const array = this.getMonthArray(newValue.slice(0,2));
+                    const array = this.getMonthArray(newValue.slice(0,1));
                     if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
                         newValue = this.resetPosition(array, newValue, 1);
                     }
@@ -206,7 +214,12 @@ class DatePicker extends React.Component {
                 }
 
                 if(mode.indexOf("time") >= 0){
-
+                    if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month() && Number.parseInt(newValue[2]) == maxValue.date()){
+                        const array = this.getHourArray(newValue.slice(0,3), true);
+                        if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
+                            newValue = this.resetPosition(array, newValue, 3);
+                        }
+                    }
                 }
 
             }
@@ -410,7 +423,7 @@ class DatePicker extends React.Component {
                         });
                     } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()) {
                         result = hourArray.filter((item) => {
-                            if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+                            if(minValue.hour() <= Number.parseInt(item.value)) return true;
                         });
                     } else {
                         result = hourArray.filter((item) => {
