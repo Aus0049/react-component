@@ -82,18 +82,10 @@ class DatePicker extends React.Component {
 
                 newValue = this.checkNewValue(newValue, ["date", "time"]);
 
-                // const datetimeMaxDate = this.checkDaysByYearMonth(moment(newValue[0] + "-" + (Number.parseInt(newValue[1]) + 1), "YYYY-MM"));
-
-                // if(newValue[2] > datetimeMaxDate){
-                //     newValue[2] = datetimeMaxDate + "";
-                // }
-
                 let newDateTimeMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2]), Number.parseInt(newValue[3]), Number.parseInt(newValue[4])]);
                 this.setState({
                     selectedValue: newDateTimeMoment
                 });
-                break;
-
                 break;
         }
     }
@@ -259,6 +251,7 @@ class DatePicker extends React.Component {
                 }
             }
         }
+
         return newValue;
     }
     checkDaysByYearMonth (value) {
