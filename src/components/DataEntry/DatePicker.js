@@ -195,6 +195,13 @@ class DatePicker extends React.Component {
                             newValue = this.resetPosition(array, newValue, 3);
                         }
                     }
+
+                    if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() && Number.parseInt(newValue[2]) == minValue.date() && Number.parseInt(newValue[3]) == minValue.hour()){
+                        const array = this.getMinuteArray(newValue.slice(0,4), true);
+                        if(Number.parseInt(newValue[4]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[4]) > Number.parseInt(array[array.length - 1].value)){
+                            newValue = this.resetPosition(array, newValue, 4);
+                        }
+                    }
                 }
             }
 
@@ -218,6 +225,13 @@ class DatePicker extends React.Component {
                         const array = this.getHourArray(newValue.slice(0,3), true);
                         if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
                             newValue = this.resetPosition(array, newValue, 3);
+                        }
+                    }
+
+                    if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month() && Number.parseInt(newValue[2]) == maxValue.date() && Number.parseInt(newValue[3]) == maxValue.hour()){
+                        const array = this.getMinuteArray(newValue.slice(0,4), true);
+                        if(Number.parseInt(newValue[4]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[4]) > Number.parseInt(array[array.length - 1].value)){
+                            newValue = this.resetPosition(array, newValue, 4);
                         }
                     }
                 }
@@ -459,7 +473,11 @@ class DatePicker extends React.Component {
         const length = 60 / timeStep;
 
         if(newValue){
-            selectedValue = moment(newValue, "HH");
+            if(newValue.length == 4){
+                selectedValue = moment(newValue);
+            } else {
+                selectedValue = moment(newValue, "HH");
+            }
         }
 
         for(let i = 0; i < length; i++){
