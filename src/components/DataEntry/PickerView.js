@@ -8,13 +8,15 @@ import PickerColumn from './PickerColumn'
 class PickerView extends React.Component {
     static defaultProps = {
         col: 1,
-        cascade: true
+        cascade: true,
+        controlled: false,
     };
     static propTypes = {
         col: React.PropTypes.number,
         data: React.PropTypes.array,
         value: React.PropTypes.array,
         cascade: React.PropTypes.bool,
+        controlled: React.PropTypes.bool, // 是否受控
         onChange: React.PropTypes.func
     };
     constructor (props) {
@@ -25,16 +27,39 @@ class PickerView extends React.Component {
     }
     componentDidMount () {
         // picker view 当做一个非受控组件
-        let {value} = this.props;
-        this.setState({
-            defaultSelectedValue: value
-        });
+        let {value, controlled} = this.props;
+        if(!controlled){
+            this.setState({
+                defaultSelectedValue: value
+            });
+        }
     }
     handleValueChange (newValue, index) {
         // 子组件column发生变化的回调函数
         // 每次值发生变化 都要判断整个值数组的新值
         let {defaultSelectedValue} = this.state;
-        let {data, cascade, onChange} = this.props;
+        let {data, cascade, controlled, value, onChange} = this.props;
+
+        if(controlled){
+            // 也要算一下正确的值
+            const oldValue = value.slice();
+            oldValue[index] = newValue;
+
+            if(cascade) {
+                const newState = this.getNewValue(data, oldValue, [], 0);
+
+                if(onChange){
+                    onChange(newState);
+                }
+            } else {
+                if(onChange){
+                    onChange(oldValue);
+                }
+            }
+
+            return;
+        }
+
         let oldValue = defaultSelectedValue.slice();
         oldValue[index] = newValue;
 
@@ -52,9 +77,11 @@ class PickerView extends React.Component {
             }
         } else {
             // 不级联 单纯改对应数据
-            this.setState({
-                defaultSelectedValue: oldValue
-            });
+            if(!controlled){
+                this.setState({
+                    defaultSelectedValue: oldValue
+                });
+            }
 
             // 如果有回调
             if(onChange){
@@ -64,15 +91,23 @@ class PickerView extends React.Component {
     }
     getColumns () {
         let result = [];
-        let {col, data, cascade} = this.props;
+        let {col, data, cascade, value, controlled} = this.props;
         let {defaultSelectedValue} = this.state;
 
-        if(defaultSelectedValue.length == 0) return;
+        if(controlled){
+            if(value.length == 0) return;
+        } else {
+            if(defaultSelectedValue.length == 0) return;
+        }
 
         let array;
 
         if(cascade){
-            array = this.getColumnsData(data, defaultSelectedValue, [], 0);
+            if(controlled){
+                array = this.getColumnsData(data, value, [], 0);
+            } else {
+                array = this.getColumnsData(data, defaultSelectedValue, [], 0);
+            }
         } else {
             array = data;
         }
@@ -80,7 +115,7 @@ class PickerView extends React.Component {
         for(let i = 0; i < col; i++){
             result.push(<PickerColumn
                 key={i}
-                value={defaultSelectedValue[i]}
+                value={controlled ? value[i] : defaultSelectedValue[i]}
                 data={array[i]}
                 index={i}
                 onValueChange={this.handleValueChange.bind(this)}

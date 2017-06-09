@@ -57,6 +57,7 @@ class DatePicker extends React.Component {
     handlePickerViewChange (newValue) {
         // picker view回调的时候
         const {mode} = this.props;
+        console.log(newValue);
 
         switch (mode) {
             case "date":
@@ -276,127 +277,101 @@ class DatePicker extends React.Component {
     }
     getYearArray () {
         // 获取年数组
-        // let {selectedValue} = this.state;
-        // const {maxValue, minValue} = this.props;
-        //
-        // let yearArray = [];
-        // let currentYear = selectedValue.year();
-        //
-        // for(let i = currentYear - 5; i < currentYear + 5; i++){
-        //
-        //     if(maxValue && !minValue){
-        //         // 上限
-        //         if(i <= maxValue.year()){
-        //             yearArray.push({label: i + "年", value: i + ''});
-        //         }
-        //     } else if (!maxValue && minValue) {
-        //         if(i >= minValue.year()){
-        //             yearArray.push({label: i + "年", value: i + ''});
-        //         }
-        //     } else if (maxValue && minValue) {
-        //         if(i <= maxValue.year() && i >= minValue.year()){
-        //             yearArray.push({label: i + "年", value: i + ''});
-        //         }
-        //     }
-        // }
-        //
-        // return yearArray;
+        const {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+
+        let yearArray = [];
+        let currentYear = selectedValue.year();
+
+        for(let i = currentYear - 5; i < currentYear + 5; i++){
+            let shouldPush = false;
+
+            if(minValue){
+                if(i >= minValue.year()){
+                    shouldPush = true;
+                }
+            }
+
+            if(maxValue){
+                if(i <= maxValue.year()){
+                    shouldPush = true;
+                }
+            }
+
+            if(shouldPush){
+                yearArray.push({label: i + "年", value: i + ''});
+            }
+        }
+
+        return yearArray;
     }
     getMonthArray (newValue) {
-        // let result = monthArray.concat();
-        // let {selectedValue} = this.state;
-        // const {maxValue, minValue} = this.props;
-        //
-        // if(newValue){
-        //     selectedValue = moment(newValue);
-        // }
-        //
-        // if(maxValue && !minValue){
-        //     // 上限
-        //    if(selectedValue.year() == maxValue.year()){
-        //        result = monthArray.filter((item) => {
-        //            if(maxValue.month() >= Number.parseInt(item.value)) return true;
-        //        });
-        //    }
-        // } else if (!maxValue && minValue) {
-        //     if(selectedValue.year() == minValue.year()){
-        //         result = monthArray.filter((item) => {
-        //             if(minValue.month() <= Number.parseInt(item.value)) return true;
-        //         });
-        //     }
-        // } else if (maxValue && minValue) {
-        //     if(selectedValue.year() == minValue.year() || selectedValue.year() == maxValue.year()){
-        //         if(selectedValue.year() == minValue.year()){
-        //             result = monthArray.filter((item) => {
-        //                 if(minValue.month() <= Number.parseInt(item.value)) return true;
-        //             });
-        //         } else if (selectedValue.year() == maxValue.year()) {
-        //             result = monthArray.filter((item) => {
-        //                 if(maxValue.month() >= Number.parseInt(item.value)) return true;
-        //             });
-        //         } else {
-        //             result = monthArray.filter((item) => {
-        //                 if(maxValue.month() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.month()) return true;
-        //             });
-        //         }
-        //     }
-        // }
-        //
-        // return result;
+        let result = monthArray.concat();
+        let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+
+        if(newValue){
+            selectedValue = moment(newValue);
+        }
+
+        if(minValue){
+            if(selectedValue.year() == minValue.year()) {
+                result = monthArray.filter((item) => {
+                    if(minValue.month() <= Number.parseInt(item.value)) return true;
+                });
+            }
+        }
+
+        if(maxValue){
+            if(selectedValue.year() == maxValue.year()){
+                result = monthArray.filter((item) => {
+                    if(maxValue.month() >= Number.parseInt(item.value)) return true;
+                });
+            }
+        }
+
+        return result;
     }
     getDateArray (newValue) {
-        // let dayArray = [];
-        // let {selectedValue} = this.state;
-        // const {maxValue, minValue} = this.props;
-        //
-        // if(newValue){
-        //     selectedValue = moment(newValue);
-        // }
-        //
-        // const daysMax = this.checkDaysByYearMonth(selectedValue);
-        //
-        // for(let i = 1; i < daysMax + 1; i++){
-        //     if(maxValue && !minValue){
-        //         // 上限
-        //         if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
-        //             if(i <= maxValue.date()){
-        //                 dayArray.push({label: i + "日", value: i + ''});
-        //             }
-        //         } else {
-        //             dayArray.push({label: i + "日", value: i + ''});
-        //         }
-        //     } else if (!maxValue && minValue) {
-        //         if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
-        //             if(i >= minValue.date()){
-        //                 dayArray.push({label: i + "日", value: i + ''});
-        //             }
-        //         } else {
-        //             dayArray.push({label: i + "日", value: i + ''});
-        //         }
-        //     } else if (maxValue && minValue) {
-        //         if((selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()) || (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month())){
-        //             if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
-        //                 if(i <= maxValue.date()){
-        //                     dayArray.push({label: i + "日", value: i + ''});
-        //                 }
-        //             } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()) {
-        //                 if(i >= minValue.date()){
-        //                     dayArray.push({label: i + "日", value: i + ''});
-        //                 }
-        //             } else {
-        //                 if(i <= maxValue.date() && i >= minValue.date()){
-        //                     dayArray.push({label: i + "日", value: i + ''});
-        //                 }
-        //             }
-        //         } else {
-        //             dayArray.push({label: i + "日", value: i + ''});
-        //         }
-        //     } else {
-        //         dayArray.push({label: i + "日", value: i + ''});
-        //     }
-        // }
-        //
-        // return dayArray;
+        let dayArray = [];
+        let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+
+        if(newValue){
+            selectedValue = moment(newValue);
+        }
+
+        const daysMax = this.checkDaysByYearMonth(selectedValue);
+
+        for(let i = 1; i < daysMax + 1; i++){
+            let shouldPush = false;
+
+            if(minValue){
+                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
+                    if(i >= minValue.date()){
+                        shouldPush = true;
+                    }
+                } else {
+                    shouldPush = true;
+                }
+            }
+
+            if(maxValue) {
+                if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
+                    if(i <= maxValue.date()){
+                        shouldPush = true;
+                    }
+                } else {
+                    shouldPush = true;
+                }
+            }
+
+            if(shouldPush){
+                dayArray.push({label: i + "日", value: i + ''});
+            }
+        }
+
+        return dayArray;
     }
     getHourArray (newValue, connectDate) {
         // let result = hourArray.concat();
@@ -612,6 +587,7 @@ class DatePicker extends React.Component {
                     data={data}
                     value={[selectedValue.year() + '', selectedValue.month() + '', selectedValue.date() + '']}
                     cascade={false}
+                    controlled={true}
                     onChange={this.handlePickerViewChange.bind(this)}>
                 </PickerView>;
             } else if (mode == "time") {
@@ -620,6 +596,7 @@ class DatePicker extends React.Component {
                     data={data}
                     value={[selectedValue.hour() + '', selectedValue.minute() + '']}
                     cascade={false}
+                    controlled={true}
                     onChange={this.handlePickerViewChange.bind(this)}>
                 </PickerView>;
             } else if (mode == "datetime") {
@@ -628,6 +605,7 @@ class DatePicker extends React.Component {
                     data={data}
                     value={[selectedValue.year() + '', selectedValue.month() + '', selectedValue.date() + '', selectedValue.hour() + '', selectedValue.minute() + '']}
                     cascade={false}
+                    controlled={true}
                     onChange={this.handlePickerViewChange.bind(this)}>
                 </PickerView>;
             }
