@@ -161,19 +161,13 @@ class DatePicker extends React.Component {
     }
     checkNewValue (newValue, mode) {
         // 检查新的值是否合法
-        if(newValue.length == 2){
-            if(!moment(newValue, "HH:mm").isValid()){
-
-            }
-        } else {
-            if(!moment(newValue).isValid()){
-                // 判断哪个字段不合法
-                const wrongPosition = moment(newValue).invalidAt();
-                if(wrongPosition == 2) {
-                    const array = this.getDateArray(newValue.slice(0,2));
-                    if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
-                        newValue = this.resetPosition(array, newValue, 2);
-                    }
+        if(!moment(newValue).isValid()){
+            // 判断哪个字段不合法
+            const wrongPosition = moment(newValue).invalidAt();
+            if(wrongPosition == 2) {
+                const array = this.getDateArray(newValue.slice(0,2));
+                if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
+                    newValue = this.resetPosition(array, newValue, 2);
                 }
             }
         }
