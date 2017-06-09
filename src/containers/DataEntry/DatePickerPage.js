@@ -18,6 +18,7 @@ class DatePickerPage extends React.Component {
             timeValue: moment("12:10", "HH:mm"),
             datetimeValue: moment(),
             yearValue: moment(),
+            monthValue: moment()
         }
     }
     handleChange (type, newValue) {
@@ -39,10 +40,14 @@ class DatePickerPage extends React.Component {
             this.setState({
                 yearValue: newValue
             });
+        } else if (type == "month") {
+            this.setState({
+                monthValue: newValue
+            });
         }
     }
     render () {
-        const {dateValue, timeValue, datetimeValue, yearValue} = this.state;
+        const {dateValue, timeValue, datetimeValue, yearValue, monthValue} = this.state;
 
         return (
             <div className="page date-picker">
@@ -90,6 +95,15 @@ class DatePickerPage extends React.Component {
                         minValue={moment([2015])}
                         onChange={this.handleChange.bind(this, "year")}>
                         <Item subtitle={yearValue.format('YYYY')} icon="horizontal">年份选择</Item>
+                    </DatePicker>
+                    <DatePicker
+                        mode="month"
+                        value={monthValue}
+                        title="选择月份"
+                        maxValue={moment("11", "MM")}
+                        minValue={moment("5", "MM")}
+                        onChange={this.handleChange.bind(this, "month")}>
+                        <Item subtitle={monthValue.format('MM')} icon="horizontal">月份选择</Item>
                     </DatePicker>
                 </List>
             </div>

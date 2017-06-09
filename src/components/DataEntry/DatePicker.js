@@ -88,9 +88,13 @@ class DatePicker extends React.Component {
                 });
                 break;
             case "year":
-
                 this.setState({
                     selectedValue: moment(newValue)
+                });
+                break;
+            case "month":
+                this.setState({
+                    selectedValue: moment(Number.parseInt(newValue[0]) + 1, "MM")
                 });
                 break;
         }
@@ -514,6 +518,12 @@ class DatePicker extends React.Component {
 
                 result = [yearArray];
                 break;
+            case "month":
+                // 月份选择
+                const monthArray = this.getMonthArray();
+
+                result = [monthArray];
+                break;
         }
 
         return result;
@@ -559,6 +569,15 @@ class DatePicker extends React.Component {
                     col={1}
                     data={data}
                     value={[selectedValue.year() + '']}
+                    cascade={false}
+                    controlled={true}
+                    onChange={this.handlePickerViewChange.bind(this)}>
+                </PickerView>;
+            } else if (mode == "month") {
+                return <PickerView
+                    col={1}
+                    data={data}
+                    value={[selectedValue.month() + '']}
                     cascade={false}
                     controlled={true}
                     onChange={this.handlePickerViewChange.bind(this)}>
