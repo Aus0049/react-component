@@ -224,7 +224,6 @@ class DatePicker extends React.Component {
 
                 if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()){
                     const array = this.getDateArray(newValue.slice(0,2));
-                    console.log(array);
                     if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
                         newValue = this.resetPosition(array, newValue, 2);
                     }
@@ -248,28 +247,28 @@ class DatePicker extends React.Component {
 
             }
         }
-        //
-        // if(mode.indexOf("time") >= 0){
-        //     // 验证分钟就行
-        //     if(minValue){
-        //         if(Number.parseInt(newValue[0]) == minValue.hour()){
-        //             const array = this.getMinuteArray(newValue[0]);
-        //             if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
-        //                 newValue = this.resetPosition(array, newValue, 1);
-        //             }
-        //         }
-        //     }
-        //
-        //     if(maxValue){
-        //         if(Number.parseInt(newValue[0]) == maxValue.hour()){
-        //             const array = this.getMinuteArray(newValue[0]);
-        //             if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
-        //                 newValue = this.resetPosition(array, newValue, 1);
-        //             }
-        //         }
-        //     }
-        // }
-        //
+
+        if(mode.indexOf("time") >= 0){
+            // 验证分钟就行
+            if(minValue){
+                if(Number.parseInt(newValue[0]) == minValue.hour()){
+                    const array = this.getMinuteArray(newValue[0]);
+                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+                        newValue = this.resetPosition(array, newValue, 1);
+                    }
+                }
+            }
+
+            if(maxValue){
+                if(Number.parseInt(newValue[0]) == maxValue.hour()){
+                    const array = this.getMinuteArray(newValue[0]);
+                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+                        newValue = this.resetPosition(array, newValue, 1);
+                    }
+                }
+            }
+        }
+
         return newValue;
     }
     checkDaysByYearMonth (value) {
@@ -335,7 +334,7 @@ class DatePicker extends React.Component {
 
         if(minValue){
             if(selectedValue.year() == minValue.year()) {
-                result = monthArray.filter((item) => {
+                result = result.filter((item) => {
                     if(minValue.month() <= Number.parseInt(item.value)) return true;
                 });
             }
@@ -343,7 +342,7 @@ class DatePicker extends React.Component {
 
         if(maxValue){
             if(selectedValue.year() == maxValue.year()){
-                result = monthArray.filter((item) => {
+                result = result.filter((item) => {
                     if(maxValue.month() >= Number.parseInt(item.value)) return true;
                 });
             }
@@ -387,160 +386,101 @@ class DatePicker extends React.Component {
         return dayArray;
     }
     getHourArray (newValue, connectDate) {
-        // let result = hourArray.concat();
-        // let {selectedValue} = this.state;
-        // const {maxValue, minValue} = this.props;
-        //
-        // if(newValue){
-        //     selectedValue = moment(newValue);
-        // }
-        //
-        // if(connectDate) {
-        //     if(maxValue && !minValue){
-        //         // 上限 年月日相等
-        //         if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
-        //             result = hourArray.filter((item) => {
-        //                 if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-        //             });
-        //         }
-        //     } else if (!maxValue && minValue) {
-        //         if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()){
-        //             result = hourArray.filter((item) => {
-        //                 if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-        //             });
-        //         }
-        //     } else if (maxValue && minValue) {
-        //         if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() ||
-        //             selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
-        //             if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()) {
-        //                 result = hourArray.filter((item) => {
-        //                     if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-        //                 });
-        //             } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()) {
-        //                 result = hourArray.filter((item) => {
-        //                     if(minValue.hour() <= Number.parseInt(item.value)) return true;
-        //                 });
-        //             } else {
-        //                 result = hourArray.filter((item) => {
-        //                     if(maxValue.hour() >= Number.parseInt(item.value) && minValue.hour() <= Number.parseInt(item.value)) return true;
-        //                 });
-        //             }
-        //         }
-        //     }
-        // } else {
-        //     if(maxValue && !minValue){
-        //         // 上限
-        //         result = hourArray.filter((item) => {
-        //             if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-        //         });
-        //     } else if (!maxValue && minValue) {
-        //         result = hourArray.filter((item) => {
-        //             if(minValue.hour() <= Number.parseInt(item.value)) return true;
-        //         });
-        //     } else if (maxValue && minValue) {
-        //         result = hourArray.filter((item) => {
-        //             if(maxValue.hour() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.hour()) return true;
-        //         });
-        //     }
-        // }
-        //
-        // return result;
+        let result = hourArray.concat();
+        let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+
+        if(newValue){
+            selectedValue = moment(newValue);
+        }
+
+        if(connectDate) {
+            if(minValue){
+                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()){
+                    result = result.filter((item) => {
+                        return Number.parseInt(item.value) >= minValue.hour();
+                    });
+                }
+            }
+
+            if(maxValue){
+                if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
+                    result = result.filter((item) => {
+                        return maxValue.hour() >= Number.parseInt(item.value);
+                    });
+                }
+            }
+
+        } else {
+            if(minValue){
+                result = result.filter((item) => {
+                    return Number.parseInt(item.value) >= minValue.hour();
+                });
+            }
+
+            if(maxValue){
+                result = result.filter((item) => {
+                    return maxValue.hour() >= Number.parseInt(item.value);
+                });
+            }
+        }
+
+        return result;
     }
     getMinuteArray (newValue, connectDate) {
-        // let result = [];
-        // let {selectedValue} = this.state;
-        // const {maxValue, minValue} = this.props;
-        // const {timeStep} = this.props;
-        // const length = 60 / timeStep;
-        //
-        // if(newValue){
-        //     if(newValue.length == 4){
-        //         selectedValue = moment(newValue);
-        //     } else {
-        //         selectedValue = moment(newValue, "HH");
-        //     }
-        // }
-        //
-        // for(let i = 0; i < length; i++){
-        //     if(connectDate) {
-        //         if(maxValue && !minValue){
-        //             // 上限
-        //             if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
-        //                 if(timeStep * i <= maxValue.minute()){
-        //                     result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                 }
-        //             } else {
-        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //             }
-        //         } else if (!maxValue && minValue) {
-        //             if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
-        //                 if(timeStep * i >= minValue.minute()){
-        //                     result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                 }
-        //             } else {
-        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //             }
-        //         } else if (maxValue && minValue) {
-        //             if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour() ||
-        //                 selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
-        //                 if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
-        //                     if(timeStep * i <= maxValue.minute()){
-        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                     }
-        //                 } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()) {
-        //                     if(timeStep * i >= minValue.minute()){
-        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                     }
-        //                 } else {
-        //                     if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
-        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                     }
-        //                 }
-        //             } else {
-        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //             }
-        //         }
-        //     } else {
-        //         if(maxValue && !minValue){
-        //             // 上限
-        //             if(selectedValue.hour() == maxValue.hour()){
-        //                 if(timeStep * i <= maxValue.minute()){
-        //                     result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                 }
-        //             } else {
-        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //             }
-        //         } else if (!maxValue && minValue) {
-        //             if(selectedValue.hour() == minValue.hour()){
-        //                 if(timeStep * i >= minValue.minute()){
-        //                     result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                 }
-        //             } else {
-        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //             }
-        //         } else if (maxValue && minValue) {
-        //             if(selectedValue.hour() == maxValue.hour() || selectedValue.hour() == minValue.hour()){
-        //                 if(selectedValue.hour() == maxValue.hour()){
-        //                     if(timeStep * i <= maxValue.minute()){
-        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                     }
-        //                 } else if (selectedValue.hour() == minValue.hour()) {
-        //                     if(timeStep * i >= minValue.minute()){
-        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                     }
-        //                 } else {
-        //                     if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
-        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //                     }
-        //                 }
-        //             } else {
-        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-        //             }
-        //         }
-        //     }
-        // }
-        //
-        // return result;
+        let result = [];
+        let {selectedValue} = this.state;
+        const {maxValue, minValue} = this.props;
+        const {timeStep} = this.props;
+        const length = 60 / timeStep;
+
+        if(newValue){
+            if(newValue.length == 4){
+                selectedValue = moment(newValue);
+            } else {
+                selectedValue = moment(newValue, "HH");
+            }
+        }
+
+        for(let i = 0; i < length; i++){
+            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        }
+
+        if(connectDate){
+            if(minValue){
+                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
+                    result = result.filter((item)=>{
+                        return Number.parseInt(item.value) >= minValue.minute();
+                    });
+                }
+            }
+
+            if(maxValue) {
+                if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
+                    result = result.filter((item)=>{
+                        return Number.parseInt(item.value) <= maxValue.minute();
+                    });
+                }
+            }
+        } else {
+            if(minValue){
+                if(selectedValue.hour() == minValue.hour()){
+                    result = result.filter((item)=>{
+                        return Number.parseInt(item.value) >= minValue.minute();
+                    });
+                }
+            }
+
+            if(maxValue) {
+                if(selectedValue.hour() == maxValue.hour()){
+                    result = result.filter((item)=>{
+                        return Number.parseInt(item.value) <= maxValue.minute();
+                    });
+                }
+            }
+        }
+
+        return result;
     }
     getDateByMode (mode) {
         let result = [];
