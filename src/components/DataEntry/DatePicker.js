@@ -162,97 +162,97 @@ class DatePicker extends React.Component {
     checkNewValue (newValue, mode) {
         // 逐项检查新日期各项 是否在限制条件内
         // 从月份开始检查
-        const {maxValue, minValue} = this.props;
-
-        if(mode.indexOf("date") >= 0){
-            if(minValue){
-                if(Number.parseInt(newValue[0]) == minValue.year()){
-                    const array = this.getMonthArray(newValue.slice(0,1));
-                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
-                        newValue = this.resetPosition(array, newValue, 1);
-                    }
-                }
-
-                if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month()){
-                    const array = this.getDateArray(newValue.slice(0,2));
-                    if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
-                        newValue = this.resetPosition(array, newValue, 2);
-                    }
-                }
-
-                if(mode.indexOf("time") >= 0){
-                    if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() && Number.parseInt(newValue[2]) == minValue.date()){
-                        const array = this.getHourArray(newValue.slice(0,3), true);
-                        if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
-                            newValue = this.resetPosition(array, newValue, 3);
-                        }
-                    }
-
-                    if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() && Number.parseInt(newValue[2]) == minValue.date() && Number.parseInt(newValue[3]) == minValue.hour()){
-                        const array = this.getMinuteArray(newValue.slice(0,4), true);
-                        if(Number.parseInt(newValue[4]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[4]) > Number.parseInt(array[array.length - 1].value)){
-                            newValue = this.resetPosition(array, newValue, 4);
-                        }
-                    }
-                }
-            }
-
-            if(maxValue){
-                if(Number.parseInt(newValue[0]) == maxValue.year()){
-                    const array = this.getMonthArray(newValue.slice(0,1));
-                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
-                        newValue = this.resetPosition(array, newValue, 1);
-                    }
-                }
-
-                if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()){
-                    const array = this.getDateArray(newValue.slice(0,2));
-                    if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
-                        newValue = this.resetPosition(array, newValue, 2);
-                    }
-                }
-
-                if(mode.indexOf("time") >= 0){
-                    if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month() && Number.parseInt(newValue[2]) == maxValue.date()){
-                        const array = this.getHourArray(newValue.slice(0,3), true);
-                        if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
-                            newValue = this.resetPosition(array, newValue, 3);
-                        }
-                    }
-
-                    if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month() && Number.parseInt(newValue[2]) == maxValue.date() && Number.parseInt(newValue[3]) == maxValue.hour()){
-                        const array = this.getMinuteArray(newValue.slice(0,4), true);
-                        if(Number.parseInt(newValue[4]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[4]) > Number.parseInt(array[array.length - 1].value)){
-                            newValue = this.resetPosition(array, newValue, 4);
-                        }
-                    }
-                }
-
-            }
-        }
-
-        if(mode.indexOf("time") >= 0){
-            // 验证分钟就行
-            if(minValue){
-                if(Number.parseInt(newValue[0]) == minValue.hour()){
-                    const array = this.getMinuteArray(newValue[0]);
-                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
-                        newValue = this.resetPosition(array, newValue, 1);
-                    }
-                }
-            }
-
-            if(maxValue){
-                if(Number.parseInt(newValue[0]) == maxValue.hour()){
-                    const array = this.getMinuteArray(newValue[0]);
-                    if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
-                        newValue = this.resetPosition(array, newValue, 1);
-                    }
-                }
-            }
-        }
-
-        return newValue;
+        // const {maxValue, minValue} = this.props;
+        //
+        // if(mode.indexOf("date") >= 0){
+        //     if(minValue){
+        //         if(Number.parseInt(newValue[0]) == minValue.year()){
+        //             const array = this.getMonthArray(newValue.slice(0,1));
+        //             if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+        //                 newValue = this.resetPosition(array, newValue, 1);
+        //             }
+        //         }
+        //
+        //         if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month()){
+        //             const array = this.getDateArray(newValue.slice(0,2));
+        //             if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
+        //                 newValue = this.resetPosition(array, newValue, 2);
+        //             }
+        //         }
+        //
+        //         if(mode.indexOf("time") >= 0){
+        //             if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() && Number.parseInt(newValue[2]) == minValue.date()){
+        //                 const array = this.getHourArray(newValue.slice(0,3), true);
+        //                 if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
+        //                     newValue = this.resetPosition(array, newValue, 3);
+        //                 }
+        //             }
+        //
+        //             if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() && Number.parseInt(newValue[2]) == minValue.date() && Number.parseInt(newValue[3]) == minValue.hour()){
+        //                 const array = this.getMinuteArray(newValue.slice(0,4), true);
+        //                 if(Number.parseInt(newValue[4]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[4]) > Number.parseInt(array[array.length - 1].value)){
+        //                     newValue = this.resetPosition(array, newValue, 4);
+        //                 }
+        //             }
+        //         }
+        //     }
+        //
+        //     if(maxValue){
+        //         if(Number.parseInt(newValue[0]) == maxValue.year()){
+        //             const array = this.getMonthArray(newValue.slice(0,1));
+        //             if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+        //                 newValue = this.resetPosition(array, newValue, 1);
+        //             }
+        //         }
+        //
+        //         if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month()){
+        //             const array = this.getDateArray(newValue.slice(0,2));
+        //             if(Number.parseInt(newValue[2]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[2]) > Number.parseInt(array[array.length - 1].value)){
+        //                 newValue = this.resetPosition(array, newValue, 2);
+        //             }
+        //         }
+        //
+        //         if(mode.indexOf("time") >= 0){
+        //             if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month() && Number.parseInt(newValue[2]) == maxValue.date()){
+        //                 const array = this.getHourArray(newValue.slice(0,3), true);
+        //                 if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
+        //                     newValue = this.resetPosition(array, newValue, 3);
+        //                 }
+        //             }
+        //
+        //             if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month() && Number.parseInt(newValue[2]) == maxValue.date() && Number.parseInt(newValue[3]) == maxValue.hour()){
+        //                 const array = this.getMinuteArray(newValue.slice(0,4), true);
+        //                 if(Number.parseInt(newValue[4]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[4]) > Number.parseInt(array[array.length - 1].value)){
+        //                     newValue = this.resetPosition(array, newValue, 4);
+        //                 }
+        //             }
+        //         }
+        //
+        //     }
+        // }
+        //
+        // if(mode.indexOf("time") >= 0){
+        //     // 验证分钟就行
+        //     if(minValue){
+        //         if(Number.parseInt(newValue[0]) == minValue.hour()){
+        //             const array = this.getMinuteArray(newValue[0]);
+        //             if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+        //                 newValue = this.resetPosition(array, newValue, 1);
+        //             }
+        //         }
+        //     }
+        //
+        //     if(maxValue){
+        //         if(Number.parseInt(newValue[0]) == maxValue.hour()){
+        //             const array = this.getMinuteArray(newValue[0]);
+        //             if(Number.parseInt(newValue[1]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[1]) > Number.parseInt(array[array.length - 1].value)){
+        //                 newValue = this.resetPosition(array, newValue, 1);
+        //             }
+        //         }
+        //     }
+        // }
+        //
+        // return newValue;
     }
     checkDaysByYearMonth (value) {
         const month = value.month();
@@ -276,283 +276,283 @@ class DatePicker extends React.Component {
     }
     getYearArray () {
         // 获取年数组
-        let {selectedValue} = this.state;
-        const {maxValue, minValue} = this.props;
-
-        let yearArray = [];
-        let currentYear = selectedValue.year();
-
-        for(let i = currentYear - 5; i < currentYear + 5; i++){
-
-            if(maxValue && !minValue){
-                // 上限
-                if(i <= maxValue.year()){
-                    yearArray.push({label: i + "年", value: i + ''});
-                }
-            } else if (!maxValue && minValue) {
-                if(i >= minValue.year()){
-                    yearArray.push({label: i + "年", value: i + ''});
-                }
-            } else if (maxValue && minValue) {
-                if(i <= maxValue.year() && i >= minValue.year()){
-                    yearArray.push({label: i + "年", value: i + ''});
-                }
-            }
-        }
-
-        return yearArray;
+        // let {selectedValue} = this.state;
+        // const {maxValue, minValue} = this.props;
+        //
+        // let yearArray = [];
+        // let currentYear = selectedValue.year();
+        //
+        // for(let i = currentYear - 5; i < currentYear + 5; i++){
+        //
+        //     if(maxValue && !minValue){
+        //         // 上限
+        //         if(i <= maxValue.year()){
+        //             yearArray.push({label: i + "年", value: i + ''});
+        //         }
+        //     } else if (!maxValue && minValue) {
+        //         if(i >= minValue.year()){
+        //             yearArray.push({label: i + "年", value: i + ''});
+        //         }
+        //     } else if (maxValue && minValue) {
+        //         if(i <= maxValue.year() && i >= minValue.year()){
+        //             yearArray.push({label: i + "年", value: i + ''});
+        //         }
+        //     }
+        // }
+        //
+        // return yearArray;
     }
     getMonthArray (newValue) {
-        let result = monthArray.concat();
-        let {selectedValue} = this.state;
-        const {maxValue, minValue} = this.props;
-
-        if(newValue){
-            selectedValue = moment(newValue);
-        }
-
-        if(maxValue && !minValue){
-            // 上限
-           if(selectedValue.year() == maxValue.year()){
-               result = monthArray.filter((item) => {
-                   if(maxValue.month() >= Number.parseInt(item.value)) return true;
-               });
-           }
-        } else if (!maxValue && minValue) {
-            if(selectedValue.year() == minValue.year()){
-                result = monthArray.filter((item) => {
-                    if(minValue.month() <= Number.parseInt(item.value)) return true;
-                });
-            }
-        } else if (maxValue && minValue) {
-            if(selectedValue.year() == minValue.year() || selectedValue.year() == maxValue.year()){
-                if(selectedValue.year() == minValue.year()){
-                    result = monthArray.filter((item) => {
-                        if(minValue.month() <= Number.parseInt(item.value)) return true;
-                    });
-                } else if (selectedValue.year() == maxValue.year()) {
-                    result = monthArray.filter((item) => {
-                        if(maxValue.month() >= Number.parseInt(item.value)) return true;
-                    });
-                } else {
-                    result = monthArray.filter((item) => {
-                        if(maxValue.month() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.month()) return true;
-                    });
-                }
-            }
-        }
-
-        return result;
+        // let result = monthArray.concat();
+        // let {selectedValue} = this.state;
+        // const {maxValue, minValue} = this.props;
+        //
+        // if(newValue){
+        //     selectedValue = moment(newValue);
+        // }
+        //
+        // if(maxValue && !minValue){
+        //     // 上限
+        //    if(selectedValue.year() == maxValue.year()){
+        //        result = monthArray.filter((item) => {
+        //            if(maxValue.month() >= Number.parseInt(item.value)) return true;
+        //        });
+        //    }
+        // } else if (!maxValue && minValue) {
+        //     if(selectedValue.year() == minValue.year()){
+        //         result = monthArray.filter((item) => {
+        //             if(minValue.month() <= Number.parseInt(item.value)) return true;
+        //         });
+        //     }
+        // } else if (maxValue && minValue) {
+        //     if(selectedValue.year() == minValue.year() || selectedValue.year() == maxValue.year()){
+        //         if(selectedValue.year() == minValue.year()){
+        //             result = monthArray.filter((item) => {
+        //                 if(minValue.month() <= Number.parseInt(item.value)) return true;
+        //             });
+        //         } else if (selectedValue.year() == maxValue.year()) {
+        //             result = monthArray.filter((item) => {
+        //                 if(maxValue.month() >= Number.parseInt(item.value)) return true;
+        //             });
+        //         } else {
+        //             result = monthArray.filter((item) => {
+        //                 if(maxValue.month() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.month()) return true;
+        //             });
+        //         }
+        //     }
+        // }
+        //
+        // return result;
     }
     getDateArray (newValue) {
-        let dayArray = [];
-        let {selectedValue} = this.state;
-        const {maxValue, minValue} = this.props;
-
-        if(newValue){
-            selectedValue = moment(newValue);
-        }
-
-        const daysMax = this.checkDaysByYearMonth(selectedValue);
-
-        for(let i = 1; i < daysMax + 1; i++){
-            if(maxValue && !minValue){
-                // 上限
-                if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
-                    if(i <= maxValue.date()){
-                        dayArray.push({label: i + "日", value: i + ''});
-                    }
-                } else {
-                    dayArray.push({label: i + "日", value: i + ''});
-                }
-            } else if (!maxValue && minValue) {
-                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
-                    if(i >= minValue.date()){
-                        dayArray.push({label: i + "日", value: i + ''});
-                    }
-                } else {
-                    dayArray.push({label: i + "日", value: i + ''});
-                }
-            } else if (maxValue && minValue) {
-                if((selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()) || (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month())){
-                    if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
-                        if(i <= maxValue.date()){
-                            dayArray.push({label: i + "日", value: i + ''});
-                        }
-                    } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()) {
-                        if(i >= minValue.date()){
-                            dayArray.push({label: i + "日", value: i + ''});
-                        }
-                    } else {
-                        if(i <= maxValue.date() && i >= minValue.date()){
-                            dayArray.push({label: i + "日", value: i + ''});
-                        }
-                    }
-                } else {
-                    dayArray.push({label: i + "日", value: i + ''});
-                }
-            } else {
-                dayArray.push({label: i + "日", value: i + ''});
-            }
-        }
-
-        return dayArray;
+        // let dayArray = [];
+        // let {selectedValue} = this.state;
+        // const {maxValue, minValue} = this.props;
+        //
+        // if(newValue){
+        //     selectedValue = moment(newValue);
+        // }
+        //
+        // const daysMax = this.checkDaysByYearMonth(selectedValue);
+        //
+        // for(let i = 1; i < daysMax + 1; i++){
+        //     if(maxValue && !minValue){
+        //         // 上限
+        //         if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
+        //             if(i <= maxValue.date()){
+        //                 dayArray.push({label: i + "日", value: i + ''});
+        //             }
+        //         } else {
+        //             dayArray.push({label: i + "日", value: i + ''});
+        //         }
+        //     } else if (!maxValue && minValue) {
+        //         if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()){
+        //             if(i >= minValue.date()){
+        //                 dayArray.push({label: i + "日", value: i + ''});
+        //             }
+        //         } else {
+        //             dayArray.push({label: i + "日", value: i + ''});
+        //         }
+        //     } else if (maxValue && minValue) {
+        //         if((selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()) || (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month())){
+        //             if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month()){
+        //                 if(i <= maxValue.date()){
+        //                     dayArray.push({label: i + "日", value: i + ''});
+        //                 }
+        //             } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month()) {
+        //                 if(i >= minValue.date()){
+        //                     dayArray.push({label: i + "日", value: i + ''});
+        //                 }
+        //             } else {
+        //                 if(i <= maxValue.date() && i >= minValue.date()){
+        //                     dayArray.push({label: i + "日", value: i + ''});
+        //                 }
+        //             }
+        //         } else {
+        //             dayArray.push({label: i + "日", value: i + ''});
+        //         }
+        //     } else {
+        //         dayArray.push({label: i + "日", value: i + ''});
+        //     }
+        // }
+        //
+        // return dayArray;
     }
     getHourArray (newValue, connectDate) {
-        let result = hourArray.concat();
-        let {selectedValue} = this.state;
-        const {maxValue, minValue} = this.props;
-
-        if(newValue){
-            selectedValue = moment(newValue);
-        }
-
-        if(connectDate) {
-            if(maxValue && !minValue){
-                // 上限 年月日相等
-                if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
-                    result = hourArray.filter((item) => {
-                        if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-                    });
-                }
-            } else if (!maxValue && minValue) {
-                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()){
-                    result = hourArray.filter((item) => {
-                        if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-                    });
-                }
-            } else if (maxValue && minValue) {
-                if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() ||
-                    selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
-                    if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()) {
-                        result = hourArray.filter((item) => {
-                            if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-                        });
-                    } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()) {
-                        result = hourArray.filter((item) => {
-                            if(minValue.hour() <= Number.parseInt(item.value)) return true;
-                        });
-                    } else {
-                        result = hourArray.filter((item) => {
-                            if(maxValue.hour() >= Number.parseInt(item.value) && minValue.hour() <= Number.parseInt(item.value)) return true;
-                        });
-                    }
-                }
-            }
-        } else {
-            if(maxValue && !minValue){
-                // 上限
-                result = hourArray.filter((item) => {
-                    if(maxValue.hour() >= Number.parseInt(item.value)) return true;
-                });
-            } else if (!maxValue && minValue) {
-                result = hourArray.filter((item) => {
-                    if(minValue.hour() <= Number.parseInt(item.value)) return true;
-                });
-            } else if (maxValue && minValue) {
-                result = hourArray.filter((item) => {
-                    if(maxValue.hour() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.hour()) return true;
-                });
-            }
-        }
-
-        return result;
+        // let result = hourArray.concat();
+        // let {selectedValue} = this.state;
+        // const {maxValue, minValue} = this.props;
+        //
+        // if(newValue){
+        //     selectedValue = moment(newValue);
+        // }
+        //
+        // if(connectDate) {
+        //     if(maxValue && !minValue){
+        //         // 上限 年月日相等
+        //         if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
+        //             result = hourArray.filter((item) => {
+        //                 if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+        //             });
+        //         }
+        //     } else if (!maxValue && minValue) {
+        //         if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()){
+        //             result = hourArray.filter((item) => {
+        //                 if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+        //             });
+        //         }
+        //     } else if (maxValue && minValue) {
+        //         if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() ||
+        //             selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()){
+        //             if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date()) {
+        //                 result = hourArray.filter((item) => {
+        //                     if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+        //                 });
+        //             } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date()) {
+        //                 result = hourArray.filter((item) => {
+        //                     if(minValue.hour() <= Number.parseInt(item.value)) return true;
+        //                 });
+        //             } else {
+        //                 result = hourArray.filter((item) => {
+        //                     if(maxValue.hour() >= Number.parseInt(item.value) && minValue.hour() <= Number.parseInt(item.value)) return true;
+        //                 });
+        //             }
+        //         }
+        //     }
+        // } else {
+        //     if(maxValue && !minValue){
+        //         // 上限
+        //         result = hourArray.filter((item) => {
+        //             if(maxValue.hour() >= Number.parseInt(item.value)) return true;
+        //         });
+        //     } else if (!maxValue && minValue) {
+        //         result = hourArray.filter((item) => {
+        //             if(minValue.hour() <= Number.parseInt(item.value)) return true;
+        //         });
+        //     } else if (maxValue && minValue) {
+        //         result = hourArray.filter((item) => {
+        //             if(maxValue.hour() >= Number.parseInt(item.value) && Number.parseInt(item.value) >= minValue.hour()) return true;
+        //         });
+        //     }
+        // }
+        //
+        // return result;
     }
     getMinuteArray (newValue, connectDate) {
-        let result = [];
-        let {selectedValue} = this.state;
-        const {maxValue, minValue} = this.props;
-        const {timeStep} = this.props;
-        const length = 60 / timeStep;
-
-        if(newValue){
-            if(newValue.length == 4){
-                selectedValue = moment(newValue);
-            } else {
-                selectedValue = moment(newValue, "HH");
-            }
-        }
-
-        for(let i = 0; i < length; i++){
-            if(connectDate) {
-                if(maxValue && !minValue){
-                    // 上限
-                    if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
-                        if(timeStep * i <= maxValue.minute()){
-                            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                        }
-                    } else {
-                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                    }
-                } else if (!maxValue && minValue) {
-                    if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
-                        if(timeStep * i >= minValue.minute()){
-                            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                        }
-                    } else {
-                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                    }
-                } else if (maxValue && minValue) {
-                    if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour() ||
-                        selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
-                        if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
-                            if(timeStep * i <= maxValue.minute()){
-                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                            }
-                        } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()) {
-                            if(timeStep * i >= minValue.minute()){
-                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                            }
-                        } else {
-                            if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
-                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                            }
-                        }
-                    } else {
-                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                    }
-                }
-            } else {
-                if(maxValue && !minValue){
-                    // 上限
-                    if(selectedValue.hour() == maxValue.hour()){
-                        if(timeStep * i <= maxValue.minute()){
-                            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                        }
-                    } else {
-                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                    }
-                } else if (!maxValue && minValue) {
-                    if(selectedValue.hour() == minValue.hour()){
-                        if(timeStep * i >= minValue.minute()){
-                            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                        }
-                    } else {
-                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                    }
-                } else if (maxValue && minValue) {
-                    if(selectedValue.hour() == maxValue.hour() || selectedValue.hour() == minValue.hour()){
-                        if(selectedValue.hour() == maxValue.hour()){
-                            if(timeStep * i <= maxValue.minute()){
-                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                            }
-                        } else if (selectedValue.hour() == minValue.hour()) {
-                            if(timeStep * i >= minValue.minute()){
-                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                            }
-                        } else {
-                            if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
-                                result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                            }
-                        }
-                    } else {
-                        result.push({label: timeStep * i + "分", value: timeStep * i + ""});
-                    }
-                }
-            }
-        }
-
-        return result;
+        // let result = [];
+        // let {selectedValue} = this.state;
+        // const {maxValue, minValue} = this.props;
+        // const {timeStep} = this.props;
+        // const length = 60 / timeStep;
+        //
+        // if(newValue){
+        //     if(newValue.length == 4){
+        //         selectedValue = moment(newValue);
+        //     } else {
+        //         selectedValue = moment(newValue, "HH");
+        //     }
+        // }
+        //
+        // for(let i = 0; i < length; i++){
+        //     if(connectDate) {
+        //         if(maxValue && !minValue){
+        //             // 上限
+        //             if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
+        //                 if(timeStep * i <= maxValue.minute()){
+        //                     result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                 }
+        //             } else {
+        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //             }
+        //         } else if (!maxValue && minValue) {
+        //             if(selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
+        //                 if(timeStep * i >= minValue.minute()){
+        //                     result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                 }
+        //             } else {
+        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //             }
+        //         } else if (maxValue && minValue) {
+        //             if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour() ||
+        //                 selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()){
+        //                 if(selectedValue.year() == maxValue.year() && selectedValue.month() == maxValue.month() && selectedValue.date() == maxValue.date() && selectedValue.hour() == maxValue.hour()){
+        //                     if(timeStep * i <= maxValue.minute()){
+        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                     }
+        //                 } else if (selectedValue.year() == minValue.year() && selectedValue.month() == minValue.month() && selectedValue.date() == minValue.date() && selectedValue.hour() == minValue.hour()) {
+        //                     if(timeStep * i >= minValue.minute()){
+        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                     }
+        //                 } else {
+        //                     if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
+        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                     }
+        //                 }
+        //             } else {
+        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //             }
+        //         }
+        //     } else {
+        //         if(maxValue && !minValue){
+        //             // 上限
+        //             if(selectedValue.hour() == maxValue.hour()){
+        //                 if(timeStep * i <= maxValue.minute()){
+        //                     result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                 }
+        //             } else {
+        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //             }
+        //         } else if (!maxValue && minValue) {
+        //             if(selectedValue.hour() == minValue.hour()){
+        //                 if(timeStep * i >= minValue.minute()){
+        //                     result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                 }
+        //             } else {
+        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //             }
+        //         } else if (maxValue && minValue) {
+        //             if(selectedValue.hour() == maxValue.hour() || selectedValue.hour() == minValue.hour()){
+        //                 if(selectedValue.hour() == maxValue.hour()){
+        //                     if(timeStep * i <= maxValue.minute()){
+        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                     }
+        //                 } else if (selectedValue.hour() == minValue.hour()) {
+        //                     if(timeStep * i >= minValue.minute()){
+        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                     }
+        //                 } else {
+        //                     if(timeStep * i <= maxValue.minute() && timeStep * i >= minValue.minute()){
+        //                         result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //                     }
+        //                 }
+        //             } else {
+        //                 result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+        //             }
+        //         }
+        //     }
+        // }
+        //
+        // return result;
     }
     getDateByMode (mode) {
         let result = [];
