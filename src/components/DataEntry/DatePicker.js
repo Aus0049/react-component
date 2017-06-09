@@ -87,6 +87,12 @@ class DatePicker extends React.Component {
                     selectedValue: newDateTimeMoment
                 });
                 break;
+            case "year":
+
+                this.setState({
+                    selectedValue: moment(newValue)
+                });
+                break;
         }
     }
     handleClickOpen (e) {
@@ -293,26 +299,13 @@ class DatePicker extends React.Component {
         let yearArray = [];
         let currentYear = selectedValue.year();
 
-        for(let i = currentYear - 5; i < currentYear + 5; i++){
-            let shouldPush = false;
+        // 默认显示选中值前后五年
+        // 有最大最小值 根据最大最小值显示
+        let earliest = minValue ? minValue.year() : currentYear - 5;
+        let latest = maxValue ? maxValue.year() : currentYear + 5;
 
-            if(minValue && !maxValue){
-                if(i >= minValue.year()){
-                    shouldPush = true;
-                }
-            } else if(maxValue && !minValue){
-                if(i <= maxValue.year()){
-                    shouldPush = true;
-                }
-            } else {
-                if(i >= minValue.year() && i <= maxValue.year()){
-                    shouldPush = true;
-                }
-            }
-
-            if(shouldPush){
-                yearArray.push({label: i + "年", value: i + ''});
-            }
+        for(let i = earliest; i <= latest; i++){
+            yearArray.push({label: i + "年", value: i + ''});
         }
 
         return yearArray;
@@ -515,6 +508,12 @@ class DatePicker extends React.Component {
 
                 result = [datetimeYearArray, datetimeMonthArray, datetimeDateArray, datetimeHourArray, datetimeMinuteArray];
                 break;
+            case "year":
+                // 年份选择器
+                const yearArray = this.getYearArray();
+
+                result = [yearArray];
+                break;
         }
 
         return result;
@@ -551,6 +550,15 @@ class DatePicker extends React.Component {
                     col={5}
                     data={data}
                     value={[selectedValue.year() + '', selectedValue.month() + '', selectedValue.date() + '', selectedValue.hour() + '', selectedValue.minute() + '']}
+                    cascade={false}
+                    controlled={true}
+                    onChange={this.handlePickerViewChange.bind(this)}>
+                </PickerView>;
+            } else if (mode == "year") {
+                return <PickerView
+                    col={1}
+                    data={data}
+                    value={[selectedValue.year() + '']}
                     cascade={false}
                     controlled={true}
                     onChange={this.handlePickerViewChange.bind(this)}>
