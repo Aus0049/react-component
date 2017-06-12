@@ -93,7 +93,7 @@ class Switch extends React.Component {
 }
 
 Switch.propTypes = {
-    theme: React.PropTypes.string, // 主题 枚举 iOS风格和Android风格
+    theme: React.PropTypes.oneOf(['iOS', 'android']), // 主题 枚举 iOS风格和Android风格
     checked: React.PropTypes.bool,
     defaultChecked: React.PropTypes.bool,
     attachedText: React.PropTypes.array,
