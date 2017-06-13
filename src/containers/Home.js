@@ -22,6 +22,10 @@ class Home extends React.Component {
                 <List>
                     <Item subtitle="List" icon="horizontal" onClick={()=>{Tools.linkTo("/data-display/list")}}>列表项</Item>
                 </List>
+                <ListTitle title="操作反馈" />
+                <List>
+                    <Item subtitle="Toast" icon="horizontal" onClick={()=>{Tools.linkTo("/feedback/list")}}>提示</Item>
+                </List>
             </div>
         )
     }
