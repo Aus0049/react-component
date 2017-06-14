@@ -9,10 +9,11 @@ import React from 'react'
 class Notice extends React.Component {
     static propTypes = {
         duration: React.PropTypes.number, // Notice显示时间
+        content: React.PropTypes.content, // Notice显示的内容
         onClose: React.PropTypes.func // 显示结束回调
     };
     static defaultProps = {
-        duration: 1500,
+        duration: 3000,
     };
     componentDidMount () {
         this.closeTimer = setTimeout(() => {
@@ -37,8 +38,8 @@ class Notice extends React.Component {
     }
     render () {
         return (
-            <div className="zby-notice">
-                Notice
+            <div className="zby-notice-box">
+                {this.props.content}
             </div>
         )
     }

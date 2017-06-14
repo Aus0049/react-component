@@ -11,6 +11,7 @@ const ToastPage = () => {
     const commonToast = () => {
         Toast.show('普通的Toast我普通的摇！！', 3000)
     };
+    window.commonToast = commonToast;
 
     return (
         <div className="page toast">

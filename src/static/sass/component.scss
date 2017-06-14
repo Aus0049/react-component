@@ -573,3 +573,124 @@ a {
     }
   }
 }
+
+// Mask
+.zby-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 100;
+  opacity: .3;
+}
+
+// Toast
+.zby-toast-box {
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  padding: 20px 30px;
+  max-width: 60%;
+  background: #000;
+  opacity: .7;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 28px;
+  line-height: 42px;
+  color: #fff;
+  z-index: 110;
+
+  -webkit-transition: all .3s;
+  transition: all .3s;
+
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+
+  &.info {
+    -webkit-animation: BombIn .3s;
+    animation: BombIn .3s;
+  }
+
+  &.error {
+    -webkit-animation: shake .5s;
+    animation: shake .5s;
+  }
+
+  .zby-toast-icon {
+    font-size: 40px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .zby-toast-content {
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+  }
+}
+
+@keyframes BombIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0, 0);
+    -webkit-transform: translate(-50%, -50%) scale(0, 0);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2, 1.2);
+    -webkit-transform: translate(-50%, -50%) scale(1.2, 1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1, 1);
+    -webkit-transform: translate(-50%, -50%) scale(1, 1);
+  }
+}
+
+@-webkit-keyframes BombIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0, 0);
+    -webkit-transform: translate(-50%, -50%) scale(0, 0);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2, 1.2);
+    -webkit-transform: translate(-50%, -50%) scale(1.2, 1.2);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1, 1);
+    -webkit-transform: translate(-50%, -50%) scale(1, 1);
+  }
+}
+
+@-webkit-keyframes shake {
+  from, to {
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  15%, 45%, 75% {
+    -webkit-transform: translate(-60%, -50%);
+    transform: translate(-60%, -50%);
+  }
+
+  30%, 60%, 90% {
+    -webkit-transform: translate(-40%, -50%);
+    transform: translate(-40%, -50%);
+  }
+}
+
+@keyframes shake {
+  from, to {
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  15%, 45%, 75% {
+    -webkit-transform: translate(-60%, -50%);
+    transform: translate(-60%, -50%);
+  }
+
+  30%, 60%, 90% {
+    -webkit-transform: translate(-40%, -50%);
+    transform: translate(-40%, -50%);
+  }
+}

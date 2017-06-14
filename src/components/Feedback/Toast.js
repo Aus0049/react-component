@@ -2,6 +2,7 @@
  * Created by Aus on 2017/6/13.
  */
 import React from 'react'
+import classNames from 'classnames'
 import Notification from './Notification'
 
 // Toast组件比较特殊
@@ -11,7 +12,7 @@ import Notification from './Notification'
 let newNotification;
 
 // 获得一个Notification
-function getNewNotification () {
+function getNewNotification (mask) {
     // 保持页面始终只有一个Notification
     if (!newNotification) {
         newNotification = Notification.reWrite();
@@ -23,19 +24,29 @@ function getNewNotification () {
 }
 
 
-function notice(content, type, duration = 3000, onClose, mask = true) {
+function notice(content, type, icon, duration = 3000, onClose, mask = true) {
     let notificationInstance = getNewNotification(mask);
 
     notificationInstance.notice({
         duration,
-        content: !!type ? (
-            <div>
-                <div>icon</div>
-                <div >{content}</div>
+        content: !!icon ? (
+            <div className={
+                classNames(['zby-toast-box',
+                    {'info': type === 'info'},
+                    {'error': type === 'error'}
+                ])
+            }>
+                <div className="zby-toast-icon">{icon}</div>
+                <div className="zby-toast-content">{content}</div>
             </div>
         ) : (
-            <div>
-                <div>{content}</div>
+            <div className={
+                classNames(['zby-toast-box',
+                    {'info': type === 'info'},
+                    {'error': type === 'error'}
+                ])
+            }>
+                <div className="zby-toast-content">{content}</div>
             </div>
         ),
         onClose: () => {
@@ -50,7 +61,7 @@ function notice(content, type, duration = 3000, onClose, mask = true) {
 }
 
 export default {
-    show(content, duration, mask) {
-        return notice(content, 'info', duration, () => {}, mask);
+    show(content, duration, icon, mask) {
+        return notice(content, 'info', icon, duration, () => {}, mask);
     }
 }

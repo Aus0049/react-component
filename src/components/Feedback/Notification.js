@@ -2,7 +2,6 @@
  * Created by Aus on 2017/6/14.
  */
 
-
 // Notification是Notice上层组件
 // 是动态插入和删除DOM节点的核心
 // 同时也向上提供给Toast很多核心函数
@@ -66,11 +65,20 @@ class Notification extends React.Component {
 
         return result;
     }
+    getMaskDOM () {
+        const {notices} = this.state;
+
+        if(notices.length == 0) return;
+
+        return <div className="zby-mask"></div>;
+    }
     render () {
         const noticesDOM = this.getNoticeDOM();
+        const maskDOM = this.getMaskDOM();
 
         return (
-            <div className="zby-notification">
+            <div className="zby-notification-box">
+                {maskDOM}
                 {noticesDOM}
             </div>
         )
