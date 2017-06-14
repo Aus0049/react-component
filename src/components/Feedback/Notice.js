@@ -9,18 +9,15 @@ import React from 'react'
 class Notice extends React.Component {
     static propTypes = {
         duration: React.PropTypes.number, // Notice显示时间
-        onClose: React.PropTypes.func, // 显示结束回调
-        children: React.PropTypes.any,
+        onClose: React.PropTypes.func // 显示结束回调
     };
     static defaultProps = {
         duration: 1500,
     };
     componentDidMount () {
-        if (this.props.duration) {
-            this.closeTimer = setTimeout(() => {
-                this.close();
-            }, this.props.duration);
-        }
+        this.closeTimer = setTimeout(() => {
+            this.close();
+        }, this.props.duration);
     }
     componentWillUnmount () {
         this.clearCloseTimer();
