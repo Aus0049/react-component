@@ -20,14 +20,16 @@ class Notification extends React.Component {
     add (notice) {
         // 添加notice
         // 创造一个不重复的key
-        const {notices} = this.state;
-        const key = notice.key ? notice.key : getUuid();
+        const key = notice.key ? notice.key : notice.key = getUuid();
 
-        if(!notices.filter((item) => item.key === key).length){
-            // 不存在重复的 添加
-            notices.push(notice);
-            this.setState({notices: notices});
-        }
+        this.setState(previousState => {
+            const notices = previousState.notices;
+            if (!notices.filter(v => v.key === key).length) {
+                return {
+                    notices: notices.concat(notice),
+                };
+            }
+        });
     }
     remove (key) {
         const {notices} = this.state;
@@ -40,17 +42,25 @@ class Notification extends React.Component {
             }
         });
 
-        notices.slice(index, 1);
+        notices.splice(index, 1);
 
         this.setState({notices: notices});
     }
     getNoticeDOM () {
+        const _this = this;
         const {notices} = this.state;
         let result = [];
 
         notices.map((notice)=>{
+            const closeCallback = function () {
+                _this.remove.bind(_this, notice.key)();
+                if(notice.onChange){
+                    notice.onChange();
+                }
+            };
+
             result.push(
-                <Notice {...notice} />
+                <Notice key={notice.key} {...notice} onClose={closeCallback} />
             );
         });
 
@@ -71,7 +81,7 @@ class Notification extends React.Component {
 let noticeNumber = 0;
 
 const getUuid = () => {
-    return "notification-" + new Date() + "-" + noticeNumber++;
+    return "notification-" + new Date().getTime() + "-" + noticeNumber++;
 };
 
 // Notification增加一个重写方法

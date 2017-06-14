@@ -27,7 +27,7 @@ class Notice extends React.Component {
             clearTimeout(this.closeTimer);
             this.closeTimer = null;
         }
-    };
+    }
     close () {
         this.clearCloseTimer();
 
