@@ -586,12 +586,23 @@ a {
   opacity: .3;
 }
 
+// Notice
+.zby-notice-box {
+  &.leave {
+    .zby-toast-box {
+      transform: translate(-50%, -100%);
+      opacity: 0;
+    }
+  }
+}
+
 // Toast
 .zby-toast-box {
   position: fixed;
   left: 50%;
   top: 30%;
   padding: 20px 30px;
+  min-width: 200px;
   max-width: 60%;
   background: rgba(0,0,0, .7);
   border-radius: 10px;

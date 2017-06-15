@@ -5,6 +5,7 @@
  * Notice是Toast最底层组件
  */
 import React from 'react'
+import classNames from 'classnames'
 
 class Notice extends React.Component {
     static propTypes = {
@@ -15,6 +16,12 @@ class Notice extends React.Component {
     static defaultProps = {
         duration: 3000,
     };
+    constructor (props) {
+        super(props);
+        this.state = {
+            shouldClose: false, // 何时关闭
+        }
+    }
     componentDidMount () {
         this.closeTimer = setTimeout(() => {
             this.close();
@@ -31,14 +38,21 @@ class Notice extends React.Component {
     }
     close () {
         this.clearCloseTimer();
+        const _this = this;
+        _this.setState({shouldClose: true});
+        const timer = setTimeout(()=>{
+            clearTimeout(timer);
 
-        if(this.props.onClose){
-            this.props.onClose();
-        }
+            if(this.props.onClose){
+                this.props.onClose();
+            }
+        }, 300);
     }
     render () {
+        const {shouldClose} = this.state;
+
         return (
-            <div className="zby-notice-box">
+            <div className={classNames(['zby-notice-box', {'leave': shouldClose}])}>
                 {this.props.content}
             </div>
         )

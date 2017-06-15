@@ -23,7 +23,6 @@ function getNewNotification (mask) {
     return newNotification;
 }
 
-
 function notice(content, type, icon, duration = 3000, onClose, mask = true) {
     let notificationInstance = getNewNotification(mask);
 
