@@ -2,9 +2,9 @@
  * Created by Aus on 2017/6/14.
  */
 
-// Notification是Notice上层组件
+// Notification是Notice父组件，容器
 // 是动态插入和删除DOM节点的核心
-// 同时也向上提供给Toast很多核心函数
+// 同时也向上暴露给Toast重写改变自己的方法
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Notice from './Notice'
@@ -35,6 +35,7 @@ class Notification extends React.Component {
         }
     }
     remove (key) {
+        // 根据key删除对应
         this.setState(previousState => {
             return {
                 notices: previousState.notices.filter(notice => notice.key !== key),
@@ -47,12 +48,11 @@ class Notification extends React.Component {
         let result = [];
 
         notices.map((notice)=>{
+            // 每个Notice onClose的时候 删除掉notices中对应key的notice
             const closeCallback = () => {
                 _this.remove(notice.key);
-
-                if(notice.onClose){
-                    notice.onClose();
-                }
+                // 如果有用户传入的onClose 执行
+                if(notice.onClose) notice.onClose();
             };
 
             result.push(
@@ -64,7 +64,8 @@ class Notification extends React.Component {
     }
     getMaskDOM () {
         const {notices, hasMask} = this.state;
-
+        // notices为空的时候 不显示蒙版
+        // 始终只有一个蒙版
         if(notices.length > 0 && hasMask == true) return <div className="zby-mask"></div>;
     }
     render () {
@@ -83,6 +84,7 @@ class Notification extends React.Component {
 // 统计notice总数 防止重复
 let noticeNumber = 0;
 
+// 生成唯一的id
 const getUuid = () => {
     return "notification-" + new Date().getTime() + "-" + noticeNumber++;
 };
