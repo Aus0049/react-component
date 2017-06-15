@@ -35,19 +35,11 @@ class Notification extends React.Component {
         }
     }
     remove (key) {
-        const {notices} = this.state;
-
-        let index = -1;
-
-        notices.map((item, i)=>{
-            if(item.key === key){
-                index = i;
-            }
+        this.setState(previousState => {
+            return {
+                notices: previousState.notices.filter(notice => notice.key !== key),
+            };
         });
-
-        notices.splice(index, 1);
-
-        this.setState({notices: notices});
     }
     getNoticeDOM () {
         const _this = this;
@@ -55,8 +47,9 @@ class Notification extends React.Component {
         let result = [];
 
         notices.map((notice)=>{
-            const closeCallback = function () {
-                _this.remove.bind(_this, notice.key)();
+            const closeCallback = () => {
+                _this.remove.bind(notice.key);
+
                 if(notice.onClose){
                     notice.onClose();
                 }
@@ -116,11 +109,12 @@ Notification.reWrite = function (properties) {
         removeNotice(key) {
             notification.remove(key);
         },
-        component: notification,
         destroy() {
+            console.log(div);
             ReactDOM.unmountComponentAtNode(div);
             document.body.removeChild(div);
-        }
+        },
+        component: notification
     }
 };
 
