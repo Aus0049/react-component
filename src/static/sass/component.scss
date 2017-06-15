@@ -618,11 +618,19 @@ a {
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 
+  // 正常提示
   &.info {
     -webkit-animation: BombIn .3s;
     animation: BombIn .3s;
   }
 
+  // 成功提示
+  &.success {
+    -webkit-animation: Flop .3s;
+    animation: Flop .3s;
+  }
+
+  // 错误提示
   &.error {
     -webkit-animation: shake .5s;
     animation: shake .5s;
@@ -669,6 +677,28 @@ a {
   100% {
     transform: translate(-50%, -50%) scale(1, 1);
     -webkit-transform: translate(-50%, -50%) scale(1, 1);
+  }
+}
+
+@keyframes Flop {
+  0% {
+    transform: translate(-50%, -50%) rotateY(90deg);
+    -webkit-transform: translate(-50%, -50%) rotateY(90deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateY(0deg);
+    -webkit-transform: translate(-50%, -50%) rotateY(0deg);
+  }
+}
+
+@-webkit-keyframes Flop {
+  0% {
+    transform: translate(-50%, -50%) rotateY(90deg);
+    -webkit-transform: translate(-50%, -50%) rotateY(90deg);
+  }
+  100% {
+    transform: translate(-50%, -50%) rotateY(0deg);
+    -webkit-transform: translate(-50%, -50%) rotateY(0deg);
   }
 }
 

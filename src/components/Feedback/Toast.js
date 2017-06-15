@@ -31,6 +31,7 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
             <div className={
                 classNames(['zby-toast-box',
                     {'info': type === 'info'},
+                    {'success': type === 'success'},
                     {'error': type === 'error'}
                 ])
             }>
@@ -41,6 +42,7 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
             <div className={
                 classNames(['zby-toast-box',
                     {'info': type === 'info'},
+                    {'success': type === 'success'},
                     {'error': type === 'error'}
                 ])
             }>
@@ -56,6 +58,9 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
 export default {
     info(content, duration, icon, mask, onClose) {
         return notice(content, 'info', icon, duration, onClose, mask);
+    },
+    success(content, duration, icon, mask, onClose) {
+        return notice(content, 'success', icon, duration, onClose, mask);
     },
     error(content, duration, icon, mask, onClose) {
         return notice(content, 'error', icon, duration, onClose, mask);
