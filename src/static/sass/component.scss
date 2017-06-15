@@ -593,8 +593,7 @@ a {
   top: 30%;
   padding: 20px 30px;
   max-width: 60%;
-  background: #000;
-  opacity: .7;
+  background: rgba(0,0,0, .7);
   border-radius: 10px;
   text-align: center;
   font-size: 28px;
@@ -619,7 +618,8 @@ a {
   }
 
   .zby-toast-icon {
-    font-size: 40px;
+    padding: 20px;
+    font-size: 80px;
     text-align: center;
     color: #fff;
   }

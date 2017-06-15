@@ -13,22 +13,26 @@ class Notification extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            notices: [] // 存储当前有的notices
+            notices: [], // 存储当前有的notices
+            hasMask: true, // 是否显示蒙版
         }
     }
     add (notice) {
         // 添加notice
         // 创造一个不重复的key
+        const {notices} = this.state;
         const key = notice.key ? notice.key : notice.key = getUuid();
+        const mask = notice.mask ? notice.mask : false;
+        const temp = notices.filter((item) => item.key === key).length;
 
-        this.setState(previousState => {
-            const notices = previousState.notices;
-            if (!notices.filter(v => v.key === key).length) {
-                return {
-                    notices: notices.concat(notice),
-                };
-            }
-        });
+        if(!temp){
+            // 不存在重复的 添加
+            notices.push(notice);
+            this.setState({
+                notices: notices,
+                hasMask: mask
+            });
+        }
     }
     remove (key) {
         const {notices} = this.state;
@@ -53,8 +57,8 @@ class Notification extends React.Component {
         notices.map((notice)=>{
             const closeCallback = function () {
                 _this.remove.bind(_this, notice.key)();
-                if(notice.onChange){
-                    notice.onChange();
+                if(notice.onClose){
+                    notice.onClose();
                 }
             };
 
@@ -66,11 +70,9 @@ class Notification extends React.Component {
         return result;
     }
     getMaskDOM () {
-        const {notices} = this.state;
+        const {notices, hasMask} = this.state;
 
-        if(notices.length == 0) return;
-
-        return <div className="zby-mask"></div>;
+        if(notices.length > 0 && hasMask == true) return <div className="zby-mask"></div>;
     }
     render () {
         const noticesDOM = this.getNoticeDOM();

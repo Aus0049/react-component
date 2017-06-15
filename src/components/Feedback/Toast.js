@@ -29,6 +29,7 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
 
     notificationInstance.notice({
         duration,
+        mask: mask,
         content: !!icon ? (
             <div className={
                 classNames(['zby-toast-box',
@@ -36,7 +37,7 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
                     {'error': type === 'error'}
                 ])
             }>
-                <div className="zby-toast-icon">{icon}</div>
+                <div className="zby-toast-icon"><i className={"fa " + icon}></i></div>
                 <div className="zby-toast-content">{content}</div>
             </div>
         ) : (
@@ -61,7 +62,10 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
 }
 
 export default {
-    show(content, duration, icon, mask) {
-        return notice(content, 'info', icon, duration, () => {}, mask);
+    info(content, duration, icon, mask, onClose) {
+        return notice(content, 'info', icon, duration, onClose, mask);
+    },
+    error(content, duration, icon, mask, onClose) {
+        return notice(content, 'error', icon, duration, onClose, mask);
     }
 }

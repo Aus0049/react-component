@@ -9,7 +9,7 @@ import React from 'react'
 class Notice extends React.Component {
     static propTypes = {
         duration: React.PropTypes.number, // Notice显示时间
-        content: React.PropTypes.content, // Notice显示的内容
+        content: React.PropTypes.any, // Notice显示的内容
         onClose: React.PropTypes.func // 显示结束回调
     };
     static defaultProps = {
