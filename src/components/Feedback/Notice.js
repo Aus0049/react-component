@@ -40,12 +40,11 @@ class Notice extends React.Component {
         this.clearCloseTimer();
         const _this = this;
         _this.setState({shouldClose: true});
-        const timer = setTimeout(()=>{
-            clearTimeout(timer);
-
+        this.timer = setTimeout(()=>{
             if(this.props.onClose){
                 this.props.onClose();
             }
+            clearTimeout(_this.timer);
         }, 300);
     }
     render () {

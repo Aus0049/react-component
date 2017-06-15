@@ -32,6 +32,7 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
                 classNames(['zby-toast-box',
                     {'info': type === 'info'},
                     {'success': type === 'success'},
+                    {'warning': type === 'warning'},
                     {'error': type === 'error'}
                 ])
             }>
@@ -43,6 +44,7 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
                 classNames(['zby-toast-box',
                     {'info': type === 'info'},
                     {'success': type === 'success'},
+                    {'warning': type === 'warning'},
                     {'error': type === 'error'}
                 ])
             }>
@@ -56,11 +58,17 @@ function notice(content, type, icon, duration = 3000, onClose, mask = true) {
 }
 
 export default {
+    show (content, duration, icon, mask, onClose) {
+        return notice(content, undefined, icon, duration, onClose, mask);
+    },
     info(content, duration, icon, mask, onClose) {
         return notice(content, 'info', icon, duration, onClose, mask);
     },
     success(content, duration, icon, mask, onClose) {
         return notice(content, 'success', icon, duration, onClose, mask);
+    },
+    warning(content, duration, icon, mask, onClose) {
+        return notice(content, 'warning', icon, duration, onClose, mask);
     },
     error(content, duration, icon, mask, onClose) {
         return notice(content, 'error', icon, duration, onClose, mask);

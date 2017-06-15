@@ -620,14 +620,20 @@ a {
 
   // 正常提示
   &.info {
-    -webkit-animation: BombIn .3s;
-    animation: BombIn .3s;
+    -webkit-animation: Flop .5s linear;
+    animation: Flop .5s linear;
   }
 
   // 成功提示
   &.success {
-    -webkit-animation: Flop .3s;
-    animation: Flop .3s;
+    -webkit-animation: BombIn .3s;
+    animation: BombIn .3s;
+  }
+
+  // 警告提示⚠️
+  &.warning {
+    -webkit-animation: slideInFromBottom .3s;
+    animation: slideInFromBottom .3s;
   }
 
   // 错误提示
@@ -685,6 +691,14 @@ a {
     transform: translate(-50%, -50%) rotateY(90deg);
     -webkit-transform: translate(-50%, -50%) rotateY(90deg);
   }
+  33% {
+    transform: translate(-50%, -50%) rotateY(0deg);
+    -webkit-transform: translate(-50%, -50%) rotateY(0deg);
+  }
+  67% {
+    transform: translate(-50%, -50%) rotateY(-30deg);
+    -webkit-transform: translate(-50%, -50%) rotateY(-30deg);
+  }
   100% {
     transform: translate(-50%, -50%) rotateY(0deg);
     -webkit-transform: translate(-50%, -50%) rotateY(0deg);
@@ -696,9 +710,30 @@ a {
     transform: translate(-50%, -50%) rotateY(90deg);
     -webkit-transform: translate(-50%, -50%) rotateY(90deg);
   }
+  33% {
+    transform: translate(-50%, -50%) rotateY(0deg);
+    -webkit-transform: translate(-50%, -50%) rotateY(0deg);
+  }
+  67% {
+    transform: translate(-50%, -50%) rotateY(-30deg);
+    -webkit-transform: translate(-50%, -50%) rotateY(-30deg);
+  }
   100% {
     transform: translate(-50%, -50%) rotateY(0deg);
     -webkit-transform: translate(-50%, -50%) rotateY(0deg);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translate(-50%, 0%);
+    -webkit-transform: translate(-50%, 0%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    opacity: 1;
   }
 }
 

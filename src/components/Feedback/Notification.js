@@ -48,7 +48,7 @@ class Notification extends React.Component {
 
         notices.map((notice)=>{
             const closeCallback = () => {
-                _this.remove.bind(notice.key);
+                _this.remove(notice.key);
 
                 if(notice.onClose){
                     notice.onClose();
@@ -110,7 +110,6 @@ Notification.reWrite = function (properties) {
             notification.remove(key);
         },
         destroy() {
-            console.log(div);
             ReactDOM.unmountComponentAtNode(div);
             document.body.removeChild(div);
         },
