@@ -92,15 +92,12 @@ const getUuid = () => {
 // Notification增加一个重写方法
 // 该方法方便Notification组件动态添加到页面中和重写
 Notification.reWrite = function (properties) {
-    const { getContainer, ...props } = properties || {};
+    const { ...props } = properties || {};
 
     let div;
-    if (getContainer) {
-        div = getContainer();
-    } else {
-        div = document.createElement('div');
-        document.body.appendChild(div);
-    }
+
+    div = document.createElement('div');
+    document.body.appendChild(div);
 
     const notification = ReactDOM.render(<Notification {...props} />, div);
 

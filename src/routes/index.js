@@ -7,6 +7,7 @@ import DatePicker from '../containers/DataEntry/DatePickerPage'
 import Picker from '../containers/DataEntry/PickerPage'
 import PickerView from '../containers/DataEntry/PickerViewPage'
 import List from '../containers/DataDisplay/ListPage'
+import Carousel from '../containers/DataDisplay/CarouselPage'
 import ToastPage from '../containers/Feedback/ToastPage'
 
 export const createRoutes = () => ({
@@ -23,7 +24,8 @@ export const createRoutes = () => ({
             {path: 'picker-view', component: PickerView},
         ]},
         {path: '/data-display', childRoutes: [
-            {path: 'list', component: List}
+            {path: 'list', component: List},
+            {path: 'carousel', component: Carousel},
         ]},
         {path: '/feedback', childRoutes: [
             {path: 'list', component: ToastPage}
