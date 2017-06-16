@@ -656,6 +656,25 @@ a {
   }
 }
 
+// Carousel
+.zby-carousel-box {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+
+  .zby-carousel-list {
+    width: 400%;
+    overflow: hidden;
+    
+    .zby-carousel-figure {
+      float: left;
+      width: 25%;
+      height: 300px;
+      background: #333333;
+    }
+  }
+}
+
 @keyframes BombIn {
   0% {
     transform: translate(-50%, -50%) scale(0, 0);

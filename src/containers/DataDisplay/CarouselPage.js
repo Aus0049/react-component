@@ -10,6 +10,13 @@ import Tools from '../../components/Tools/Tools'
 const Item = List.Item;
 
 const CarouselPage = () => {
+    const carouselData = [
+        {content: "1", style: {'textAlign': 'center', 'font-size': '40px', 'color': '#fff', 'background': 'red'}},
+        {content: "2", style: {'textAlign': 'center', 'font-size': '40px', 'color': '#fff', 'background': 'blue'}},
+        {content: "3", style: {'textAlign': 'center', 'font-size': '40px', 'color': '#fff', 'background': 'yellow'}},
+        {content: "4", style: {'textAlign': 'center', 'font-size': '40px', 'color': '#fff', 'background': 'green'}}
+    ];
+
     return (
         <div className="page carousel">
             <h1 className="title">
@@ -18,7 +25,11 @@ const CarouselPage = () => {
             </h1>
 
             <ListTitle title="基本" />
-            <Carousel />
+            <div style={{'padding': '0 5%'}}>
+                <Carousel
+                    data={carouselData}
+                    startIndex={0} />
+            </div>
         </div>
     )
 };
