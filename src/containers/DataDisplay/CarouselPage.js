@@ -28,7 +28,7 @@ const CarouselPage = () => {
             <div style={{'padding': '0 5%'}}>
                 <Carousel
                     data={carouselData}
-                    startIndex={0} />
+                    startIndex={1} />
             </div>
         </div>
     )

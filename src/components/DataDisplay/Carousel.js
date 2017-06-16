@@ -5,6 +5,14 @@ import React from 'react'
 import Hammer from 'hammerjs'
 
 class Carousel extends React.Component {
+    static propTypes = {
+        data: React.PropTypes.array, // 图片源数组
+        startIndex: React.PropTypes.number // 初始位置
+    };
+    static defaultProps = {
+        data: [],
+        startIndex: 0
+    };
     constructor (props) {
         super(props);
         this.state = {
@@ -19,6 +27,9 @@ class Carousel extends React.Component {
         if(startIndex){
             this.setState({currentFigureIndex: startIndex});
         }
+
+        // 获取轮播图宽度
+        this.carouselWidth = this.refs.box.getBoundingClientRect().width;
     }
     bindGestureEvent () {
         // 手势事件
@@ -60,16 +71,27 @@ class Carousel extends React.Component {
         return result;
     }
     getListStyle () {
+        // 处理list的宽度和当前的marginLeft
         const {data} = this.props;
+        const {currentFigureIndex} = this.state;
+        const result = {'width': (data.length * 100) + "%"};
 
-        return {'width': (data.length * 100) + "%"};
+        // 获取轮播图宽度
+        if(this.carouselWidth) {
+            result.marginLeft = - (this.carouselWidth * currentFigureIndex) + "px";
+        } else {
+            // 不存在 归0
+            result.marginLeft = "0px";
+        }
+
+        return result;
     }
     render () {
         const listStyle = this.getListStyle();
         const listDOM = this.getListDOM();
 
         return (
-            <div className="zby-carousel-box">
+            <div className="zby-carousel-box" ref="box">
                 <div className="zby-carousel-list" ref="list" style={listStyle}>
                     {listDOM}
                 </div>
