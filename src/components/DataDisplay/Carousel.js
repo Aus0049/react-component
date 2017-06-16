@@ -14,6 +14,11 @@ class Carousel extends React.Component {
     componentDidMount () {
         // 初始化手势事件
         this.bindGestureEvent();
+
+        const startIndex = this.props.startIndex;
+        if(startIndex){
+            this.setState({currentFigureIndex: startIndex});
+        }
     }
     bindGestureEvent () {
         // 手势事件
@@ -37,7 +42,6 @@ class Carousel extends React.Component {
         // 拖动结束 判断是否翻页
         listHammer.on('panend', (e)=>{
             // 拖动
-
         });
 
     }
