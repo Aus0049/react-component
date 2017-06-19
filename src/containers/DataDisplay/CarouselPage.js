@@ -30,6 +30,17 @@ const CarouselPage = () => {
                     data={carouselData}
                     startIndex={1} />
             </div>
+
+            <ListTitle title="自动轮播，循环轮播" />
+            <div style={{'padding': '0 5%'}}>
+                <Carousel
+                    data={carouselData}
+                    startIndex={0}
+                    autoplay={true}
+                    intervalTime={2000}
+                    infinite={true}
+                    loopFromStart={false}/>
+            </div>
         </div>
     )
 };

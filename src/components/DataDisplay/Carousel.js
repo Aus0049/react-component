@@ -8,29 +8,44 @@ import classNames from 'classnames'
 class Carousel extends React.Component {
     static propTypes = {
         data: React.PropTypes.array, // 图片源数组
-        startIndex: React.PropTypes.number // 初始位置
+        startIndex: React.PropTypes.number, // 初始位置
+        autoplay: React.PropTypes.bool, // 是否自动播放
+        intervalTime: React.PropTypes.number, // 循环播放时间差
+        infinite: React.PropTypes.bool, // 是否循环播放
+        loopFromStart: React.PropTypes.bool, // 是否从头循环
     };
     static defaultProps = {
         data: [],
-        startIndex: 0
+        startIndex: 0,
+        autoplay: false,
+        infinite: false,
+        loopFromStart: true
     };
     constructor (props) {
         super(props);
         this.state = {
+            data: props.data,
+            loopData: [],
             currentFigureIndex: 0,
         }
     }
     componentDidMount () {
-        // 初始化手势事件
-        this.bindGestureEvent();
+        const {startIndex, loopFromStart} = this.props;
+        const loopData = loopFromStart ? [] : this.getLoopData();
 
-        const startIndex = this.props.startIndex;
-        if(startIndex){
-            this.setState({currentFigureIndex: startIndex});
-        }
+        this.setState({
+            loopData: loopData,
+            currentFigureIndex: startIndex ? startIndex : 0
+        });
 
         // 获取轮播图宽度
         this.carouselWidth = this.refs.box.getBoundingClientRect().width;
+
+        // 初始化手势事件
+        this.bindGestureEvent();
+    }
+    componentWillUnmount() {
+        // clearInterval(this.intervalPlay);
     }
     bindGestureEvent () {
         // 手势事件
@@ -91,9 +106,32 @@ class Carousel extends React.Component {
             }
         }, step);
     }
+    getLoopData () {
+        // 不从头循环的时候 制造对应数组
+        const {data, startIndex} = this.props;
+        const length = data.length;
+        let result = [];
+
+        if(length == 1){
+            result = [data[0], data[0], data[0]];
+        } else if (length == 2) {
+            result = [data[1 - startIndex], data[2 - startIndex], data[1 - startIndex]];
+        } else {
+            // length >= 3;
+            if(startIndex == 0){
+                result = [data[length - 1], data[startIndex], data[startIndex + 1]];
+            } else if (startIndex == length - 1) {
+                result = [data[startIndex - 1], data[startIndex], data[0]];
+            } else {
+                result = [data[startIndex - 1], data[startIndex], data[startIndex + 1]];
+            }
+        }
+
+        return result;
+    }
     getMovePosition (moveDistance, currentMarginLeft) {
         // 做一个 达到左右极限 简易弹簧效果
-        const length = this.props.data.length;
+        const length = this.state.data.length;
         let result = moveDistance + currentMarginLeft;
 
         if(result >= 0){
@@ -107,7 +145,7 @@ class Carousel extends React.Component {
     }
     getCurrentIndex () {
         // 判断list当前应在那个index
-        const {data} = this.props;
+        const {data} = this.state;
         const list = this.refs.list;
         const currentMarginLeft = list.style.marginLeft;
         const currentRemainder = Math.abs(Number.parseInt(currentMarginLeft) % this.carouselWidth);
@@ -131,12 +169,53 @@ class Carousel extends React.Component {
 
         return currentIndex;
     }
-    getListDOM () {
-        const {data} = this.props;
-        let result = [];
-        const width = (100 / data.length) + "%";
+    getListStyle () {
+        // 处理list的宽度和当前的marginLeft
+        const {currentFigureIndex, data, loopData} = this.state;
+        const {loopFromStart} = this.props;
+        const result = loopFromStart ? {'width': (data.length * 100) + "%"} : {'width': (loopData.length * 100) + "%"};
 
-        data.map((item, index)=>{
+        // 获取轮播图宽度
+        if(this.carouselWidth) {
+            if(loopFromStart){
+                result.marginLeft = - (this.carouselWidth * currentFigureIndex) + "px";
+            } else {
+                result.marginLeft = - (this.carouselWidth * (currentFigureIndex + 1)) + "px";
+            }
+        } else {
+            // 不存在 归0
+            if(loopFromStart){
+                result.marginLeft = "0px";
+            } else {
+                result.marginLeft = "-33.33%";
+            }
+        }
+
+        return result;
+    }
+    getListDOM () {
+        // 分成两种 从头循环和不从头循环
+        const {loopFromStart} = this.props;
+        const {data, loopData} = this.state;
+        let result = [];
+
+        if(loopFromStart){
+            // 从头循环
+            const width = (100 / data.length) + "%";
+
+            data.map((item, index)=>{
+                const {content, style, ...props} = item;
+                result.push(
+                    <div className="zby-carousel-figure" key={index} style={Object.assign({'width': width}, style)} {...props}>{content}</div>
+                );
+            });
+
+            return result;
+        }
+
+        const width = (100 / loopData.length) + "%";
+
+        loopData.map((item, index)=>{
             const {content, style, ...props} = item;
             result.push(
                 <div className="zby-carousel-figure" key={index} style={Object.assign({'width': width}, style)} {...props}>{content}</div>
@@ -145,25 +224,8 @@ class Carousel extends React.Component {
 
         return result;
     }
-    getListStyle () {
-        // 处理list的宽度和当前的marginLeft
-        const {data} = this.props;
-        const {currentFigureIndex} = this.state;
-        const result = {'width': (data.length * 100) + "%"};
-
-        // 获取轮播图宽度
-        if(this.carouselWidth) {
-            result.marginLeft = - (this.carouselWidth * currentFigureIndex) + "px";
-        } else {
-            // 不存在 归0
-            result.marginLeft = "0px";
-        }
-
-        return result;
-    }
     getDotDOM () {
-        const data = this.props.data;
-        const {currentFigureIndex} = this.state;
+        const {currentFigureIndex, data} = this.state;
         let result = [];
 
         data.map((item, index)=>{
