@@ -11,10 +11,10 @@ const Item = List.Item;
 
 const CarouselPage = () => {
     const carouselData = [
-        {content: "1", style: {'textAlign': 'center', 'fontSize': '40px', 'color': '#fff', 'background': 'red'}},
-        {content: "2", style: {'textAlign': 'center', 'fontSize': '40px', 'color': '#fff', 'background': 'blue'}},
-        {content: "3", style: {'textAlign': 'center', 'fontSize': '40px', 'color': '#000', 'background': 'yellow'}},
-        {content: "4", style: {'textAlign': 'center', 'fontSize': '40px', 'color': '#fff', 'background': 'green'}}
+        {content: "Figure1", style: {'textAlign': 'center', 'fontSize': '1rem', 'lineHeight': '4rem', 'color': '#fff', 'background': '#26a69a'}},
+        {content: "Figure2", style: {'textAlign': 'center', 'fontSize': '1rem', 'lineHeight': '4rem', 'color': '#fff', 'background': '#ff751f'}},
+        {content: <div style={{'textAlign': 'center', 'fontSize': '1rem', 'lineHeight': '4rem', 'color': '#fff', 'background': '#a88652'}}>Figure3</div>},
+        {content: <img src="http://imglf1.ph.126.net/yGAEbKu1MI4PBX8afuQP3Q==/6619135865514155584.jpg" style={{width: '100%', height: '100%'}}/>}
     ];
 
     return (

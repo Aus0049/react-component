@@ -671,6 +671,32 @@ a {
       background: #333333;
     }
   }
+
+  .zby-carousel-dot-box {
+    position: absolute;
+    left: 50%;
+    bottom: 15px;
+
+    transform: translate(-50%, 0);
+
+    .zby-carousel-dot {
+      display: inline-block;
+      margin-right: 20px;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: #fff;
+      transition: all .3s;
+
+      &.active {
+        transform: scale(1.5, 1.5);
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 @keyframes BombIn {

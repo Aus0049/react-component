@@ -3,6 +3,7 @@
  */
 import React from 'react'
 import Hammer from 'hammerjs'
+import classNames from 'classnames'
 
 class Carousel extends React.Component {
     static propTypes = {
@@ -56,7 +57,10 @@ class Carousel extends React.Component {
             const currentIndex = _this.getCurrentIndex();
             currentMarginLeft = - (currentIndex * this.carouselWidth) + 'px';
             // 滑动动画 滑到对应位置
-            _this.animation(list, {marginLeft: currentMarginLeft}, 300);
+            _this.animation(list, {marginLeft: currentMarginLeft}, 300, ()=>{
+                // 改变当前index
+                _this.setState({currentFigureIndex: currentIndex});
+            });
         });
     }
     animation (obj, style, time, callback) {
@@ -80,6 +84,10 @@ class Carousel extends React.Component {
                 num++;
             } else {
                 clearInterval(timer);
+                // 回调
+                if(callback){
+                    callback();
+                }
             }
         }, step);
     }
@@ -153,9 +161,23 @@ class Carousel extends React.Component {
 
         return result;
     }
+    getDotDOM () {
+        const data = this.props.data;
+        const {currentFigureIndex} = this.state;
+        let result = [];
+
+        data.map((item, index)=>{
+            result.push(
+                <span key={index} className={classNames(['zby-carousel-dot', {'active': index == currentFigureIndex}])}></span>
+            );
+        });
+
+        return result;
+    }
     render () {
         const listStyle = this.getListStyle();
         const listDOM = this.getListDOM();
+        const dotDOM = this.getDotDOM();
 
         return (
             <div className="zby-carousel-box" ref="box">
@@ -163,10 +185,7 @@ class Carousel extends React.Component {
                     {listDOM}
                 </div>
                 <div className="zby-carousel-dot-box">
-                    <span className="zby-carousel-dot"></span>
-                    <span className="zby-carousel-dot"></span>
-                    <span className="zby-carousel-dot"></span>
-                    <span className="zby-carousel-dot"></span>
+                    {dotDOM}
                 </div>
             </div>
         )
