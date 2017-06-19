@@ -34,27 +34,48 @@ class Carousel extends React.Component {
     bindGestureEvent () {
         // 手势事件
         const list = this.refs.list;
-        const {data} = this.props;
         const listHammer = new Hammer(list);
 
-        let positionX;
+        let positionX, currentMarginLeft, _this = this;
 
         // 拖动开始记下当前位置
         listHammer.on('panstart', (e)=>{
             positionX = e.deltaX;
+            currentMarginLeft = Number.parseInt(list.style.marginLeft);
         });
 
         // 拖动中
         listHammer.on('panmove', (e)=>{
             // 拖动
-            list.style.marginLeft = (e.deltaX - positionX) + "px";
+            list.style.marginLeft = (e.deltaX - positionX) + currentMarginLeft + "px";
         });
 
         // 拖动结束 判断是否翻页
         listHammer.on('panend', (e)=>{
-            // 拖动
+            // 拖动结束 判断归位
+            const currentIndex = _this.getCurrentIndex();
+            currentMarginLeft = - (currentIndex * this.carouselWidth) + 'px';
+            // 滑动动画 滑到对应位置
+            _this.animation(list, {marginLeft: currentMarginLeft}, 500);
         });
+    }
+    animation (obj, style, time, callback) {
+        // 实现jq animate
 
+    }
+    getCurrentIndex () {
+        // 判断list当前应在那个index
+        const {data} = this.props;
+        const list = this.refs.list;
+        const currentMarginLeft = list.style.marginLeft;
+        const currentRemainder = Math.abs(Number.parseInt(currentMarginLeft) % this.carouselWidth);
+
+        let currentIndex = Math.abs(Number.parseInt(Number.parseInt(currentMarginLeft) / this.carouselWidth));
+        if(Math.abs(currentRemainder / this.carouselWidth) > 0.5){
+            currentIndex++;
+        }
+
+        return currentIndex;
     }
     getListDOM () {
         const {data} = this.props;

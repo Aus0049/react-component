@@ -11,10 +11,10 @@ const Item = List.Item;
 
 const CarouselPage = () => {
     const carouselData = [
-        {content: "1", style: {'textAlign': 'center', 'font-size': '40px', 'color': '#fff', 'background': 'red'}},
-        {content: "2", style: {'textAlign': 'center', 'font-size': '40px', 'color': '#fff', 'background': 'blue'}},
-        {content: "3", style: {'textAlign': 'center', 'font-size': '40px', 'color': '#fff', 'background': 'yellow'}},
-        {content: "4", style: {'textAlign': 'center', 'font-size': '40px', 'color': '#000', 'background': 'green'}}
+        {content: "1", style: {'textAlign': 'center', 'fontSize': '40px', 'color': '#fff', 'background': 'red'}},
+        {content: "2", style: {'textAlign': 'center', 'fontSize': '40px', 'color': '#fff', 'background': 'blue'}},
+        {content: "3", style: {'textAlign': 'center', 'fontSize': '40px', 'color': '#fff', 'background': 'yellow'}},
+        {content: "4", style: {'textAlign': 'center', 'fontSize': '40px', 'color': '#000', 'background': 'green'}}
     ];
 
     return (
