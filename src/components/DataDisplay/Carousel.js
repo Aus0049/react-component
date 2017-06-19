@@ -41,13 +41,13 @@ class Carousel extends React.Component {
         // 拖动开始记下当前位置
         listHammer.on('panstart', (e)=>{
             positionX = e.deltaX;
-            currentMarginLeft = Number.parseInt(list.style.marginLeft);
+            currentMarginLeft = Number.parseFloat(list.style.marginLeft);
         });
 
         // 拖动中
         listHammer.on('panmove', (e)=>{
             // 拖动
-            list.style.marginLeft = (e.deltaX - positionX) + currentMarginLeft + "px";
+            list.style.marginLeft = _this.getMovePosition(e.deltaX - positionX, currentMarginLeft) + "px";
         });
 
         // 拖动结束 判断是否翻页
@@ -83,16 +83,42 @@ class Carousel extends React.Component {
             }
         }, step);
     }
+    getMovePosition (moveDistance, currentMarginLeft) {
+        // 做一个 达到左右极限 简易弹簧效果
+        const length = this.props.data.length;
+        let result = moveDistance + currentMarginLeft;
+
+        if(result >= 0){
+            result = result / 2;
+        } else if (result < -((length - 1) * this.carouselWidth)) {
+            // 右边距
+            result = -((length - 1) * this.carouselWidth) + ((result + ((length - 1) * this.carouselWidth)) / 2);
+        }
+
+        return result;
+    }
     getCurrentIndex () {
         // 判断list当前应在那个index
         const {data} = this.props;
         const list = this.refs.list;
         const currentMarginLeft = list.style.marginLeft;
         const currentRemainder = Math.abs(Number.parseInt(currentMarginLeft) % this.carouselWidth);
+        let currentIndex;
 
-        let currentIndex = Math.abs(Number.parseInt(Number.parseInt(currentMarginLeft) / this.carouselWidth));
-        if(Math.abs(currentRemainder / this.carouselWidth) > 0.5){
-            currentIndex++;
+        if(Number.parseInt(currentMarginLeft) <= 0){
+            currentIndex = Math.abs(Number.parseInt(Number.parseInt(currentMarginLeft) / this.carouselWidth));
+            if((currentRemainder / this.carouselWidth) >= 0.5){
+                currentIndex++;
+            } else if ((currentRemainder / this.carouselWidth) <= -0.5 ){
+                currentIndex--;
+            }
+
+            // 最大限制
+            if(currentIndex > data.length - 1){
+                currentIndex = data.length - 1;
+            }
+        } else {
+            currentIndex = 0;
         }
 
         return currentIndex;
