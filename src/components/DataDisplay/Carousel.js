@@ -49,6 +49,7 @@ class Carousel extends React.Component {
     }
     bindGestureEvent () {
         // 手势事件
+        const {loopFromStart} = this.props;
         const list = this.refs.list;
         const listHammer = new Hammer(list);
 
@@ -69,13 +70,45 @@ class Carousel extends React.Component {
         // 拖动结束 判断是否翻页
         listHammer.on('panend', (e)=>{
             // 拖动结束 判断归位
-            const currentIndex = _this.getCurrentIndex();
-            currentMarginLeft = - (currentIndex * this.carouselWidth) + 'px';
-            // 滑动动画 滑到对应位置
-            _this.animation(list, {marginLeft: currentMarginLeft}, 300, ()=>{
-                // 改变当前index
-                _this.setState({currentFigureIndex: currentIndex});
-            });
+            if(loopFromStart){
+                const currentIndex = _this.getCurrentIndex();
+                currentMarginLeft = - (currentIndex * this.carouselWidth) + 'px';
+                // 滑动动画 滑到对应位置
+                _this.animation(list, {marginLeft: currentMarginLeft}, 300, ()=>{
+                    // 改变当前index
+                    _this.setState({currentFigureIndex: currentIndex});
+                });
+            } else {
+                let move = e.deltaX - positionX;
+                let nextIndex;
+
+                if(move / _this.carouselWidth >= 0.5){
+                    move = _this.carouselWidth + currentMarginLeft + "px";
+                    nextIndex = _this.state.currentFigureIndex - 1;
+                } else if (move / _this.carouselWidth <= -0.5) {
+                    move = -_this.carouselWidth + currentMarginLeft + "px";
+                    nextIndex = _this.state.currentFigureIndex + 1;
+                } else {
+                    // 归位
+                    move = -_this.carouselWidth + "px";
+                    nextIndex = _this.state.currentFigureIndex;
+                }
+
+                if(nextIndex < 0){
+                    nextIndex = _this.state.data.length - 1;
+                } else if (nextIndex > _this.state.data.length - 1) {
+                    nextIndex = 0;
+                }
+
+                _this.animation(list, {marginLeft: move}, 300, ()=>{
+                    // 改变当前index
+                    list.style.marginLeft = -_this.carouselWidth + "px";
+                    _this.setState({
+                        loopData: _this.getLoopData(true, nextIndex),
+                        currentFigureIndex: nextIndex
+                    });
+                });
+            }
         });
     }
     animation (obj, style, time, callback) {
@@ -106,9 +139,18 @@ class Carousel extends React.Component {
             }
         }, step);
     }
-    getLoopData () {
+    getLoopData (fromState, newIndex) {
         // 不从头循环的时候 制造对应数组
-        const {data, startIndex} = this.props;
+        let data, startIndex;
+
+        if(fromState){
+            data = this.state.data;
+            startIndex = newIndex;
+        } else {
+            data = this.props.data;
+            startIndex = this.props.startIndex;
+        }
+
         const length = data.length;
         let result = [];
 
@@ -130,15 +172,27 @@ class Carousel extends React.Component {
         return result;
     }
     getMovePosition (moveDistance, currentMarginLeft) {
+        const {loopFromStart} = this.props;
+
         // 做一个 达到左右极限 简易弹簧效果
         const length = this.state.data.length;
         let result = moveDistance + currentMarginLeft;
 
-        if(result >= 0){
-            result = result / 2;
-        } else if (result < -((length - 1) * this.carouselWidth)) {
-            // 右边距
-            result = -((length - 1) * this.carouselWidth) + ((result + ((length - 1) * this.carouselWidth)) / 2);
+        if(loopFromStart){
+            if(result >= 0){
+                result = result / 2;
+            } else if (result < -((length - 1) * this.carouselWidth)) {
+                // 右边距
+                result = -((length - 1) * this.carouselWidth) + ((result + ((length - 1) * this.carouselWidth)) / 2);
+            }
+        } else {
+            // loopFromStart为false的时候 滑屏不能超过一张图大
+            if(moveDistance >= this.carouselWidth){
+                result = this.carouselWidth + currentMarginLeft;
+            } else if (moveDistance <= -this.carouselWidth) {
+                // 右边距
+                result = -this.carouselWidth + currentMarginLeft;
+            }
         }
 
         return result;
@@ -180,7 +234,7 @@ class Carousel extends React.Component {
             if(loopFromStart){
                 result.marginLeft = - (this.carouselWidth * currentFigureIndex) + "px";
             } else {
-                result.marginLeft = - (this.carouselWidth * (currentFigureIndex + 1)) + "px";
+                result.marginLeft = - (this.carouselWidth * 1) + "px";
             }
         } else {
             // 不存在 归0
