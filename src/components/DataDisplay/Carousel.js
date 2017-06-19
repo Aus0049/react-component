@@ -56,12 +56,32 @@ class Carousel extends React.Component {
             const currentIndex = _this.getCurrentIndex();
             currentMarginLeft = - (currentIndex * this.carouselWidth) + 'px';
             // 滑动动画 滑到对应位置
-            _this.animation(list, {marginLeft: currentMarginLeft}, 500);
+            _this.animation(list, {marginLeft: currentMarginLeft}, 300);
         });
     }
     animation (obj, style, time, callback) {
-        // 实现jq animate
+        // 简易实现jq animate
+        const currentStyle = obj.style;
+        const diffObj = {};
+        const step = 20, intervalNum = time / step;
+        let num = 0;
 
+        for(let i in style){
+            diffObj[i] = (Number.parseFloat(style[i]) - Number.parseFloat(currentStyle[i])) / intervalNum;
+        }
+
+        // 开始调用
+        let timer = setInterval(()=>{
+            if(num < intervalNum){
+                for(let i in diffObj){
+                    currentStyle[i] = Number.parseFloat(currentStyle[i]) + diffObj[i] + 'px';
+                }
+
+                num++;
+            } else {
+                clearInterval(timer);
+            }
+        }, step);
     }
     getCurrentIndex () {
         // 判断list当前应在那个index
