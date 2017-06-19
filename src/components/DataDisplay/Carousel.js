@@ -11,26 +11,25 @@ class Carousel extends React.Component {
         startIndex: React.PropTypes.number, // 初始位置
         autoplay: React.PropTypes.bool, // 是否自动播放
         intervalTime: React.PropTypes.number, // 循环播放时间差
-        infinite: React.PropTypes.bool, // 是否循环播放
         loopFromStart: React.PropTypes.bool, // 是否从头循环
     };
     static defaultProps = {
         data: [],
         startIndex: 0,
         autoplay: false,
-        infinite: false,
+        intervalTime: 2000,
         loopFromStart: true
     };
     constructor (props) {
         super(props);
         this.state = {
             data: props.data,
-            loopData: [],
+            loopData: [], // loopFromStart为false的时候 显示的数组
             currentFigureIndex: 0,
         }
     }
     componentDidMount () {
-        const {startIndex, loopFromStart} = this.props;
+        const {startIndex, loopFromStart, autoplay} = this.props;
         const loopData = loopFromStart ? [] : this.getLoopData();
 
         this.setState({
@@ -43,9 +42,20 @@ class Carousel extends React.Component {
 
         // 初始化手势事件
         this.bindGestureEvent();
+
+        if(autoplay){
+            this.bindAutoPlay();
+        }
     }
     componentWillUnmount() {
-        // clearInterval(this.intervalPlay);
+        clearInterval(this.intervalPlay);
+    }
+    bindAutoPlay () {
+        // 绑定自动轮播
+        const {intervalTime} = this.props;
+        this.intervalPlay = setInterval(()=>{
+            this.changeFigure();
+        }, intervalTime);
     }
     bindGestureEvent () {
         // 手势事件
@@ -110,6 +120,38 @@ class Carousel extends React.Component {
                 });
             }
         });
+    }
+    changeFigure () {
+        const {loopFromStart} = this.props;
+        const list = this.refs.list;
+
+        if(loopFromStart){
+            let {currentFigureIndex} = this.state;
+            let nextIndex = currentFigureIndex + 1;
+            if(currentFigureIndex == this.state.data.length - 1){
+                nextIndex = 0;
+            }
+
+            this.animation(list, {'marginLeft': -nextIndex * this.carouselWidth + "px"}, 300, ()=>{
+                this.setState({currentFigureIndex: nextIndex});
+            });
+        } else {
+            this.animation(list, {'marginLeft': - 2 * this.carouselWidth + "px"}, 300, ()=>{
+                let nextIndex = this.state.currentFigureIndex + 1;
+
+                if(nextIndex < 0){
+                    nextIndex = this.state.data.length - 1;
+                } else if (nextIndex > this.state.data.length - 1) {
+                    nextIndex = 0;
+                }
+
+                list.style.marginLeft = -this.carouselWidth + "px";
+                this.setState({
+                    loopData: this.getLoopData(true, nextIndex),
+                    currentFigureIndex: nextIndex
+                });
+            });
+        }
     }
     animation (obj, style, time, callback) {
         // 简易实现jq animate
