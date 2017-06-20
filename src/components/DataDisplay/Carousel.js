@@ -12,13 +12,17 @@ class Carousel extends React.Component {
         autoplay: React.PropTypes.bool, // 是否自动播放
         intervalTime: React.PropTypes.number, // 循环播放时间差
         loopFromStart: React.PropTypes.bool, // 是否从头循环
+        dots: React.PropTypes.bool, // 是否显示底部指示点
+        swipe: React.PropTypes.bool, // 是否可以滑动
     };
     static defaultProps = {
         data: [],
         startIndex: 0,
         autoplay: false,
         intervalTime: 2000,
-        loopFromStart: true
+        loopFromStart: true,
+        dots: true,
+        swipe: true
     };
     constructor (props) {
         super(props);
@@ -29,7 +33,7 @@ class Carousel extends React.Component {
         }
     }
     componentDidMount () {
-        const {startIndex, loopFromStart, autoplay} = this.props;
+        const {startIndex, loopFromStart, autoplay, swipe} = this.props;
         const loopData = loopFromStart ? [] : this.getLoopData();
 
         this.setState({
@@ -41,12 +45,15 @@ class Carousel extends React.Component {
         this.carouselWidth = this.refs.box.getBoundingClientRect().width;
 
         // 初始化手势事件
-        this.bindGestureEvent();
+        if(swipe){
+            this.bindGestureEvent();
+        }
 
-        if(autoplay){
+        if (autoplay) {
             this.bindAutoPlay();
         }
     }
+
     componentWillUnmount() {
         clearInterval(this.intervalPlay);
     }
@@ -322,6 +329,10 @@ class Carousel extends React.Component {
     }
     getDotDOM () {
         const {currentFigureIndex, data} = this.state;
+        const {dots} = this.props;
+
+        if(!dots) return;
+
         let result = [];
 
         data.map((item, index)=>{
@@ -330,7 +341,9 @@ class Carousel extends React.Component {
             );
         });
 
-        return result;
+        return <div className="zby-carousel-dot-box">
+            {result}
+        </div>;
     }
     render () {
         const listStyle = this.getListStyle();
@@ -342,9 +355,7 @@ class Carousel extends React.Component {
                 <div className="zby-carousel-list" ref="list" style={listStyle}>
                     {listDOM}
                 </div>
-                <div className="zby-carousel-dot-box">
-                    {dotDOM}
-                </div>
+                {dotDOM}
             </div>
         )
     }

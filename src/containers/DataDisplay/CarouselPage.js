@@ -28,7 +28,8 @@ const CarouselPage = () => {
             <div style={{'padding': '0 5%'}}>
                 <Carousel
                     data={carouselData}
-                    startIndex={1}/>
+                    startIndex={1}
+                    dots={false}/>
             </div>
 
             <ListTitle title="自动轮播，循环轮播" />
@@ -38,6 +39,16 @@ const CarouselPage = () => {
                     autoplay={true}
                     intervalTime={2000}
                     loopFromStart={false}/>
+            </div>
+
+            <ListTitle title="自动轮播，不循环轮播，不可滑动" />
+            <div style={{'padding': '0 5%'}}>
+                <Carousel
+                    data={carouselData}
+                    startIndex={3}
+                    autoplay={true}
+                    intervalTime={2000}
+                    swipe={false}/>
             </div>
         </div>
     )
