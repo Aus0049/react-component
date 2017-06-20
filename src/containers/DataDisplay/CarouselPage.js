@@ -50,6 +50,14 @@ const CarouselPage = () => {
                     intervalTime={2000}
                     swipe={false}/>
             </div>
+            <ListTitle title="没有动画效果，有回调函数" />
+            <div style={{'padding': '0 5%'}}>
+                <Carousel
+                    data={carouselData}
+                    loopFromStart={false}
+                    animation={false}
+                    onFigureChange={(nextIndex)=>{console.log("afterChange index is " + nextIndex)}}/>
+            </div>
         </div>
     )
 };

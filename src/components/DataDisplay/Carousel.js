@@ -14,6 +14,8 @@ class Carousel extends React.Component {
         loopFromStart: React.PropTypes.bool, // 是否从头循环
         dots: React.PropTypes.bool, // 是否显示底部指示点
         swipe: React.PropTypes.bool, // 是否可以滑动
+        animation: React.PropTypes.bool, // 是否显示动画
+        onFigureChange: React.PropTypes.func, // 切换figure之后的回调函数
     };
     static defaultProps = {
         data: [],
@@ -22,7 +24,8 @@ class Carousel extends React.Component {
         intervalTime: 2000,
         loopFromStart: true,
         dots: true,
-        swipe: true
+        swipe: true,
+        animation: true
     };
     constructor (props) {
         super(props);
@@ -53,7 +56,6 @@ class Carousel extends React.Component {
             this.bindAutoPlay();
         }
     }
-
     componentWillUnmount() {
         clearInterval(this.intervalPlay);
     }
@@ -66,70 +68,95 @@ class Carousel extends React.Component {
     }
     bindGestureEvent () {
         // 手势事件
-        const {loopFromStart} = this.props;
+        const {loopFromStart, animation, onFigureChange} = this.props;
         const list = this.refs.list;
         const listHammer = new Hammer(list);
 
         let positionX, currentMarginLeft, _this = this;
 
-        // 拖动开始记下当前位置
-        listHammer.on('panstart', (e)=>{
-            positionX = e.deltaX;
-            currentMarginLeft = Number.parseFloat(list.style.marginLeft);
-        });
+        if(animation){
+            // 拖动开始记下当前位置
+            listHammer.on('panstart', (e)=>{
+                positionX = e.deltaX;
+                currentMarginLeft = Number.parseFloat(list.style.marginLeft);
+            });
 
-        // 拖动中
-        listHammer.on('panmove', (e)=>{
-            // 拖动
-            list.style.marginLeft = _this.getMovePosition(e.deltaX - positionX, currentMarginLeft) + "px";
-        });
+            // 拖动中
+            listHammer.on('panmove', (e)=>{
+                // 拖动
+                list.style.marginLeft = _this.getMovePosition(e.deltaX - positionX, currentMarginLeft) + "px";
+            });
 
-        // 拖动结束 判断是否翻页
-        listHammer.on('panend', (e)=>{
-            // 拖动结束 判断归位
-            if(loopFromStart){
-                const currentIndex = _this.getCurrentIndex();
-                currentMarginLeft = - (currentIndex * this.carouselWidth) + 'px';
-                // 滑动动画 滑到对应位置
-                _this.animation(list, {marginLeft: currentMarginLeft}, 300, ()=>{
-                    // 改变当前index
-                    _this.setState({currentFigureIndex: currentIndex});
-                });
-            } else {
-                let move = e.deltaX - positionX;
-                let nextIndex;
-
-                if(move / _this.carouselWidth >= 0.5){
-                    move = _this.carouselWidth + currentMarginLeft + "px";
-                    nextIndex = _this.state.currentFigureIndex - 1;
-                } else if (move / _this.carouselWidth <= -0.5) {
-                    move = -_this.carouselWidth + currentMarginLeft + "px";
-                    nextIndex = _this.state.currentFigureIndex + 1;
-                } else {
-                    // 归位
-                    move = -_this.carouselWidth + "px";
-                    nextIndex = _this.state.currentFigureIndex;
-                }
-
-                if(nextIndex < 0){
-                    nextIndex = _this.state.data.length - 1;
-                } else if (nextIndex > _this.state.data.length - 1) {
-                    nextIndex = 0;
-                }
-
-                _this.animation(list, {marginLeft: move}, 300, ()=>{
-                    // 改变当前index
-                    list.style.marginLeft = -_this.carouselWidth + "px";
-                    _this.setState({
-                        loopData: _this.getLoopData(true, nextIndex),
-                        currentFigureIndex: nextIndex
+            // 拖动结束 判断是否翻页
+            listHammer.on('panend', (e)=>{
+                // 拖动结束 判断归位
+                if(loopFromStart){
+                    const currentIndex = _this.getCurrentIndex();
+                    currentMarginLeft = - (currentIndex * this.carouselWidth) + 'px';
+                    // 滑动动画 滑到对应位置
+                    _this.animation(list, {marginLeft: currentMarginLeft}, 300, ()=>{
+                        // 改变当前index
+                        _this.setState({currentFigureIndex: currentIndex});
+                        if(onFigureChange) onFigureChange(currentIndex);
                     });
-                });
-            }
-        });
+                } else {
+                    let [move, nextIndex] = _this.limitMove(e.deltaX - positionX, currentMarginLeft);
+
+                    _this.animation(list, {marginLeft: move}, 300, ()=>{
+                        // 改变当前index
+                        list.style.marginLeft = -_this.carouselWidth + "px";
+                        _this.setState({
+                            loopData: _this.getLoopData(true, nextIndex),
+                            currentFigureIndex: nextIndex
+                        });
+                        if(onFigureChange) onFigureChange(nextIndex);
+                    });
+                }
+            });
+        } else {
+            // 无动画效果
+            listHammer.on('swiperight', (e)=>{
+                // 滑动超过1/4即可
+                if(Math.abs(e.deltaX) / _this.carouselWidth > 0.25){
+                    let nextIndex = _this.state.currentFigureIndex - 1;
+                    if(nextIndex < 0){
+                        nextIndex = _this.state.data.length - 1;
+                    }
+                    if(loopFromStart){
+                        _this.setState({currentFigureIndex: nextIndex});
+                    } else {
+                        _this.setState({
+                            loopData: _this.getLoopData(true, nextIndex),
+                            currentFigureIndex: nextIndex
+                        });
+                    }
+                    if(onFigureChange) onFigureChange(nextIndex);
+                }
+            });
+
+            listHammer.on('swipeleft', (e)=>{
+                // 滑动超过1/4即可
+                if(Math.abs(e.deltaX) / _this.carouselWidth > 0.25){
+                    let nextIndex = _this.state.currentFigureIndex + 1;
+                    if(nextIndex >= _this.state.data.length){
+                        nextIndex = 0;
+                    }
+                    if(loopFromStart){
+                        _this.setState({currentFigureIndex: nextIndex});
+                    } else {
+                        _this.setState({
+                            loopData: _this.getLoopData(true, nextIndex),
+                            currentFigureIndex: nextIndex
+                        });
+                    }
+
+                    if(onFigureChange) onFigureChange(nextIndex);
+                }
+            });
+        }
     }
     changeFigure () {
-        const {loopFromStart} = this.props;
+        const {loopFromStart, animation, onFigureChange} = this.props;
         const list = this.refs.list;
 
         if(loopFromStart){
@@ -139,11 +166,33 @@ class Carousel extends React.Component {
                 nextIndex = 0;
             }
 
-            this.animation(list, {'marginLeft': -nextIndex * this.carouselWidth + "px"}, 300, ()=>{
+            if(animation){
+                this.animation(list, {'marginLeft': -nextIndex * this.carouselWidth + "px"}, 300, ()=>{
+                    this.setState({currentFigureIndex: nextIndex});
+                });
+            } else {
                 this.setState({currentFigureIndex: nextIndex});
-            });
+            }
+            if(onFigureChange) onFigureChange(nextIndex);
         } else {
-            this.animation(list, {'marginLeft': - 2 * this.carouselWidth + "px"}, 300, ()=>{
+            if(animation){
+                this.animation(list, {'marginLeft': - 2 * this.carouselWidth + "px"}, 300, ()=>{
+                    let nextIndex = this.state.currentFigureIndex + 1;
+
+                    if(nextIndex < 0){
+                        nextIndex = this.state.data.length - 1;
+                    } else if (nextIndex > this.state.data.length - 1) {
+                        nextIndex = 0;
+                    }
+
+                    list.style.marginLeft = -this.carouselWidth + "px";
+                    this.setState({
+                        loopData: this.getLoopData(true, nextIndex),
+                        currentFigureIndex: nextIndex
+                    });
+                    if(onFigureChange) onFigureChange(nextIndex);
+                });
+            } else {
                 let nextIndex = this.state.currentFigureIndex + 1;
 
                 if(nextIndex < 0){
@@ -157,7 +206,8 @@ class Carousel extends React.Component {
                     loopData: this.getLoopData(true, nextIndex),
                     currentFigureIndex: nextIndex
                 });
-            });
+                if(onFigureChange) onFigureChange(nextIndex);
+            }
         }
     }
     animation (obj, style, time, callback) {
@@ -219,6 +269,30 @@ class Carousel extends React.Component {
         }
 
         return result;
+    }
+    limitMove (distance, currentMarginLeft) {
+        let move = distance;
+        let nextIndex;
+
+        if(move / this.carouselWidth >= 0.5){
+            move = this.carouselWidth + currentMarginLeft + "px";
+            nextIndex = this.state.currentFigureIndex - 1;
+        } else if (move / this.carouselWidth <= -0.5) {
+            move = -this.carouselWidth + currentMarginLeft + "px";
+            nextIndex = this.state.currentFigureIndex + 1;
+        } else {
+            // 归位
+            move = -this.carouselWidth + "px";
+            nextIndex = this.state.currentFigureIndex;
+        }
+
+        if(nextIndex < 0){
+            nextIndex = this.state.data.length - 1;
+        } else if (nextIndex > this.state.data.length - 1) {
+            nextIndex = 0;
+        }
+
+        return [move, nextIndex];
     }
     getMovePosition (moveDistance, currentMarginLeft) {
         const {loopFromStart} = this.props;
