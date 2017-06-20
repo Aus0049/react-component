@@ -26,9 +26,11 @@ class Notice extends React.Component {
         }
     }
     componentDidMount () {
-        this.closeTimer = setTimeout(() => {
-            this.close();
-        }, this.props.duration - 300); // 减掉消失动画300毫秒
+        if(this.props.duration > 0){
+            this.closeTimer = setTimeout(() => {
+                this.close();
+            }, this.props.duration - 300); // 减掉消失动画300毫秒
+        }
     }
     componentWillUnmount () {
         // 当有意外关闭的时候 清掉定时器

@@ -30,7 +30,11 @@ const ToastPage = () => {
         Toast.warning('警告：手机2s后爆炸', 3000, 'fa-exclamation-triangle', false);
     };
     const loadingToast = () => {
-        Toast.show('加载中...', 3000, 'fa-circle-o-notch fa-spin', false);
+        Toast.show('加载中...', 0, 'fa-circle-o-notch fa-spin', false);
+        const timer = setTimeout(()=>{
+            Toast.hide();
+            clearTimeout(timer);
+        }, 3000);
     };
 
     return (
