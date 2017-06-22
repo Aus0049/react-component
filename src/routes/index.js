@@ -9,6 +9,7 @@ import PickerView from '../containers/DataEntry/PickerViewPage'
 import List from '../containers/DataDisplay/ListPage'
 import Carousel from '../containers/DataDisplay/CarouselPage'
 import ToastPage from '../containers/Feedback/ToastPage'
+import TagPage from '../containers/DataDisplay/TagPage'
 
 export const createRoutes = () => ({
     path: '/',
@@ -26,6 +27,7 @@ export const createRoutes = () => ({
         {path: '/data-display', childRoutes: [
             {path: 'list', component: List},
             {path: 'carousel', component: Carousel},
+            {path: 'Tag', component: TagPage},
         ]},
         {path: '/feedback', childRoutes: [
             {path: 'list', component: ToastPage}
