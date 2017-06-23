@@ -8,14 +8,27 @@ import Touchable from 'rc-touchable'
 const Tag = (props) => {
     const {content, selected, closeable, disabled, onClick, onClose, style} = props;
 
+    const handleClick = () => {
+        if(onClick) onClick(props);
+    };
+
+    let closeDOM = [];
+
+    if(closeable) {
+        closeDOM.push(
+            <div className="close"><i className="fa fa-times"></i></div>
+        );
+    }
+
     return (
-        <Touchable
-            onPress={onClick}
-            disabled={disabled}>
-            <div className={classNames(['zby-tag-box', {'selected': selected}])}>
-                {content}
+            <div className={classNames(['zby-tag-box', {'selected': selected}])} style={style}>
+                <Touchable
+                    onPress={ handleClick }
+                    disabled={disabled}>
+                <div>{content}</div>
+                </Touchable>
+                {closeDOM}
             </div>
-        </Touchable>
     );
 };
 

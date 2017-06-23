@@ -12,9 +12,13 @@ class TagPage extends React.Component {
         super(props);
         this.state = {
             colorfulTags: [
-                {content: "Basic", selected: false, closeable: false, onClick: ()=>{console.log(arguments);}}
+                {content: "Basic", selected: false, closeable: true, onClick: this.handleTagClick},
+                {content: "Pink", selected: true, closeable: true, style: {color: "#f5317f", background: "#fdd8e7", borderColor: "#fdd8e7"}},
             ]
         }
+    }
+    handleTagClick (item) {
+        console.log(item);
     }
     getTagsDOM () {
         let result = [];
@@ -40,7 +44,6 @@ class TagPage extends React.Component {
                 <div style={{padding: "20px 5%"}}>
                     {tagsDOM}
                 </div>
-
             </div>
         );
     }
