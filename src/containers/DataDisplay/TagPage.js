@@ -11,10 +11,24 @@ class TagPage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            colorfulTags: [{content: ""}]
+            colorfulTags: [
+                {content: "Basic", selected: false, closeable: false, onClick: ()=>{console.log(arguments);}}
+            ]
         }
     }
+    getTagsDOM () {
+        let result = [];
+        const {colorfulTags} = this.state;
+
+        colorfulTags.map((item, index)=>{
+            result.push(<Tag key={index} {...item} />);
+        });
+
+        return result;
+    }
     render () {
+        const tagsDOM = this.getTagsDOM();
+
         return (
             <div className="page carousel">
                 <h1 className="title">
@@ -24,7 +38,7 @@ class TagPage extends React.Component {
 
                 <ListTitle title="基本" />
                 <div style={{padding: "20px 5%"}}>
-                    <Tag />
+                    {tagsDOM}
                 </div>
 
             </div>
