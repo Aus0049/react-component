@@ -699,6 +699,19 @@ a {
   }
 }
 
+// Tag
+.zby-tag-box {
+  display: inline-block;
+  height: 60px;
+  font-size: 28px;
+  line-height: 60px;
+  padding: 0 20px;
+  color: #888;
+  border: 1px solid $darkGray;
+  border-radius: 5px;
+  background: #fff;
+}
+
 @keyframes BombIn {
   0% {
     transform: translate(-50%, -50%) scale(0, 0);

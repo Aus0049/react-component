@@ -7,7 +7,9 @@ import classNames from 'classnames'
 class Tag extends React.Component {
     render () {
         return (
-            <div>tag</div>
+            <div className="zby-tag-box">
+                adds
+            </div>
         );
     }
 }

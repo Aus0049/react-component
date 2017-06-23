@@ -5,6 +5,7 @@ import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
 import Tools from '../../components/Tools/Tools'
+import Tag from '../../components/DataDisplay/Tag'
 
 class TagPage extends React.Component {
     constructor (props) {
@@ -22,7 +23,9 @@ class TagPage extends React.Component {
                 </h1>
 
                 <ListTitle title="基本" />
-
+                <div style={{padding: "20px 5%"}}>
+                    <Tag />
+                </div>
 
             </div>
         );
