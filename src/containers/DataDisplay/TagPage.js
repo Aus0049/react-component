@@ -12,8 +12,9 @@ class TagPage extends React.Component {
         super(props);
         this.state = {
             colorfulTags: [
-                {content: "Basic", selected: false, closeable: true, onClick: this.handleTagClick},
-                {content: "Pink", selected: true, closeable: true, style: {color: "#f5317f", background: "#fdd8e7", borderColor: "#fdd8e7"}},
+                {content: "Basic", selected: false, closeable: true, onClick: this.handleTagClick, onClose: this.handleTagClick},
+                {content: "Basic", selected: true, closeable: false, onClick: this.handleTagClick},
+                {content: "Pink", selected: false, closeable: false, style: {color: "#f5317f", background: "#fdd8e7", borderColor: "#fdd8e7"}},
             ]
         }
     }

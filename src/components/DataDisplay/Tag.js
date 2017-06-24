@@ -12,20 +12,29 @@ const Tag = (props) => {
         if(onClick) onClick(props);
     };
 
+    const handleClose = () => {
+        if(onClose) onClose(props);
+    };
+
     let closeDOM = [];
 
     if(closeable) {
         closeDOM.push(
-            <div className="close"><i className="fa fa-times"></i></div>
+            <Touchable
+                key="close-t"
+                onPress={ handleClose }>
+                <div key="close" className="close"><i className="fa fa-times"></i></div>
+            </Touchable>
         );
     }
 
     return (
             <div className={classNames(['zby-tag-box', {'selected': selected}])} style={style}>
                 <Touchable
+                    key="content-t"
                     onPress={ handleClick }
                     disabled={disabled}>
-                <div>{content}</div>
+                <div key="content">{content}</div>
                 </Touchable>
                 {closeDOM}
             </div>
