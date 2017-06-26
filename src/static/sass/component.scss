@@ -703,17 +703,24 @@ a {
 .zby-tag-box {
   display: inline-block;
   position: relative;
-  margin: 0 10px 0 10px;
+  margin: 0 10px 20px 10px;
   padding: 16px 20px;
   border: 1px solid $darkGray;
   border-radius: 5px;
   background: #fff;
   font-size: 28px;
   color: #888;
+  word-break: break-all;
 
   &.selected {
     border-color: $viColor;
     color: $viColor;
+  }
+
+  &.disabled {
+    color: #bbb;
+    background: #ddd;
+    border-color: #ddd;
   }
 
   .close {

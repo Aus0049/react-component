@@ -29,7 +29,7 @@ const Tag = (props) => {
     }
 
     return (
-            <div className={classNames(['zby-tag-box', {'selected': selected}])} style={style}>
+            <div className={classNames(['zby-tag-box', {'selected': selected, 'disabled': disabled}])} style={style}>
                 <Touchable
                     key="content-t"
                     onPress={ handleClick }
