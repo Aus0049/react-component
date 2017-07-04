@@ -13,6 +13,13 @@ class UploaderPage extends React.Component {
             uploadList1: []
         }
     }
+    handleUploadChange (obj) {
+        const {uploadList1} = this.state;
+
+        uploadList1.push(obj);
+
+        this.setState({uploadList1: uploadList1});
+    }
     render () {
         const {uploadList1} = this.state;
 
@@ -26,7 +33,8 @@ class UploaderPage extends React.Component {
                 <ListTitle title="基本" />
                 <Uploader
                     data={uploadList1}
-                    uploadUrl={'https://jsonplaceholder.typicode.com/posts/'} />
+                    uploadUrl={'https://jsonplaceholder.typicode.com/posts/'}
+                    onChange={this.handleUploadChange.bind(this)} />
             </div>
         )
     }
