@@ -120,12 +120,18 @@ class Uploader extends React.Component{
         this.uploadImg(formData);
     }
     uploadImg (formData) {
+        const _this = this;
         const imgFile = this.imgFile;
         const xhr = new XMLHttpRequest();
         const {uploadUrl, onChange} = this.props;
 
+        // 开始发送ajax
+        if(onChange) {
+            onChange({key: '', url: '', name: imgFile.name, dataUrl: ''}, "start");
+        }
+
         // 进度监听
-        // xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this), false);
+        xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this), false);
         // 加载监听
         // xhr.addEventListener('load', ()=>{console.log("加载中");}, false);
         // 错误监听
@@ -136,16 +142,18 @@ class Uploader extends React.Component{
                 if (xhr.status === 200 || xhr.status === 201) {
                     // 上传成功
                     if(onChange) {
-                        console.log(1111);
-                        onChange({key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl});
+                        onChange({key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl}, "loaded");
                     }
                 } else {
                     // 上传失败
                 }
             }
         };
-        xhr.open('GET', uploadUrl , true);
+        xhr.open('POST', uploadUrl , true);
         xhr.send(formData);
+    }
+    handleProgress (event) {
+
     }
     getImagesListDOM () {
         const {data} = this.props;
@@ -157,7 +165,7 @@ class Uploader extends React.Component{
 
             result.push(
                 <div key={index} className="zby-img-preview-box">
-                    <img src={src} />
+                    {src ? <img src={src} /> : <div className="uploading"><i className="fa fa-picture-o"></i></div>}
                 </div>
             );
         });

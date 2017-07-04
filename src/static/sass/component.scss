@@ -755,11 +755,28 @@ a {
     border-radius: 20px;
     border: 2px solid #d9d9d9;
     background: #fff;
+    animation: scaleIn .3s;
+    vertical-align: top;
+
+    transition: all .3s;
+    transform-origin: left top;
 
     img {
       display: block;
       height: 100%;
       border-radius: 20px;
+    }
+
+    .uploading {
+      width: 200px;
+      height: 100%;
+      text-align: center;
+
+      .fa {
+        font-size: 80px;
+        line-height: 176px;
+        color: #999;
+      }
     }
   }
 
@@ -906,5 +923,14 @@ a {
   30%, 60%, 90% {
     -webkit-transform: translate(-40%, -50%);
     transform: translate(-40%, -50%);
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0, 0);
+  }
+  100% {
+    transform: scale(1, 1);
   }
 }
