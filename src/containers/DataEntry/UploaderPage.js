@@ -3,19 +3,33 @@
  */
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
+import Uploader from '../../components/DataEntry/Uploader'
 import Tools from '../../components/Tools/Tools'
 
-const UploaderPage = () => {
-    return (
-        <div className="page uploader">
-            <h1 className="title">
-                <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
-                Uploader
-            </h1>
+class UploaderPage extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            uploadList1: []
+        }
+    }
+    render () {
+        const {uploadList1} = this.state;
 
-            <ListTitle title="基本" />
-        </div>
-    )
-};
+        return (
+            <div className="page uploader">
+                <h1 className="title">
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    Uploader
+                </h1>
+
+                <ListTitle title="基本" />
+                <Uploader
+                    data={uploadList1}
+                    uploadUrl={'https://jsonplaceholder.typicode.com/posts/'} />
+            </div>
+        )
+    }
+}
 
 export default UploaderPage
