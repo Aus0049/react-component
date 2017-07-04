@@ -133,9 +133,10 @@ class Uploader extends React.Component{
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 const result = JSON.parse(xhr.responseText);
-                if (xhr.status === 200) {
+                if (xhr.status === 200 || xhr.status === 201) {
                     // 上传成功
                     if(onChange) {
+                        console.log(1111);
                         onChange({key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl});
                     }
                 } else {
@@ -143,7 +144,7 @@ class Uploader extends React.Component{
                 }
             }
         };
-        xhr.open('POST', uploadUrl , true);
+        xhr.open('GET', uploadUrl , true);
         xhr.send(formData);
     }
     getImagesListDOM () {
@@ -152,9 +153,11 @@ class Uploader extends React.Component{
         const _this = this;
 
         data.map((item, index)=>{
+            const src = item.url ? item.url : item.dataUrl;
+
             result.push(
                 <div key={index} className="zby-img-preview-box">
-                    <img src={item.src} alt=""/>
+                    <img src={src} />
                 </div>
             );
         });

@@ -745,11 +745,29 @@ a {
   padding: 20px;
   background: #fff;
 
+  .zby-img-preview-box {
+    box-sizing: border-box;
+    display: inline-block;
+    margin-right: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    height: 200px;
+    border-radius: 20px;
+    border: 2px solid #d9d9d9;
+    background: #fff;
+
+    img {
+      display: block;
+      height: 100%;
+      border-radius: 20px;
+    }
+  }
+
   .zby-upload-img {
     display: inline-block;
-    width: 150px;
-    height: 150px;
-    border-radius: 4px;
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
     border: 2px dashed #d9d9d9;
     vertical-align: top;
     text-align: center;
@@ -763,7 +781,7 @@ a {
 
     .fa-plus {
       font-size: 60px;
-      line-height: 100px;
+      line-height: 150px;
     }
 
     .text {
