@@ -5,6 +5,14 @@ import React from 'react'
 import classNames from 'classnames'
 import Touchable from 'rc-touchable'
 
+// 统计img总数 防止重复
+let imgNumber = 0;
+
+// 生成唯一的id
+const getUuid = () => {
+    return "img-" + new Date().getTime() + "-" + imgNumber++;
+};
+
 class Uploader extends React.Component{
     constructor (props) {
         super(props);
@@ -125,26 +133,26 @@ class Uploader extends React.Component{
         const imgFile = this.imgFile;
         const xhr = new XMLHttpRequest();
         const {uploadUrl, onChange} = this.props;
+        const uuid = getUuid();
 
         // 开始发送ajax
         if(onChange) {
-            onChange({key: '', url: '', name: imgFile.name, dataUrl: '', status: 'loading'});
+            onChange({id: uuid, key: '', url: '', name: imgFile.name, dataUrl: '', status: 'loading'});
         }
 
         // 进度监听
         xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this), false);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
-                // const result = JSON.parse(xhr.responseText);
                 if (xhr.status === 200 || xhr.status === 201) {
                     // 上传成功
                     if(onChange) {
-                        onChange({key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'loaded'});
+                        onChange({id: uuid, key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'loaded'});
                     }
                 } else {
                     // 上传失败
                     if(onChange) {
-                        onChange({key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'error'});
+                        onChange({id: uuid, key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'error'});
                     }
                 }
             }
@@ -160,6 +168,11 @@ class Uploader extends React.Component{
         this.refs[`text${data.length - 1}`].innerHTML = progress;
         this.refs[`img${data.length - 1}`].style.width = progress;
     }
+    handleDelete (id) {
+        const {onDelete} = this.props;
+
+        if(onDelete) onDelete(id);
+    }
     getImagesListDOM () {
         const {data} = this.props;
         const result = [];
@@ -174,7 +187,7 @@ class Uploader extends React.Component{
                     {src ? <img src={src} onClick={()=>{item.url ? window.open(item.url) : ''}}/> : <div className="uploading"><i className="fa fa-picture-o"></i></div>}
                     {status === 'loading' ? <div className="progress-text" ref={`text${index}`}></div> : ''}
                     {status === 'loading' ? <div className="progress" ref={`img${index}`}></div> : ''}
-                    {status === 'loaded' || status === 'error' ? <div className="close"><i className="fa fa-times"></i></div> : ''}
+                    {status === 'loaded' || status === 'error' ? <div className="close" onClick={_this.handleDelete.bind(_this, item.id)}><i className="fa fa-times"></i></div> : ''}
                 </div>
             );
         });

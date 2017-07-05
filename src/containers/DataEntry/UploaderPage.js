@@ -19,9 +19,23 @@ class UploaderPage extends React.Component {
         if(obj.status === 'loading'){
             uploadList1.push(obj);
         } else {
-            uploadList1.pop();
-            uploadList1.push(obj);
+            uploadList1.map((item, index)=>{
+                if(item.id === obj.id){
+                    uploadList1.splice(index, 1, obj)
+                }
+            });
         }
+
+        this.setState({uploadList1: uploadList1});
+    }
+    handleDelete (id) {
+        const {uploadList1} = this.state;
+
+        uploadList1.map((item, index)=>{
+            if(item.id === id){
+                uploadList1.splice(index, 1);
+            }
+        });
 
         this.setState({uploadList1: uploadList1});
     }
@@ -40,7 +54,7 @@ class UploaderPage extends React.Component {
                     data={uploadList1}
                     uploadUrl={'https://jsonplaceholder.typicode.com/posts/'}
                     onChange={this.handleUploadChange.bind(this)}
-
+                    onDelete={this.handleDelete.bind(this)}
                 />
             </div>
         )
