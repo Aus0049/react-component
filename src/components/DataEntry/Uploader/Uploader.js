@@ -4,6 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Touchable from 'rc-touchable'
+import Toast from '../../Feedback/Toast'
 import './style/index.scss'
 
 // 统计img总数 防止重复
@@ -18,22 +19,27 @@ class Uploader extends React.Component{
     constructor (props) {
         super(props);
         this.imgFile = {};
+        this.handleInputChange = this.handleInputChange.bind(this);
     }
-    static propTypes = {
-        data: React.PropTypes.array, // 图片缓存区数组
-        uploadUrl: React.PropTypes.string, // 图上传路径
-    };
-    static defaultProps = {
-
-    };
     handleInputChange (event) {
         const file = event.target.files[0];
-
+        const {typeArray, maxSize} = this.props;
+        // 图片类型检查
+        if(typeArray.indexOf(file.type.split('/')[1]) === -1){
+            Toast.error('不支持文件类型', 2000, undefined, false);
+            return;
+        }
+        // 图片尺寸检查
+        if(file.size > maxSize * 1024){
+            Toast.error('文件大小超过限制', 2000, undefined, false);
+            return;
+        }
         // 图片转dataUrl
         this.transformFileToDataUrl(file);
     }
     transformFileToDataUrl (file) {
         const _this = this;
+        const {compress} = this.props;
         const imgCompassMaxSize = 200 * 1024; // 超过 200k 就压缩
 
         // 存储文件相关信息
@@ -47,16 +53,17 @@ class Uploader extends React.Component{
         reader.onload = function(e) {
             const result = e.target.result;
 
-            if(result.length < imgCompassMaxSize) {
-                _this.compress(result, _this.processData.bind(_this), false );    // 图片不压缩
-            } else {
+            if(compress && result.length > imgCompassMaxSize){
                 _this.compress(result, _this.processData.bind(_this));            // 图片压缩
+            } else {
+                _this.compress(result, _this.processData.bind(_this), false );    // 图片不压缩
             }
         };
 
         reader.readAsDataURL(file);
     }
     compress (dataURL, callback, shouldCompress = true) {
+        const {compressionRatio} = this.props;
         const imgFile = this.imgFile;
         const img = new window.Image();
 
@@ -74,7 +81,7 @@ class Uploader extends React.Component{
             let compressedDataUrl;
 
             if(shouldCompress){
-                compressedDataUrl = canvas.toDataURL(imgFile.type, 0.2);
+                compressedDataUrl = canvas.toDataURL(imgFile.type, (compressionRatio / 100));
             } else {
                 compressedDataUrl = canvas.toDataURL(imgFile.type, 1);
             }
@@ -213,10 +220,28 @@ class Uploader extends React.Component{
         return (
             <div className="zby-uploader-box">
                 {imagesList}
-                <input ref="input" type="file" className="file-input" name="image" accept="image/*" onChange={this.handleInputChange.bind(this)} />
+                <input ref="input" type="file" className="file-input" name="image" accept="image/*" onChange={this.handleInputChange} />
             </div>
         )
     }
 }
+
+Uploader.propTypes = {
+    data: React.PropTypes.array.isRequired, // 图片缓存区数组
+    uploadUrl: React.PropTypes.string.isRequired, // 图上传路径
+    onChange: React.PropTypes.func.isRequired, // 图片上传之后的回调
+    onDelete: React.PropTypes.func.isRequired, // 图片删除之后的回调
+    typeArray: React.PropTypes.array, // 支持类型数组
+    maxSize: React.PropTypes.number, // 图片最大体积 单位：KB
+    compress: React.PropTypes.bool, // 是否进行图片压缩
+    compressionRatio: React.PropTypes.number // 图片压缩比例 单位：%
+};
+
+Uploader.defaultProps = {
+    typeArray: ['jpeg', 'jpg', 'png', 'gif'],
+    maxSize: 5 * 1024, // 5MB
+    compress: true,
+    compressionRatio: 20
+};
 
 export default Uploader
