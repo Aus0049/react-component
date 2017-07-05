@@ -13,12 +13,12 @@ class UploaderPage extends React.Component {
             uploadList1: []
         }
     }
-    handleUploadChange (obj, status = "start") {
+    handleUploadChange (obj) {
         const {uploadList1} = this.state;
 
-        if(status == "start"){
+        if(obj.status === 'loading'){
             uploadList1.push(obj);
-        } else if (status == "loaded") {
+        } else {
             uploadList1.pop();
             uploadList1.push(obj);
         }

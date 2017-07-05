@@ -2,6 +2,7 @@
  * Created by Aus on 2017/7/4.
  */
 import React from 'react'
+import classNames from 'classnames'
 import Touchable from 'rc-touchable'
 
 class Uploader extends React.Component{
@@ -127,7 +128,7 @@ class Uploader extends React.Component{
 
         // 开始发送ajax
         if(onChange) {
-            onChange({key: '', url: '', name: imgFile.name, dataUrl: ''}, "start");
+            onChange({key: '', url: '', name: imgFile.name, dataUrl: '', status: 'loading'});
         }
 
         // 进度监听
@@ -138,22 +139,30 @@ class Uploader extends React.Component{
         // xhr.addEventListener('error', ()=>{Toast.error("上传失败！", 2000, undefined, false);}, false);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
-                const result = JSON.parse(xhr.responseText);
+                // const result = JSON.parse(xhr.responseText);
                 if (xhr.status === 200 || xhr.status === 201) {
                     // 上传成功
                     if(onChange) {
-                        onChange({key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl}, "loaded");
+                        onChange({key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'loaded'});
                     }
                 } else {
                     // 上传失败
+                    if(onChange) {
+                        onChange({key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'error'});
+                    }
                 }
             }
         };
         xhr.open('POST', uploadUrl , true);
         xhr.send(formData);
     }
-    handleProgress (event) {
+    handleProgress (e) {
+        // 上传中
+        const {data} = this.props;
+        const progress = Number.parseInt((e.loaded / e.total) * 100) + "%";
 
+        this.refs[`text${data.length - 1}`].innerHTML = progress;
+        this.refs[`img${data.length - 1}`].style.width = progress;
     }
     getImagesListDOM () {
         const {data} = this.props;
@@ -162,10 +171,13 @@ class Uploader extends React.Component{
 
         data.map((item, index)=>{
             const src = item.url ? item.url : item.dataUrl;
+            const status = item.status;
 
             result.push(
-                <div key={index} className="zby-img-preview-box">
+                <div key={index} className={classNames('zby-img-preview-box', {loaded: status === 'loaded'}, {error: status === 'error'})}>
                     {src ? <img src={src} /> : <div className="uploading"><i className="fa fa-picture-o"></i></div>}
+                    <div className="progress-text" ref={`text${index}`}></div>
+                    <div className="progress" ref={`img${index}`}></div>
                 </div>
             );
         });

@@ -748,6 +748,7 @@ a {
   .zby-img-preview-box {
     box-sizing: border-box;
     display: inline-block;
+    position: relative;
     margin-right: 20px;
     margin-bottom: 20px;
     padding: 10px;
@@ -757,9 +758,26 @@ a {
     background: #fff;
     animation: scaleIn .3s;
     vertical-align: top;
+    overflow: hidden;
 
     transition: all .3s;
     transform-origin: left top;
+
+    &.error {
+      border-color: red;
+
+      .progress-text,
+      .progress {
+        display: none;
+      }
+    }
+
+    &.loaded {
+      .progress-text,
+      .progress {
+        display: none;
+      }
+    }
 
     img {
       display: block;
@@ -777,6 +795,25 @@ a {
         line-height: 176px;
         color: #999;
       }
+    }
+
+    .progress-text {
+      font-size: 26px;
+      color: #999;
+      position: absolute;
+      left: 50%;
+      bottom: 15px;
+
+      transform: translate(-50%);
+    }
+
+    .progress {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 6px;
+      background: $viColor;
     }
   }
 
