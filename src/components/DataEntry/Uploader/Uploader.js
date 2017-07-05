@@ -4,6 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Touchable from 'rc-touchable'
+import './style/index.scss'
 
 // 统计img总数 防止重复
 let imgNumber = 0;

@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
-import Uploader from '../../components/DataEntry/Uploader'
+import Uploader from '../../components/DataEntry/Uploader/'
 import Tools from '../../components/Tools/Tools'
 
 class UploaderPage extends React.Component {
