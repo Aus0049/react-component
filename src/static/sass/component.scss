@@ -2,6 +2,7 @@
 
 $viColor: #00b4a5;
 $darkViColor: #009486;
+$linearViColor: linear-gradient(to right, #31D5A1, #00B4A5);
 $lightGray: #ddd;
 $darkGray: #bbb;
 
@@ -758,25 +759,16 @@ a {
     background: #fff;
     animation: scaleIn .3s;
     vertical-align: top;
-    overflow: hidden;
 
     transition: all .3s;
     transform-origin: left top;
 
     &.error {
       border-color: red;
-
-      .progress-text,
-      .progress {
-        display: none;
-      }
     }
 
-    &.loaded {
-      .progress-text,
-      .progress {
-        display: none;
-      }
+    &.loading {
+      overflow: hidden;
     }
 
     img {
@@ -813,7 +805,22 @@ a {
       bottom: 0;
       width: 0;
       height: 6px;
-      background: $viColor;
+      background: $linearViColor;
+    }
+
+    .close {
+      position: absolute;
+      right: -20px;
+      top: -20px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid $darkGray;
+      background: #fff;
+      border-radius: 50%;
+      font-size: 24px;
+      line-height: 40px;
+      color: $viColor;
+      text-align: center;
     }
   }
 

@@ -39,7 +39,9 @@ class UploaderPage extends React.Component {
                 <Uploader
                     data={uploadList1}
                     uploadUrl={'https://jsonplaceholder.typicode.com/posts/'}
-                    onChange={this.handleUploadChange.bind(this)} />
+                    onChange={this.handleUploadChange.bind(this)}
+
+                />
             </div>
         )
     }

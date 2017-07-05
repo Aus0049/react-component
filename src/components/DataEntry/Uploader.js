@@ -133,10 +133,6 @@ class Uploader extends React.Component{
 
         // 进度监听
         xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this), false);
-        // 加载监听
-        // xhr.addEventListener('load', ()=>{console.log("加载中");}, false);
-        // 错误监听
-        // xhr.addEventListener('error', ()=>{Toast.error("上传失败！", 2000, undefined, false);}, false);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 // const result = JSON.parse(xhr.responseText);
@@ -174,10 +170,11 @@ class Uploader extends React.Component{
             const status = item.status;
 
             result.push(
-                <div key={index} className={classNames('zby-img-preview-box', {loaded: status === 'loaded'}, {error: status === 'error'})}>
-                    {src ? <img src={src} /> : <div className="uploading"><i className="fa fa-picture-o"></i></div>}
-                    <div className="progress-text" ref={`text${index}`}></div>
-                    <div className="progress" ref={`img${index}`}></div>
+                <div key={index} className={classNames('zby-img-preview-box', {loading: status === 'loading'}, {loaded: status === 'loaded'}, {error: status === 'error'})}>
+                    {src ? <img src={src} onClick={()=>{item.url ? window.open(item.url) : ''}}/> : <div className="uploading"><i className="fa fa-picture-o"></i></div>}
+                    {status === 'loading' ? <div className="progress-text" ref={`text${index}`}></div> : ''}
+                    {status === 'loading' ? <div className="progress" ref={`img${index}`}></div> : ''}
+                    {status === 'loaded' || status === 'error' ? <div className="close"><i className="fa fa-times"></i></div> : ''}
                 </div>
             );
         });
