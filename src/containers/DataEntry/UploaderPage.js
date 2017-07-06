@@ -56,6 +56,7 @@ class UploaderPage extends React.Component {
                     uploadUrl={'https://jsonplaceholder.typicode.com/posts/'}
                     onChange={this.handleUploadChange}
                     onDelete={this.handleDelete}
+                    max={5}
                 />
             </div>
         )

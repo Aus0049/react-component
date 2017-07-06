@@ -183,7 +183,7 @@ class Uploader extends React.Component{
         if(onDelete) onDelete(id);
     }
     getImagesListDOM () {
-        const {data} = this.props;
+        const {data, max} = this.props;
         const result = [];
         const _this = this;
 
@@ -192,6 +192,8 @@ class Uploader extends React.Component{
                 <Figure key={item.id} {...item} onDelete={_this.handleDelete.bind(_this)} />
             );
         });
+
+        if(max && data.length >= max) return result;
 
         result.push(
             <Touchable
@@ -227,7 +229,8 @@ Uploader.propTypes = {
     typeArray: React.PropTypes.array, // 支持类型数组
     maxSize: React.PropTypes.number, // 图片最大体积 单位：KB
     compress: React.PropTypes.bool, // 是否进行图片压缩
-    compressionRatio: React.PropTypes.number // 图片压缩比例 单位：%
+    compressionRatio: React.PropTypes.number, // 图片压缩比例 单位：%
+    max: React.PropTypes.number // 最大上传图片数
 };
 
 Uploader.defaultProps = {
