@@ -123,9 +123,11 @@ $darkGray: #bbb;
 
 @keyframes scaleIn {
   0% {
-    transform: scale(0, 0);
+    width: 0;
+    height: 0;
   }
   100% {
-    transform: scale(1, 1);
+    width: auto;
+    height: 200px;
   }
 }

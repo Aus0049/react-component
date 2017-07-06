@@ -4,6 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Touchable from 'rc-touchable'
+import Figure from './Figure'
 import Toast from '../../Feedback/Toast'
 import './style/index.scss'
 
@@ -145,7 +146,7 @@ class Uploader extends React.Component{
 
         // 开始发送ajax
         if(onChange) {
-            onChange({id: uuid, key: '', url: '', name: imgFile.name, dataUrl: '', status: 'loading'});
+            onChange({id: uuid, imgKey: '', imgUrl: '', name: imgFile.name, dataUrl: '', status: 'loading'});
         }
 
         // 进度监听
@@ -155,12 +156,12 @@ class Uploader extends React.Component{
                 if (xhr.status === 200 || xhr.status === 201) {
                     // 上传成功
                     if(onChange) {
-                        onChange({id: uuid, key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'loaded'});
+                        onChange({id: uuid, imgKey: '', imgUrl: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'loaded'});
                     }
                 } else {
                     // 上传失败
                     if(onChange) {
-                        onChange({id: uuid, key: '', url: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'error'});
+                        onChange({id: uuid, imgKey: '', imgUrl: '', name: imgFile.name, dataUrl: imgFile.dataUrl, status: 'error'});
                     }
                 }
             }
@@ -170,11 +171,11 @@ class Uploader extends React.Component{
     }
     handleProgress (e) {
         // 上传中
-        const {data} = this.props;
-        const progress = Number.parseInt((e.loaded / e.total) * 100) + "%";
-
-        this.refs[`text${data.length - 1}`].innerHTML = progress;
-        this.refs[`img${data.length - 1}`].style.width = progress;
+        // const {data} = this.props;
+        // const progress = Number.parseInt((e.loaded / e.total) * 100) + "%";
+        //
+        // this.refs[`text${data.length - 1}`].innerHTML = progress;
+        // this.refs[`img${data.length - 1}`].style.width = progress;
     }
     handleDelete (id) {
         const {onDelete} = this.props;
@@ -186,17 +187,9 @@ class Uploader extends React.Component{
         const result = [];
         const _this = this;
 
-        data.map((item, index)=>{
-            const src = item.url ? item.url : item.dataUrl;
-            const status = item.status;
-
+        data.map((item)=>{
             result.push(
-                <div key={index} className={classNames('zby-img-preview-box', {loading: status === 'loading'}, {loaded: status === 'loaded'}, {error: status === 'error'})}>
-                    {src ? <img src={src} onClick={()=>{item.url ? window.open(item.url) : ''}}/> : <div className="uploading"><i className="fa fa-picture-o"></i></div>}
-                    {status === 'loading' ? <div className="progress-text" ref={`text${index}`}></div> : ''}
-                    {status === 'loading' ? <div className="progress" ref={`img${index}`}></div> : ''}
-                    {status === 'loaded' || status === 'error' ? <div className="close" onClick={_this.handleDelete.bind(_this, item.id)}><i className="fa fa-times"></i></div> : ''}
-                </div>
+                <Figure key={item.id} {...item} />
             );
         });
 
@@ -211,7 +204,7 @@ class Uploader extends React.Component{
                 </div>
             </Touchable>
         );
-        
+
         return result;
     }
     render () {
