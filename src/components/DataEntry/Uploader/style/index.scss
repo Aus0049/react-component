@@ -29,12 +29,20 @@ $darkGray: #bbb;
     transition: all .3s;
     transform-origin: left top;
 
+    &.loading {
+      overflow: hidden;
+    }
+
     &.error {
       border-color: red;
     }
 
-    &.loading {
-      overflow: hidden;
+    &.deleted {
+      margin: 0;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      animation: scaleOut .3s;
     }
 
     img {
@@ -129,5 +137,18 @@ $darkGray: #bbb;
   100% {
     width: auto;
     height: 200px;
+  }
+}
+
+@keyframes scaleOut {
+  0% {
+    width: auto;
+    height: 200px;
+    opacity: 1;
+  }
+  100% {
+    width: 0;
+    height: 0;
+    opacity: 0;
   }
 }

@@ -179,7 +179,6 @@ class Uploader extends React.Component{
     }
     handleDelete (id) {
         const {onDelete} = this.props;
-
         if(onDelete) onDelete(id);
     }
     getImagesListDOM () {
@@ -189,7 +188,7 @@ class Uploader extends React.Component{
 
         data.map((item)=>{
             result.push(
-                <Figure key={item.id} {...item} />
+                <Figure key={item.id} {...item} onDelete={_this.handleDelete.bind(_this)} />
             );
         });
 

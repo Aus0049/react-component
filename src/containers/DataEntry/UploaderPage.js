@@ -35,7 +35,7 @@ class UploaderPage extends React.Component {
         this.setState((previousState)=>{
             return previousState.uploadList1.map((item, index)=>{
                 if(item.id === id){
-                    previousState.uploadList1.splice(index, 1);
+                    previousState.uploadList1[index].status = 'deleted';
                 }
             });
         });
