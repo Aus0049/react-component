@@ -193,7 +193,9 @@ class Uploader extends React.Component{
             );
         });
 
-        if(max && data.length >= max) return result;
+        const figureInShow = data.filter(item => item.status !== 'deleted');
+
+        if(max && figureInShow.length >= max) return result;
 
         result.push(
             <Touchable
