@@ -150,7 +150,7 @@ class Uploader extends React.Component{
         }
 
         // 进度监听
-        xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this), false);
+        xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this, uuid), false);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 || xhr.status === 201) {
@@ -169,13 +169,14 @@ class Uploader extends React.Component{
         xhr.open('POST', uploadUrl , true);
         xhr.send(formData);
     }
-    handleProgress (e) {
+    handleProgress (id, e) {
         // 上传中
-        // const {data} = this.props;
-        // const progress = Number.parseInt((e.loaded / e.total) * 100) + "%";
-        //
-        // this.refs[`text${data.length - 1}`].innerHTML = progress;
-        // this.refs[`img${data.length - 1}`].style.width = progress;
+        const number = Number.parseInt((e.loaded / e.total) * 100) + "%";
+        const text = document.querySelector('#text-'+id);
+        const progress = document.querySelector('#progress-'+id);
+
+        text.innerHTML = number;
+        progress.style.width = number;
     }
     handleDelete (id) {
         const {onDelete} = this.props;
