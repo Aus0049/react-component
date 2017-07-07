@@ -5,6 +5,7 @@ import React from 'react'
 import classNames from 'classnames'
 import PickerView from '../../PickerView/index'
 import Touchable from 'rc-touchable'
+import '../style/index.scss'
 
 // 选择器组件
 class Picker extends React.Component {

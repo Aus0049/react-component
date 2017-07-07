@@ -4,7 +4,7 @@
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
-import DatePicker from '../../components/DataEntry/DatePicker'
+import DatePicker from '../../components/DataEntry/DataPicker/'
 import Tools from '../../components/Tools/Tools'
 import moment from 'moment'
 

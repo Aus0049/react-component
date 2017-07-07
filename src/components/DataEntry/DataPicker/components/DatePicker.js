@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import classNames from 'classnames'
-import PickerView from './PickerView/'
+import PickerView from '../../PickerView/'
 import Touchable from 'rc-touchable'
 import moment from 'moment'
 
@@ -24,19 +24,6 @@ const hourArray = [
 
 // 日期时间选择器
 class DatePicker extends React.Component {
-    static defaultProps = {
-        mode: "date",
-        value: moment(),
-        timeStep: 1
-    };
-    static propTypes = {
-        mode: React.PropTypes.string, // 模式：枚举类型：日期date 时间time 日期时间datetime 年year 月moth 默认是date
-        value: React.PropTypes.object, // moment类型
-        title: React.PropTypes.string, // 标题
-        timeStep: React.PropTypes.number, // time模式下 时间的步长 值为60的约数如1，2，3，4，5，6，10，12，15，20，30，60
-        maxValue: React.PropTypes.object, // 最大值 <=
-        minValue: React.PropTypes.object // 最小值 >=
-    };
     constructor (props) {
         super(props);
         this.state = {
@@ -48,7 +35,7 @@ class DatePicker extends React.Component {
     }
     componentDidMount () {
         // picker 当做一个非受控组件
-        let {value} = this.props;
+        const {value} = this.props;
         this.setState({
             defaultValue: value,
             selectedValue: value
@@ -64,38 +51,33 @@ class DatePicker extends React.Component {
                 // 年月一定合法 主要就是检验日
                 newValue = this.checkNewValue(newValue, ["date"]);
 
-                let newDateMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2])]);
-                this.setState({
-                    selectedValue: newDateMoment
-                });
+                const newDateMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2])]);
+                this.setState({selectedValue: newDateMoment});
+
                 break;
             case "time":
                 // 时间切换
                 newValue = this.checkNewValue(newValue, ["time"]);
 
-                let newTimeMoment = moment(`${newValue[0]}:${newValue[1]}`, "HH:mm");
-                this.setState({
-                    selectedValue: newTimeMoment
-                });
+                const newTimeMoment = moment(`${newValue[0]}:${newValue[1]}`, "HH:mm");
+                this.setState({selectedValue: newTimeMoment});
+
                 break;
             case "datetime":
 
                 newValue = this.checkNewValue(newValue, ["date", "time"]);
 
-                let newDateTimeMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2]), Number.parseInt(newValue[3]), Number.parseInt(newValue[4])]);
-                this.setState({
-                    selectedValue: newDateTimeMoment
-                });
+                const newDateTimeMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2]), Number.parseInt(newValue[3]), Number.parseInt(newValue[4])]);
+                this.setState({selectedValue: newDateTimeMoment});
+
                 break;
             case "year":
-                this.setState({
-                    selectedValue: moment(newValue)
-                });
+                this.setState({selectedValue: moment(newValue)});
+
                 break;
             case "month":
-                this.setState({
-                    selectedValue: moment(Number.parseInt(newValue[0]) + 1, "MM")
-                });
+                this.setState({selectedValue: moment(Number.parseInt(newValue[0]) + 1, "MM")});
+
                 break;
         }
     }
@@ -103,11 +85,9 @@ class DatePicker extends React.Component {
 
         if(e) e.preventDefault();
 
-        this.setState({
-            show: true
-        });
+        this.setState({show: true});
 
-        let t = this;
+        const t = this;
         let timer = setTimeout(()=>{
             t.setState({
                 animation: "in"
@@ -119,11 +99,9 @@ class DatePicker extends React.Component {
 
         if(e) e.preventDefault();
 
-        this.setState({
-            animation: "out"
-        });
+        this.setState({animation: "out"});
 
-        let t = this;
+        const t = this;
         let timer = setTimeout(()=>{
             t.setState({
                 show: false
@@ -137,13 +115,9 @@ class DatePicker extends React.Component {
 
         this.handleClickClose();
 
-        this.setState({
-            selectedValue: defaultValue
-        });
+        this.setState({selectedValue: defaultValue});
 
-        if(onCancel){
-            onCancel();
-        }
+        if (onCancel) onCancel();
     }
     handleConfirm () {
         // 点击确认之后的回调
@@ -152,9 +126,7 @@ class DatePicker extends React.Component {
         this.handleClickClose();
 
         // 更新默认值
-        this.setState({
-            defaultValue: selectedValue
-        });
+        this.setState({defaultValue: selectedValue});
 
         if (this.props.onChange) this.props.onChange(selectedValue);
     }
@@ -300,7 +272,7 @@ class DatePicker extends React.Component {
         const {selectedValue} = this.state;
         const {maxValue, minValue} = this.props;
 
-        let yearArray = [];
+        const yearArray = [];
         let currentYear = selectedValue.year();
 
         // 默认显示选中值前后五年
@@ -324,7 +296,7 @@ class DatePicker extends React.Component {
         }
 
         if(minValue){
-            if(selectedValue.year() == minValue.year()) {
+            if(selectedValue.year() === minValue.year()) {
                 result = result.filter((item) => {
                     if(minValue.month() <= Number.parseInt(item.value)) return true;
                 });
@@ -332,7 +304,7 @@ class DatePicker extends React.Component {
         }
 
         if(maxValue){
-            if(selectedValue.year() == maxValue.year()){
+            if(selectedValue.year() === maxValue.year()){
                 result = result.filter((item) => {
                     if(maxValue.month() >= Number.parseInt(item.value)) return true;
                 });
@@ -629,5 +601,20 @@ class DatePicker extends React.Component {
         )
     }
 }
+
+DatePicker.propTypes = {
+    mode: React.PropTypes.string, // 模式：枚举类型：日期date 时间time 日期时间datetime 年year 月moth 默认是date
+    value: React.PropTypes.object, // moment类型
+    title: React.PropTypes.string, // 标题
+    timeStep: React.PropTypes.number, // time模式下 时间的步长 值为60的约数如1，2，3，4，5，6，10，12，15，20，30，60
+    maxValue: React.PropTypes.object, // 最大值 <=
+    minValue: React.PropTypes.object // 最小值 >=
+};
+
+DatePicker.defaultProps = {
+    mode: "date",
+    value: moment(),
+    timeStep: 1
+};
 
 export default DatePicker
