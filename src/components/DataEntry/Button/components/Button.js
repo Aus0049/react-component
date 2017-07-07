@@ -4,6 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Touchable from 'rc-touchable'
+import '../style/index.scss'
 
 // button 组件
 const Button = (props) => {
@@ -12,12 +13,10 @@ const Button = (props) => {
     const cn = classNames(['zby-button',{
         'inline': inline,
         'group': group,
-        'primary': type == "primary",
-        'ghost': type == "ghost",
+        'primary': type === "primary",
+        'ghost': type === "ghost",
         'disabled': disabled
     }, className]);
-
-    const iconDOM = iconClass ? <i className={`fa ${iconClass}`}></i> : '';
 
     return (
         <Touchable
@@ -25,7 +24,7 @@ const Button = (props) => {
             onPress={onClick}
             disabled={disabled}>
             <a className={cn}>
-                {iconDOM}
+                {iconClass ? <i className={`fa ${iconClass}`}></i> : ''}
                 <span className="zby-button-text">{children}</span>
             </a>
         </Touchable>
