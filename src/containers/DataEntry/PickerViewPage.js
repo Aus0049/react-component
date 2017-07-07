@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
-import PickerView from '../../components/DataEntry/PickerView'
+import PickerView from '../../components/DataEntry/PickerView/'
 import Tools from '../../components/Tools/Tools'
 
 class PickerViewPage extends React.Component {

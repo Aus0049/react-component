@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import classNames from 'classnames'
-import PickerView from './PickerView'
+import PickerView from './PickerView/'
 import Touchable from 'rc-touchable'
 import moment from 'moment'
 

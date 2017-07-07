@@ -7,12 +7,6 @@ import classNames from 'classnames'
 
 // picker-view 中的列
 class PickerColumn extends React.Component {
-    static propTypes = {
-        index: React.PropTypes.number,
-        data: React.PropTypes.array,
-        value: React.PropTypes.string,
-        onValueChange: React.PropTypes.func
-    };
     componentDidMount () {
         // 绑定事件
         this.bindScrollEvent();
@@ -35,7 +29,7 @@ class PickerColumn extends React.Component {
         // 最后还是用了何一鸣的zscroll插件
         // 但是这个插件并没有太多的文档介绍 gg
         // 插件demo地址：http://yiminghe.me/zscroller/examples/demo.html
-        let t = this;
+        const t = this;
         this.zscroller = new ZScroller(content, {
             scrollbars: false,
             scrollingX: false,
@@ -78,17 +72,17 @@ class PickerColumn extends React.Component {
     }
     scrollToPosition () {
         // 滚动到选中的位置
-        let {data, value} = this.props;
+        const {data, value} = this.props;
 
         data.map((item)=>{
-            if(item.value == value){
+            if(item.value === value){
                 this.selectByIndex();
                 return;
             }
         });
 
         for(let i = 0; i < data.length; i++){
-            if(data[i].value == value){
+            if(data[i].value === value){
                 this.selectByIndex(i);
                 return;
             }
@@ -98,23 +92,23 @@ class PickerColumn extends React.Component {
     }
     selectByIndex (index) {
         // 滚动到index对应的位置
-        let top = this.itemHeight * index;
+        const top = this.itemHeight * index;
 
         this.zscroller.scroller.scrollTo(0, top);
     }
     getCols () {
         // 根据value 和 index 获取到对应的data
-        let {data, value, index} = this.props;
-        let result = [];
+        const {data, value, index} = this.props;
+        const result = [];
 
         for(let i = 0; i < data.length; i++){
-            result.push(<div key={index + "-" + i} className={classNames(['zby-picker-view-col', {'selected': data[i].value == value}])}>{data[i].label}</div>);
+            result.push(<div key={index + "-" + i} className={classNames(['zby-picker-view-col', {'selected': data[i].value === value}])}>{data[i].label}</div>);
         }
 
         return result;
     }
     render () {
-        let cols = this.getCols();
+        const cols = this.getCols();
 
         return (
             <div className="zby-picker-view-item">
@@ -129,5 +123,12 @@ class PickerColumn extends React.Component {
         )
     }
 }
+
+PickerColumn.propTypes = {
+    index: React.PropTypes.number.isRequired,
+    data: React.PropTypes.array.isRequired,
+    value: React.PropTypes.string,
+    onValueChange: React.PropTypes.func
+};
 
 export default PickerColumn;

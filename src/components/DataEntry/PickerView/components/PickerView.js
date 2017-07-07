@@ -3,22 +3,10 @@
  */
 import React from 'react'
 import PickerColumn from './PickerColumn'
+import '../style/index.scss'
 
 // 选择器组件
 class PickerView extends React.Component {
-    static defaultProps = {
-        col: 1,
-        cascade: true,
-        controlled: false,
-    };
-    static propTypes = {
-        col: React.PropTypes.number,
-        data: React.PropTypes.array,
-        value: React.PropTypes.array,
-        cascade: React.PropTypes.bool,
-        controlled: React.PropTypes.bool, // 是否受控
-        onChange: React.PropTypes.func
-    };
     constructor (props) {
         super(props);
         this.state = {
@@ -90,9 +78,9 @@ class PickerView extends React.Component {
         }
     }
     getColumns () {
-        let result = [];
-        let {col, data, cascade, value, controlled} = this.props;
-        let {defaultSelectedValue} = this.state;
+        const result = [];
+        const {col, data, cascade, value, controlled} = this.props;
+        const {defaultSelectedValue} = this.state;
 
         if(controlled){
             if(value.length == 0) return;
@@ -158,7 +146,7 @@ class PickerView extends React.Component {
             }
         }
 
-        if(has == undefined) {
+        if(has === undefined) {
             has = 0;
             newValue.push(tree[has].value);
         }
@@ -179,5 +167,20 @@ class PickerView extends React.Component {
         )
     }
 }
+
+PickerView.propTypes = {
+    col: React.PropTypes.number,
+    data: React.PropTypes.array,
+    value: React.PropTypes.array,
+    cascade: React.PropTypes.bool,
+    controlled: React.PropTypes.bool, // 是否受控
+    onChange: React.PropTypes.func
+};
+
+PickerView.defaultProps = {
+    col: 1,
+    cascade: true,
+    controlled: false,
+};
 
 export default PickerView
