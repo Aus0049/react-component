@@ -4,7 +4,7 @@
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
-import Switch from '../../components/DataEntry/Switch'
+import Switch from '../../components/DataEntry/Switch/components/Switch'
 import Tools from '../../components/Tools/Tools'
 
 const Item = List.Item;
@@ -45,10 +45,10 @@ class SwitchPage extends React.Component {
 
                 <ListTitle title="禁止🚫" />
                 <List>
-                    <Item subtitle={<Switch defaultChecked={false} disabled={true} />}>iOS关闭状态</Item>
-                    <Item subtitle={<Switch defaultChecked={true} disabled={true} />}>iOS开启状态</Item>
-                    <Item subtitle={<Switch defaultChecked={true} theme="android" disabled={true} />}>安卓关闭状态</Item>
-                    <Item subtitle={<Switch defaultChecked={true} theme="android" disabled={true} />}>安卓开启状态</Item>
+                    <Item subtitle={<Switch defaultChecked={false} disabled />}>iOS关闭状态</Item>
+                    <Item subtitle={<Switch defaultChecked={true} disabled />}>iOS开启状态</Item>
+                    <Item subtitle={<Switch defaultChecked={true} theme="android" disabled />}>安卓关闭状态</Item>
+                    <Item subtitle={<Switch defaultChecked={true} theme="android" disabled />}>安卓开启状态</Item>
                 </List>
 
                 <ListTitle title="带文字" />

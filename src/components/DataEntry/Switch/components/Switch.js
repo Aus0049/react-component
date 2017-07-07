@@ -4,6 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Touchable from 'rc-touchable'
+import '../style/index.scss'
 
 // 滑动开关组件
 class Switch extends React.Component {
@@ -37,7 +38,7 @@ class Switch extends React.Component {
         }
     }
     toggle () {
-        const checked = !(this.props.checked != undefined ? this.props.checked : this.state.checked);
+        const checked = !(this.props.checked !== undefined ? this.props.checked : this.state.checked);
         this.setChecked(checked);
     }
     setChecked (checked) {
@@ -49,13 +50,13 @@ class Switch extends React.Component {
         this.props.onChange(checked);
     }
     getClassName () {
-        const checked = this.props.checked != undefined ? this.props.checked : this.state.checked;
+        const checked = this.props.checked !== undefined ? this.props.checked : this.state.checked;
         const {theme, disabled} = this.props;
         const {focus} = this.state;
 
         return classNames(['zby-switch-box', {
-            'iOS': theme == 'iOS',
-            'android': theme == 'android',
+            'iOS': theme === 'iOS',
+            'android': theme === 'android',
             'on' : checked,
             'off' : !checked,
             'focus': focus,
@@ -65,7 +66,7 @@ class Switch extends React.Component {
     getAttachedDOM () {
         const {attachedText} = this.props;
 
-        if(!attachedText || attachedText.length != 2){return;}
+        if(!attachedText || attachedText.length !== 2){return;}
 
         return  [
             <span key='a-t' className='attachedTextTrue'>{attachedText[0]}</span>,
