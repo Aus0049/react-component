@@ -3,28 +3,11 @@
  */
 import React from 'react'
 import classNames from 'classnames'
-import PickerView from './PickerView/'
+import PickerView from '../../PickerView/index'
 import Touchable from 'rc-touchable'
 
 // 选择器组件
 class Picker extends React.Component {
-    static defaultProps = {
-        col: 1,
-        cancelText: "取消",
-        confirmText: "确定",
-        cascade: true
-    };
-    static propTypes = {
-        col: React.PropTypes.number,
-        data: React.PropTypes.array,
-        value: React.PropTypes.array,
-        cancelText: React.PropTypes.string,
-        title: React.PropTypes.string,
-        confirmText: React.PropTypes.string,
-        cascade: React.PropTypes.bool,
-        onChange: React.PropTypes.func,
-        onCancel: React.PropTypes.func
-    };
     constructor (props) {
         super(props);
         this.state = {
@@ -36,7 +19,7 @@ class Picker extends React.Component {
     }
     componentDidMount () {
         // picker 当做一个非受控组件
-        let {value} = this.props;
+        const {value} = this.props;
         this.setState({
             defaultValue: value,
             selectedValue: value
@@ -46,11 +29,9 @@ class Picker extends React.Component {
 
         if(e) e.preventDefault();
 
-        this.setState({
-            show: true
-        });
+        this.setState({show: true});
 
-        let t = this;
+        const t = this;
         let timer = setTimeout(()=>{
             t.setState({
                 animation: "in"
@@ -62,11 +43,9 @@ class Picker extends React.Component {
 
         if(e) e.preventDefault();
 
-        this.setState({
-            animation: "out"
-        });
+        this.setState({animation: "out"});
 
-        let t = this;
+        const t = this;
         let timer = setTimeout(()=>{
             t.setState({
                 show: false
@@ -75,11 +54,9 @@ class Picker extends React.Component {
         }, 300);
     }
     handlePickerViewChange (newValue) {
-        let {onPickerChange} = this.props;
+        const {onPickerChange} = this.props;
 
-        this.setState({
-            selectedValue: newValue
-        });
+        this.setState({selectedValue: newValue});
 
         if(onPickerChange){
             onPickerChange(newValue);
@@ -91,9 +68,7 @@ class Picker extends React.Component {
 
         this.handleClickClose();
 
-        this.setState({
-            selectedValue: defaultValue
-        });
+        this.setState({selectedValue: defaultValue});
 
         if(onCancel){
             onCancel();
@@ -105,9 +80,7 @@ class Picker extends React.Component {
 
         this.handleClickClose();
 
-        this.setState({
-           defaultChecked: selectedValue
-        });
+        this.setState({defaultChecked: selectedValue});
 
         if (this.props.onChange) this.props.onChange(selectedValue);
     }
@@ -152,7 +125,8 @@ class Picker extends React.Component {
                 data={data}
                 value={selectedValue}
                 cascade={cascade}
-                onChange={this.handlePickerViewChange.bind(this)}>
+                onChange={this.handlePickerViewChange.bind(this)}
+            >
             </PickerView>;
         }
     }
@@ -170,5 +144,24 @@ class Picker extends React.Component {
         )
     }
 }
+
+Picker.propTypes = {
+    col: React.PropTypes.number,
+    data: React.PropTypes.array,
+    value: React.PropTypes.array,
+    cancelText: React.PropTypes.string,
+    title: React.PropTypes.string,
+    confirmText: React.PropTypes.string,
+    cascade: React.PropTypes.bool,
+    onChange: React.PropTypes.func,
+    onCancel: React.PropTypes.func
+};
+
+Picker.defaultProps = {
+    col: 1,
+    cancelText: "取消",
+    confirmText: "确定",
+    cascade: true
+};
 
 export default Picker
