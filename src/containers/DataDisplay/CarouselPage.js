@@ -4,7 +4,7 @@
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
 import List from '../../components/DataDisplay/List'
-import Carousel from '../../components/DataDisplay/Carousel'
+import Carousel from '../../components/DataDisplay/Carousel/'
 import Tools from '../../components/Tools/Tools'
 
 const Item = List.Item;

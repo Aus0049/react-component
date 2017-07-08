@@ -237,48 +237,6 @@ a {
   }
 }
 
-// Carousel
-.zby-carousel-box {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-
-  .zby-carousel-list {
-    overflow: hidden;
-    
-    .zby-carousel-figure {
-      float: left;
-      height: 300px;
-      background: #333333;
-    }
-  }
-
-  .zby-carousel-dot-box {
-    position: absolute;
-    left: 50%;
-    bottom: 15px;
-
-    transform: translate(-50%, 0);
-
-    .zby-carousel-dot {
-      display: inline-block;
-      margin-right: 20px;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      background: #fff;
-      transition: all .3s;
-
-      &.active {
-        transform: scale(1.5, 1.5);
-      }
-
-      &:last-of-type {
-        margin-right: 0;
-      }
-    }
-  }
-}
 
 // Tag
 .zby-tag-box {

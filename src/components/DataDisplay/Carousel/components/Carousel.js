@@ -4,29 +4,9 @@
 import React from 'react'
 import Hammer from 'hammerjs'
 import classNames from 'classnames'
+import '../style/index.scss'
 
 class Carousel extends React.Component {
-    static propTypes = {
-        data: React.PropTypes.array, // 图片源数组
-        startIndex: React.PropTypes.number, // 初始位置
-        autoplay: React.PropTypes.bool, // 是否自动播放
-        intervalTime: React.PropTypes.number, // 循环播放时间差
-        loopFromStart: React.PropTypes.bool, // 是否从头循环
-        dots: React.PropTypes.bool, // 是否显示底部指示点
-        swipe: React.PropTypes.bool, // 是否可以滑动
-        animation: React.PropTypes.bool, // 是否显示动画
-        onFigureChange: React.PropTypes.func, // 切换figure之后的回调函数
-    };
-    static defaultProps = {
-        data: [],
-        startIndex: 0,
-        autoplay: false,
-        intervalTime: 2000,
-        loopFromStart: true,
-        dots: true,
-        swipe: true,
-        animation: true
-    };
     constructor (props) {
         super(props);
         this.state = {
@@ -434,5 +414,28 @@ class Carousel extends React.Component {
         )
     }
 }
+
+Carousel.propTypes = {
+    data: React.PropTypes.array, // 图片源数组
+    startIndex: React.PropTypes.number, // 初始位置
+    autoplay: React.PropTypes.bool, // 是否自动播放
+    intervalTime: React.PropTypes.number, // 循环播放时间差
+    loopFromStart: React.PropTypes.bool, // 是否从头循环
+    dots: React.PropTypes.bool, // 是否显示底部指示点
+    swipe: React.PropTypes.bool, // 是否可以滑动
+    animation: React.PropTypes.bool, // 是否显示动画
+    onFigureChange: React.PropTypes.func, // 切换figure之后的回调函数
+};
+
+Carousel.defaultProps = {
+    data: [],
+    startIndex: 0,
+    autoplay: false,
+    intervalTime: 2000,
+    loopFromStart: true,
+    dots: true,
+    swipe: true,
+    animation: true
+};
 
 export default Carousel
