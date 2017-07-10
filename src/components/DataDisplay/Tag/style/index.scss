@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+$viColor: #00b4a5;
+$darkViColor: #009486;
+$linearViColor: linear-gradient(to right, #31D5A1, #00B4A5);
+$lightGray: #ddd;
+$darkGray: #bbb;
+
+// Tag
+.zby-tag-box {
+  display: inline-block;
+  position: relative;
+  margin: 0 10px 20px 10px;
+  padding: 16px 20px;
+  border: 1px solid $darkGray;
+  border-radius: 5px;
+  background: #fff;
+  font-size: 28px;
+  color: #888;
+  word-break: break-all;
+
+  &.selected {
+    border-color: $viColor;
+    color: $viColor;
+  }
+
+  &.disabled {
+    color: #bbb;
+    background: #ddd;
+    border-color: #ddd;
+  }
+
+  .close {
+    position: absolute;
+    right: -20px;
+    top: -20px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid $darkGray;
+    background: #fff;
+    border-radius: 50%;
+    font-size: 24px;
+    line-height: 40px;
+    color: #888;
+    text-align: center;
+  }
+}

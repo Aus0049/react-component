@@ -3,9 +3,8 @@
  */
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle'
-import List from '../../components/DataDisplay/List'
 import Tools from '../../components/Tools/Tools'
-import Tag from '../../components/DataDisplay/Tag'
+import Tag from '../../components/DataDisplay/Tag/'
 
 const handleTagClick = (item) => {
     console.log(item);

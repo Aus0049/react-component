@@ -4,6 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Touchable from 'rc-touchable'
+import '../style/index.scss'
 
 const Tag = (props) => {
     const {content, selected, closeable, disabled, onClick, onClose, style} = props;
