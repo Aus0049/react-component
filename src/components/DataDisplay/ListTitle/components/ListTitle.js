@@ -2,13 +2,14 @@
  * Created by Aus on 2017/4/1.
  */
 import React from 'react'
+import classNames from 'classnames'
+import '../style/index.scss'
 
 const ListTitle = (props) => {
     const {title, align} = props;
-    const className = align ? "zby-list-title " + align : "zby-list-title";
 
     return (
-        <div className={className}>{title}</div>
+        <div className={classNames(['zby-list-title', {[align]: align}])}>{title}</div>
     )
 };
 
@@ -20,7 +21,7 @@ ListTitle.propTypes = {
     align: React.PropTypes.oneOf(['left', 'center', 'right'])
 };
 ListTitle.defaultProps = {
-    align: "left"
+    align: 'left'
 };
 
 export default ListTitle

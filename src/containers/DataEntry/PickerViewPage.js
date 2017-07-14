@@ -2,7 +2,7 @@
  * Created by Aus on 2017/5/6.
  */
 import React from 'react'
-import ListTitle from '../../components/DataDisplay/ListTitle'
+import ListTitle from '../../components/DataDisplay/ListTitle/'
 import PickerView from '../../components/DataEntry/PickerView/'
 import Tools from '../../components/Tools/Tools'
 
