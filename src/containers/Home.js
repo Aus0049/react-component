@@ -1,6 +1,6 @@
 import React from 'react'
 import ListTitle from '../components/DataDisplay/ListTitle/'
-import List from '../components/DataDisplay/List'
+import List from '../components/DataDisplay/List/'
 import Tools from '../components/Tools/Tools'
 
 const Item = List.Item;

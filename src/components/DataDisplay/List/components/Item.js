@@ -6,40 +6,24 @@ import classNames from 'classnames'
 import Touchable from 'rc-touchable'
 
 class Item extends React.Component {
-    static defaultProps = {
-        multiple: false,
-        disabled: false
-    };
-    static propTypes = {
-        subtitle: React.PropTypes.node, // 列表项的副标题 可选
-        icon: React.PropTypes.oneOf(['horizontal', 'vertical']), // 列表项的icon 可选 枚举 horizontal/vertical
-        multiple: React.PropTypes.bool, // 列表项是否多行显示 默认否
-        onClick: React.PropTypes.func, // 列表项点击回调事件
-        onLongPress: React.PropTypes.func, // 长按回调事件
-        disabled: React.PropTypes.bool // 列表项不可点击 默认值false
-    };
     getClassName () {
-        let {subtitle, icon, className, multipleLine, disabled} = this.props;
+        const {subtitle, icon, className, multipleLine, disabled} = this.props;
 
-        let cn = classNames(['zby-item-box', {
+        return classNames(['zby-item-box', {
             'with-subtitle': subtitle,
             'multiple': multipleLine,
             'with-icon': icon,
-            'disabled': disabled
+            'disabled': disabled,
+            [className]: className
         }]);
-
-        if(className) cn += " " + className;
-
-        return cn;
     }
     getSubTitleDOM () {
-        let {subtitle} = this.props;
+        const {subtitle} = this.props;
 
         if (subtitle) return <span className="subtitle">{subtitle}</span>;
     }
     getIconDOM () {
         const {icon} = this.props;
-        let iconDOM;
 
         if(!icon) return;
 
@@ -52,9 +36,7 @@ class Item extends React.Component {
                 return <i className="icon fa fa-angle-down"></i>;
         }
 
-        iconDOM = <i className="icon fa fa-angle-down"></i>;
-
-        return iconDOM;
+        return <i className="icon fa fa-angle-down"></i>;
     }
     render () {
         const {subtitle, icon, multipleLine, disabled, className, onClick, onLongPress, ...resProps} = this.props;
@@ -64,7 +46,7 @@ class Item extends React.Component {
 
         return (
             <Touchable
-                activeClassName={onClick && !disabled ? "zby-list-item-tap-active" : ''}
+                activeClassName={onClick && !disabled ? 'zby-list-item-tap-active' : ''}
                 disabled={disabled}
                 onPress={onClick}
                 onLongPress={onLongPress}>
@@ -81,5 +63,18 @@ class Item extends React.Component {
 }
 
 // List中的item 组件
+Item.PropTypes = {
+    subtitle: React.PropTypes.node, // 列表项的副标题 可选
+    icon: React.PropTypes.oneOf(['horizontal', 'vertical']), // 列表项的icon 可选 枚举 horizontal/vertical
+    multiple: React.PropTypes.bool, // 列表项是否多行显示 默认否
+    onClick: React.PropTypes.func, // 列表项点击回调事件
+    onLongPress: React.PropTypes.func, // 长按回调事件
+    disabled: React.PropTypes.bool // 列表项不可点击 默认值false
+};
+
+Item.defaultProps = {
+    multiple: false,
+    disabled: false
+};
 
 export default Item

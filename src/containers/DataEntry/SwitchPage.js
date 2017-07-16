@@ -3,8 +3,8 @@
  */
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle/'
-import List from '../../components/DataDisplay/List'
-import Switch from '../../components/DataEntry/Switch/components/Switch'
+import List from '../../components/DataDisplay/List/'
+import Switch from '../../components/DataEntry/Switch/'
 import Tools from '../../components/Tools/Tools'
 
 const Item = List.Item;
