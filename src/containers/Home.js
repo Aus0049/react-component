@@ -24,6 +24,10 @@ const Home = () => {
                 <Item subtitle="Carousel" icon="horizontal" onClick={()=>{Tools.linkTo("/data-display/carousel")}}>轮播图</Item>
                 <Item subtitle="Tag" icon="horizontal" onClick={()=>{Tools.linkTo("/data-display/tag")}}>标签</Item>
             </List>
+            <ListTitle title="表单组件" />
+            <List>
+                <Item subtitle="Input" icon="horizontal" onClick={()=>{Tools.linkTo("/form/input")}}>单行文本</Item>
+            </List>
             <ListTitle title="操作反馈" />
             <List>
                 <Item subtitle="Toast" icon="horizontal" onClick={()=>{Tools.linkTo("/feedback/list")}}>提示</Item>

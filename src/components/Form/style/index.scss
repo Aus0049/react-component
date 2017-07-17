@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+// form表单最外层div 只负责样式
+.zby-form-box {
+  margin: 30px 0;
+  padding: 0 20px;
+  background: #fff;
+}
+
+// input textarea样式
+.zby-form-line-box {
+  overflow: hidden;
+  border-bottom: #eee solid 2px;
+
+  &.with-bottom-border {
+    border-bottom: #eee solid 2px;
+  }
+
+  &:last-of-type {
+    border-bottom: none;
+  }
+
+  &.text-area {
+    .content {
+      .input-readonly {
+        padding-top: 30px;
+        padding-bottom: 30px;
+        min-height: 200px;
+        line-height: 40px;
+        word-break: break-all;
+      }
+
+      textarea {
+        display: block;
+        width: 100%;
+        padding: 30px 0 30px 20px;
+        min-height: 200px;
+        font-size: 26px;
+        line-height: 40px;
+        color: #333;
+        border: none;
+        resize: none;
+        outline: none;
+      }
+    }
+  }
+
+  &.number {
+    .content {
+      position: relative;
+
+      input {
+        padding-right: 120px;
+      }
+
+      .unit {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 120px;
+        color: #999;
+        text-align: center;
+        font-size: 26px;
+        line-height: 100px;
+      }
+    }
+  }
+
+  .title {
+    position: relative;
+    padding: 0;
+    width: 230px;
+    float: left;
+    left: 0;
+    top: 0;
+
+    .fa-asterisk {
+      display: inline-block;
+      font-size: 26px;
+      line-height: 100px;
+      color: red;
+      visibility: hidden;
+
+      &.required {
+        visibility: visible;
+      }
+    }
+
+    .label-name {
+      display: inline-block;
+      max-width: 200px;
+      height: 100px;
+      padding-left: 20px;
+      color: #999;
+      font-size: 26px;
+      line-height: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: top;
+    }
+  }
+
+  .content {
+    margin-left: 230px;
+
+    input {
+      width: 100%;
+      padding: 30px 0 30px 20px;
+      font-size: 26px;
+      line-height: 40px;
+      color: #333;
+      border: none;
+    }
+
+    .input-readonly {
+      padding-left: 20px;
+      font-size: 26px;
+      line-height: 100px;
+      color: #999;
+    }
+  }
+}
