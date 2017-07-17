@@ -11,18 +11,20 @@ class InputPage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            value1: "abc"
+            value1: 'abc',
+            value2: 'ABC',
+            value3: '一二三'
         };
     }
     handleChange (type, e) {
         const value = e.target.value;
-
+        console.log({[type]: value});
         this.setState({
             [type]: value
         });
     }
     render () {
-        const {value1} = this.state;
+        const {value1, value2, value3} = this.state;
 
         return (
             <div className="page input">
@@ -35,6 +37,8 @@ class InputPage extends React.Component {
 
                 <div className='zby-form-box'>
                     <Input labelName="受控组件" value={value1} required placeHolder="受控组件" onChange={this.handleChange.bind(this, 'value1')} />
+                    <Input labelName="不受控组件" value={value2} placeHolder="不受控组件" controlled={false} />
+                    <Input labelName="readOnly" value={value3} readOnly placeHolder="readOnly" />
                 </div>
             </div>
         )

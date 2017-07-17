@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import '../style/index.scss'
 
 const Input = (props) => {
-    const {required, labelName, readOnly, value, placeHolder, onChange} = props;
+    const {required, labelName, readOnly, controlled, value, placeHolder, onChange} = props;
 
     return (
         <div className="zby-form-line-box">
@@ -16,7 +16,8 @@ const Input = (props) => {
             </div>
             <div className="content">
                 {readOnly ? <p className="input-readonly">{value ? value : placeHolder}</p> :
-                    <input type="text" value={value} placeholder={placeHolder} onChange={onChange} />}
+                    controlled ? <input type="text" value={value} placeholder={placeHolder} onChange={onChange} /> :
+                        <input type="text" defaultValue={value} placeholder={placeHolder} />}
             </div>
         </div>
     )
@@ -28,6 +29,7 @@ Input.PropTypes = {
     required: React.PropTypes.bool,
     labelName: React.PropTypes.string.isRequired,
     readOnly: React.PropTypes.bool,
+    controlled: React.PropTypes.bool,
     value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
     placeHolder: React.PropTypes.string,
     onChange: React.PropTypes.func,
@@ -36,6 +38,7 @@ Input.PropTypes = {
 Input.defaultProps = {
     required: false,
     readOnly: false,
+    controlled: true,
     onChange: empty
 };
 
