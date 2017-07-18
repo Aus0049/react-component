@@ -12,14 +12,6 @@
   overflow: hidden;
   border-bottom: #eee solid 2px;
 
-  &.with-bottom-border {
-    border-bottom: #eee solid 2px;
-  }
-
-  &:last-of-type {
-    border-bottom: none;
-  }
-
   &.text-area {
     .content {
       .input-readonly {
@@ -119,5 +111,11 @@
       line-height: 100px;
       color: #999;
     }
+  }
+}
+
+.zby-form-box > .zby-form-line-box {
+  &:last-of-type {
+    border-bottom: none;
   }
 }

@@ -15,23 +15,8 @@ $darkGray: #bbb;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 
-  // 下边线
-  div:not(:last-child) {
-    .zby-list-item {
-      .zby-item-box {
-        border-bottom: 1px solid #ccc;
-      }
-    }
-  }
-
   .zby-list-item {
     padding: 0 40px;
-
-    &:last-of-type {
-      .zby-item-box {
-        border-bottom: none;
-      }
-    }
 
     &.zby-list-item-tap-active {
       background-color: $lightGray;
@@ -105,5 +90,11 @@ $darkGray: #bbb;
         color: #999;
       }
     }
+  }
+}
+
+.zby-list-box > .zby-list-item .zby-item-box {
+  &:last-of-type {
+    border-bottom: none;
   }
 }
