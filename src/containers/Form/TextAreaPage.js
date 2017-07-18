@@ -1,12 +1,12 @@
 /**
- * Created by Aus on 2017/7/17.
+ * Created by Aus on 2017/7/18.
  */
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle/'
-import {Input} from '../../components/Form/'
+import {TextArea} from '../../components/Form/'
 import Tools from '../../components/Tools/Tools'
 
-class InputPage extends React.Component {
+class TextAreaPage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
@@ -35,13 +35,11 @@ class InputPage extends React.Component {
                 <ListTitle title="普通" />
 
                 <div className='zby-form-box'>
-                    <Input labelName="受控组件" value={value1} required placeHolder="受控组件" onChange={this.handleChange.bind(this, 'value1')} />
-                    <Input labelName="不受控组件" value={value2} placeHolder="不受控组件" controlled={false} />
-                    <Input labelName="readOnly" value={value3} readOnly placeHolder="readOnly" />
+
                 </div>
             </div>
         )
     }
 }
 
-export default InputPage
+export default TextAreaPage

@@ -27,6 +27,7 @@ const Home = () => {
             <ListTitle title="表单组件" />
             <List>
                 <Item subtitle="Input" icon="horizontal" onClick={()=>{Tools.linkTo("/form/input")}}>单行文本</Item>
+                <Item subtitle="TextArea" icon="horizontal" onClick={()=>{Tools.linkTo("/form/textarea")}}>多行文本</Item>
             </List>
             <ListTitle title="操作反馈" />
             <List>
