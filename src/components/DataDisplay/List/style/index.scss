@@ -93,8 +93,10 @@ $darkGray: #bbb;
   }
 }
 
-.zby-list-box > .zby-list-item .zby-item-box {
+.zby-list-box > .zby-list-item {
   &:last-of-type {
-    border-bottom: none;
+    .zby-item-box {
+      border-bottom: none;
+    }
   }
 }
