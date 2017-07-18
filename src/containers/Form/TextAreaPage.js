@@ -10,7 +10,7 @@ class TextAreaPage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            value1: 'abc',
+            value1: '一二三四五六七八九十一二三四五六七八九十',
             value2: 'ABC',
             value3: '一二三'
         };
@@ -35,7 +35,9 @@ class TextAreaPage extends React.Component {
                 <ListTitle title="普通" />
 
                 <div className='zby-form-box'>
-
+                    <TextArea labelName="受控组件" value={value1} required placeHolder="受控组件" onChange={this.handleChange.bind(this, 'value1')} />
+                    <TextArea labelName="不受控组件" value={value2} placeHolder="不受控组件" controlled={false} />
+                    <TextArea labelName="readOnly" value={value3} readOnly placeHolder="readOnly" />
                 </div>
             </div>
         )
