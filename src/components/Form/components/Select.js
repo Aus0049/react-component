@@ -15,7 +15,7 @@ const Select = (props) => {
     }
 
     return (
-        <div className="form-line-box select">
+        <div className="zby-form-line-box select">
             <div className="title">
                 <i className={classNames(['icon', 'icon-required', {required: required}])}></i>
                 <div className="label-name">{labelName}</div>

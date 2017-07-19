@@ -37,6 +37,7 @@ class SelectPage extends React.Component {
 
                 <div className='zby-form-box'>
                     <Select
+                        labelName="测试"
                         data={data}
                         value={[value1]}
                     />
