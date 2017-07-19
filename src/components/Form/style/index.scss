@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+textarea {
+  box-sizing: border-box;
+}
+
 // form表单最外层div 只负责样式
 .zby-form-box {
   margin: 30px 0;
