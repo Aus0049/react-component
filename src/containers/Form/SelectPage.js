@@ -39,7 +39,7 @@ class SelectPage extends React.Component {
                     <Select
                         labelName="测试"
                         data={data}
-                        value={[value1]}
+                        value={value1}
                     />
                 </div>
             </div>
