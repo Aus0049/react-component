@@ -120,7 +120,7 @@ class Picker extends React.Component {
         const {col, data, cascade} = this.props;
         const {selectedValue, show} = this.state;
 
-        if(selectedValue != undefined && show){
+        if(selectedValue !== undefined && show){
             return <PickerView
                 col={col}
                 data={data}
