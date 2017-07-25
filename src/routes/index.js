@@ -10,6 +10,7 @@ import Uploader from '../containers/DataEntry/UploaderPage'
 import Input from '../containers/Form/InputPage'
 import TextArea from '../containers/Form/TextAreaPage'
 import Select from '../containers/Form/SelectPage'
+import DateRange from '../containers/Form/DateRangePage'
 import List from '../containers/DataDisplay/ListPage'
 import Carousel from '../containers/DataDisplay/CarouselPage'
 import ToastPage from '../containers/Feedback/ToastPage'
@@ -38,6 +39,7 @@ export const createRoutes = () => ({
             {path: 'input', component: Input},
             {path: 'textarea', component: TextArea},
             {path: 'select', component: Select},
+            {path: 'date-range', component: DateRange},
         ]},
         {path: '/feedback', childRoutes: [
             {path: 'list', component: ToastPage}

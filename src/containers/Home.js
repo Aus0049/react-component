@@ -29,6 +29,7 @@ const Home = () => {
                 <Item subtitle="Input" icon="horizontal" onClick={()=>{Tools.linkTo("/form/input")}}>单行文本</Item>
                 <Item subtitle="TextArea" icon="horizontal" onClick={()=>{Tools.linkTo("/form/textarea")}}>多行文本</Item>
                 <Item subtitle="Select" icon="horizontal" onClick={()=>{Tools.linkTo("/form/select")}}>单选框</Item>
+                <Item subtitle="DateRange" icon="horizontal" onClick={()=>{Tools.linkTo("/form/date-range")}}>日期区间</Item>
             </List>
             <ListTitle title="操作反馈" />
             <List>

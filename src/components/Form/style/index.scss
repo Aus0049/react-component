@@ -104,6 +104,30 @@ textarea {
       line-height: 100px;
       color: #999;
     }
+
+    .connection {
+      float: left;
+      overflow: hidden;
+      box-sizing: border-box;
+
+      &.date {
+        width: 60%;
+      }
+
+      &.time {
+        width: 40%;
+        padding-left: 10px;
+      }
+    }
+
+    .zby-list-item {
+      padding-left: 0;
+      padding-right: 20px;
+
+      .zby-item-box {
+        padding-right: 20px;
+      }
+    }
   }
 }
 

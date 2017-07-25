@@ -10,35 +10,15 @@ import moment from 'moment'
 import '../style/index.scss'
 
 const DateRange = (props) => {
-    const timeData = [{label: "上半天", value: "00:00:00"}, {label: "下半天", value: "12:00:00"}];
-    const {required, startLabelName, endLabelName, kind, readOnly, rangeLabelName, longValue, onChange} = props;
-    const today = moment().format('YYYY-MM-DD');
-    const now = moment().format('HH:mm');
-    let {startValue, endValue} = props;
-
-    // 初始化默认值
-    if(!startValue){
-        if(kind){
-            startValue = today + ' 00:00:00';
-        } else {
-            startValue = today + ' ' + now;
-        }
-    }
-
-    if(!endValue){
-        if(kind){
-            endValue = today + ' 00:00:00';
-        } else {
-            endValue = today + ' ' + now;
-        }
-    }
+    const {required, startLabelName, endLabelName, readOnly, rangeLabelName, rangeValue, onChange} = props;
+    const {startValue, endValue} = props;
 
     const [startDate, startTime] = startValue.split(' ');
     const [endDate, endTime] = endValue.split(' ');
     const datetimeDOM = [];
 
     function handleChange(from, type, value) {
-        const data = {startValue: startValue, endValue: endValue, longValue: undefined};
+        const data = {startValue: startValue, endValue: endValue, rangeValue: undefined};
 
         if('date' === type){
             if('start' === from){
@@ -74,7 +54,7 @@ const DateRange = (props) => {
         // 分钟 做两位小数处理
         const minutes = (diff % (1000 * 60 * 60)) / (1000 * 60) ;
 
-        data.longValue = `${hours} 小时 ${minutes} 分钟 (${days} 天)`;
+        data.rangeValue = `${hours} 小时 ${minutes} 分钟 (${days} 天)`;
 
         onChange(data);
     }
@@ -83,7 +63,6 @@ const DateRange = (props) => {
     datetimeDOM.push(
         <div className="content">
             <div className="connection date">
-                <i className="icon icon-time"></i>
                 {readOnly ?
                     <p className="input-readonly">{startDate}</p>
                     :
@@ -93,11 +72,11 @@ const DateRange = (props) => {
                         value={moment(startDate, 'YYYY-MM-DD')}
                         onChange={handleChange.bind(undefined, 'start', 'date')}
                     >
-                        <List.Item arrow="down" className="ant-input-value inline">{startDate}</List.Item>
+                        <List.Item className="ant-input-value inline" icon="vertical">{startDate}</List.Item>
                     </DatePicker>}
             </div>
             <div className="connection time">
-                {kind === 0 ?
+                {
                     readOnly ?
                         <p className="input-readonly">{startTime}</p>
                         :
@@ -107,21 +86,9 @@ const DateRange = (props) => {
                             value={moment(startTime, 'HH:mm')}
                             onChange={handleChange.bind(undefined, 'start', 'time')}
                         >
-                            <List.Item arrow="down" className="ant-input-value inline">{startTime}</List.Item>
+                            <List.Item className="ant-input-value inline" icon="vertical">{startTime}</List.Item>
                         </DatePicker>
-                    :
-                    readOnly ?
-                        <p className="input-readonly">{startTime === "00:00:00" ? "上半天" : "下半天"}</p>
-                        :
-                        <Picker
-                            data={timeData}
-                            cols={1}
-                            title="选择时间"
-                            value={[startTime]}
-                            onChange={handleChange.bind(undefined, 'start', 'day')}
-                        >
-                            <List.Item arrow="down" className="ant-input-value inline">{startTime === "00:00:00" ? "上半天" : "下半天"}</List.Item>
-                        </Picker>}
+                }
             </div>
         </div>
     );
@@ -130,7 +97,6 @@ const DateRange = (props) => {
     datetimeDOM.push(
         <div className="content">
             <div className="connection date">
-                <i className="icon icon-time"></i>
                 {readOnly ?
                     <p className="input-readonly">{endDate}</p>
                     :
@@ -140,12 +106,11 @@ const DateRange = (props) => {
                         value={moment(endDate, 'YYYY-MM-DD')}
                         onChange={handleChange.bind(undefined, 'end', 'date')}
                     >
-                        <List.Item arrow="down" className="ant-input-value inline">{endDate}</List.Item>
+                        <List.Item className="ant-input-value inline" icon="vertical">{endDate}</List.Item>
                     </DatePicker>}
             </div>
             <div className="connection time">
-                {kind === 0 ?
-                    readOnly ?
+                {readOnly ?
                         <p className="input-readonly">{endTime}</p>
                         :
                         <DatePicker
@@ -154,21 +119,9 @@ const DateRange = (props) => {
                             value={moment(endTime, 'HH:mm')}
                             onChange={handleChange.bind(undefined, 'end', 'time')}
                         >
-                            <List.Item arrow="down" className="ant-input-value inline">{endTime}</List.Item>
+                            <List.Item className="ant-input-value inline" icon="vertical">{endTime}</List.Item>
                         </DatePicker>
-                    :
-                    readOnly ?
-                        <p className="input-readonly">{endTime === "00:00:00" ? "上半天" : "下半天"}</p>
-                        :
-                        <Picker
-                            data={timeData}
-                            cols={1}
-                            title="选择时间"
-                            value={[endTime]}
-                            onChange={handleChange.bind(undefined, 'end', 'day')}
-                        >
-                            <List.Item arrow="down" className="ant-input-value inline">{endTime === "00:00:00" ? "上半天" : "下半天"}</List.Item>
-                        </Picker>}
+                }
             </div>
         </div>
     );
@@ -176,29 +129,29 @@ const DateRange = (props) => {
     return (
         <div className="form-date-range-box">
 
-            <div className="form-line-box select">
+            <div className="zby-form-line-box select">
                 <div className="title">
-                    <i className={classNames(['icon', 'icon-required', {required: required}])}></i>
+                    <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
                     <div className="label-name">{startLabelName}</div>
                 </div>
                 {datetimeDOM[0]}
             </div>
 
-            <div className="form-line-box select">
+            <div className="zby-form-line-box select">
                 <div className="title">
-                    <i className={classNames(['icon', 'icon-required', {required: required}])}></i>
+                    <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
                     <div className="label-name">{endLabelName}</div>
                 </div>
                 {datetimeDOM[1]}
             </div>
 
-            <div className="form-line-box select">
+            <div className="zby-form-line-box select">
                 <div className="title">
-                    <i className={classNames(['icon', 'icon-required', {required: required}])}></i>
+                    <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
                     <div className="label-name">{rangeLabelName}</div>
                 </div>
                 <div className="content">
-                    <p className="input-readonly">{longValue}</p>
+                    <p className="input-readonly">{rangeValue}</p>
                 </div>
             </div>
 
@@ -215,16 +168,14 @@ DateRange.PropTypes = {
     endLabelName: React.PropTypes.string.isRequired,
     endValue: React.PropTypes.string,
     rangeLabelName: React.PropTypes.string.isRequired,
-    longValue: React.PropTypes.string,
+    rangeValue: React.PropTypes.string,
     readOnly: React.PropTypes.bool,
-    kind: React.PropTypes.oneOf([0, 1]),
     onChange: React.PropTypes.func
 };
 
 DateRange.defaultProps = {
     required: false,
     readOnly: false,
-    kind: 0,
     onChange: empty
 };
 
