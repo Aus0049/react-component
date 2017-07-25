@@ -10,18 +10,16 @@ class SelectPage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            value1: '选项一',
-            value2: '选项二',
+            value1: {value: '选项一'},
+            value2: {value: '选项二'},
             value3: '选项三'
         };
     }
-    // handleChange (type, e) {
-    //     const value = e.target.value;
-    //     console.log({[type]: value});
-    //     this.setState({
-    //         [type]: value
-    //     });
-    // }
+    handleChange (type, value) {
+        this.setState({
+            [type]: value
+        });
+    }
     render () {
         const {value1, value2, value3} = this.state;
         const data = [{label: '选项一', value: '选项一'}, {label: '选项二', value: '选项二'}, {label: '选项三', value: '选项三'}];
@@ -37,9 +35,17 @@ class SelectPage extends React.Component {
 
                 <div className='zby-form-box'>
                     <Select
-                        labelName="测试"
+                        labelName="正常"
                         data={data}
-                        value={value1}
+                        value={value1.value}
+                        onChange={this.handleChange.bind(this, 'value1')}
+                    />
+                    <Select
+                        labelName="readonly"
+                        readOnly
+                        data={data}
+                        value={value2.value}
+                        onChange={this.handleChange.bind(this, 'value2')}
                     />
                 </div>
             </div>
