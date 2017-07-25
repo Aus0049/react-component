@@ -28,7 +28,7 @@ class SelectPage extends React.Component {
             <div className="page select">
                 <h1 className="title">
                     <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
-                    Input
+                    Select
                 </h1>
 
                 <ListTitle title="普通" />

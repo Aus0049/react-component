@@ -4,7 +4,6 @@
 import React from 'react'
 import classNames from 'classnames'
 import DatePicker from '../../DataEntry/DataPicker/'
-import Picker from '../../DataEntry/Picker/'
 import List from '../../DataDisplay/List/'
 import moment from 'moment'
 import '../style/index.scss'
