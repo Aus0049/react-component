@@ -10,7 +10,8 @@ class DataRangePage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            value1: {require: true, startLabelName: '开始时间啊', startValue: '2017-06-21 12:00', endLabelName: '结束时间啊', endValue: '2017-09-09 12:00', rangeLabelName: 'ok', rangeValue: '1920小时0分钟（80天）'},
+            value1: {required: true, startLabelName: '开始时间啊', startValue: '2017-06-21 12:00', endLabelName: '结束时间啊', endValue: '2017-09-09 12:00', rangeLabelName: 'ok', rangeValue: '1920小时0分钟（80天）'},
+            value2: {required: false, readOnly: true, startLabelName: 'start', startValue: '2017-06-21 12:00', endLabelName: 'end', endValue: '2017-09-09 12:00', rangeLabelName: 'range', rangeValue: '1920小时0分钟（80天）'},
         };
     }
     handleChange (type, value) {
@@ -20,7 +21,7 @@ class DataRangePage extends React.Component {
         });
     }
     render () {
-        const {value1} = this.state;
+        const {value1, value2} = this.state;
 
         return (
             <div className="page date-range">
@@ -30,11 +31,16 @@ class DataRangePage extends React.Component {
                 </h1>
 
                 <ListTitle title="普通" />
-
                 <div className='zby-form-box'>
                     <DateRange
                         {...value1}
                         onChange={this.handleChange.bind(this, 'value1')}
+                    />
+                </div>
+                <ListTitle title="readonly" />
+                <div className='zby-form-box'>
+                    <DateRange
+                        {...value2}
                     />
                 </div>
             </div>
