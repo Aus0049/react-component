@@ -5,13 +5,14 @@ import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle/'
 import {DateRange} from '../../components/Form/'
 import Tools from '../../components/Tools/Tools'
+import moment from 'moment'
 
 class DataRangePage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            value1: {required: true, startLabelName: '开始时间啊', startValue: '2017-06-21 12:00', endLabelName: '结束时间啊', endValue: '2017-09-09 12:00', rangeLabelName: 'ok', rangeValue: '1920小时0分钟（80天）'},
-            value2: {required: false, readOnly: true, startLabelName: 'start', startValue: '2017-06-21 12:00', endLabelName: 'end', endValue: '2017-09-09 12:00', rangeLabelName: 'range', rangeValue: '1920小时0分钟（80天）'},
+            value1: {required: true, startLabelName: '开始时间啊', startValue: moment(), endLabelName: '结束时间啊', endValue: moment(), rangeLabelName: '时长'},
+            value2: {required: false, startLabelName: 'start', startValue: moment(), endLabelName: 'end', endValue: moment(), rangeLabelName: 'range', kind: 'datetime'},
         };
     }
     handleChange (type, value) {
@@ -36,11 +37,9 @@ class DataRangePage extends React.Component {
                         {...value1}
                         onChange={this.handleChange.bind(this, 'value1')}
                     />
-                </div>
-                <ListTitle title="readonly" />
-                <div className='zby-form-box'>
                     <DateRange
                         {...value2}
+                        onChange={this.handleChange.bind(this, 'value2')}
                     />
                 </div>
             </div>
