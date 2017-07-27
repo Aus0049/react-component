@@ -51,6 +51,98 @@ textarea {
     }
   }
 
+  &.checkbox {
+
+    .checkbox-item-line {
+      &:last-of-type {
+        .checkbox-label {
+          border-bottom: none;
+        }
+      }
+      &.readonly {
+        .check-box-box {
+          opacity: .5;
+        }
+
+        .checkbox-label {
+          color: #999;
+        }
+      }
+    }
+
+    .check-box-box {
+      position: relative;
+      width: 100px;
+      height: 100px;
+      float: left;
+
+      .check-box {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        perspective: 1000;
+        -webkit-perspective: 1000;
+
+        margin-left: -21px;
+        margin-top: -21px;
+        transition: 0.5s;
+        -webkit-transition: 0.5s;
+
+        transform-style: preserve-3d;
+        -webkit-transform-style: preserve-3d;
+
+        &.checked {
+          transform: rotateY(180deg);
+          -webkit-transform: rotateY(180deg);
+        }
+
+        .front {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 42px;
+          height: 42px;
+          border: 2px solid #d5d5d5;
+          background: #ffffff;
+          border-radius: 50%;
+          z-index: 2;
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+
+        .back {
+          position: absolute;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 42px;
+          height: 42px;
+          font-size: 42px;
+          border-radius: 50%;
+          color: #46ab39;
+          transform: rotateY(180deg);
+          -webkit-transform: rotateY(180deg);
+          backface-visibility: hidden;
+          -webkit-backface-visibility: hidden;
+        }
+      }
+    }
+
+    .checkbox-label {
+      margin-left: 100px;
+      padding: 30px 0 30px 20px;
+      font-size: 26px;
+      line-height: 40px;
+      color: #333;
+      word-break: break-all;
+      border-bottom: #eee solid 2px;
+    }
+  }
+
   .title {
     position: relative;
     padding: 0;
@@ -109,15 +201,6 @@ textarea {
       float: left;
       overflow: hidden;
       box-sizing: border-box;
-
-      &.date {
-        width: 60%;
-      }
-
-      &.time {
-        width: 40%;
-        padding-left: 10px;
-      }
     }
 
     .zby-list-item {

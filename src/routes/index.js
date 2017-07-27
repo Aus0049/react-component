@@ -12,6 +12,7 @@ import TextArea from '../containers/Form/TextAreaPage'
 import Select from '../containers/Form/SelectPage'
 import DateRange from '../containers/Form/DateRangePage'
 import DateTime from '../containers/Form/DateTimePage'
+import Checkbox from '../containers/Form/CheckboxPage'
 import List from '../containers/DataDisplay/ListPage'
 import Carousel from '../containers/DataDisplay/CarouselPage'
 import ToastPage from '../containers/Feedback/ToastPage'
@@ -42,6 +43,7 @@ export const createRoutes = () => ({
             {path: 'select', component: Select},
             {path: 'date-range', component: DateRange},
             {path: 'date-time', component: DateTime},
+            {path: 'checkbox', component: Checkbox},
         ]},
         {path: '/feedback', childRoutes: [
             {path: 'list', component: ToastPage}
