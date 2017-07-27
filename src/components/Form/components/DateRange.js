@@ -9,9 +9,9 @@ import moment from 'moment'
 import '../style/index.scss'
 
 const DateRange = (props) => {
-    const {required, startLabelName, endLabelName, startValue, endValue, readOnly, rangeLabelName, kind, onChange} = props;
+    const {required, startLabelName, endLabelName, startValue, endValue, readOnly, rangeLabelName, kind, format, onChange} = props;
     const datetimeDOM = [];
-    let startValueText, endValueText;
+    let startValueText = <span>&nbsp;</span>, endValueText = <span>&nbsp;</span>;
 
     if(startValue){
         if(kind === 'date'){
@@ -46,7 +46,13 @@ const DateRange = (props) => {
         // 分钟 做两位小数处理
         const minutes = Number.parseInt((diff % (1000 * 60 * 60)) / (1000 * 60) * 100) / 100;
 
-        datetimeDOM.push(`${hours} 小时 ${minutes} 分钟 (${days} 天)`);
+        let text = `${hours} 小时 ${minutes} 分钟 (${days} 天)`;
+
+        if(format){
+            text = format(days, hours, minutes);
+        }
+
+        datetimeDOM.push(text);
     }
 
     return (
@@ -119,6 +125,7 @@ DateRange.PropTypes = {
     rangeLabelName: React.PropTypes.string.isRequired,
     readOnly: React.PropTypes.bool,
     kind: React.PropTypes.oneOf(['date', 'datetime']),
+    format: React.PropTypes.func,
     onChange: React.PropTypes.func
 };
 

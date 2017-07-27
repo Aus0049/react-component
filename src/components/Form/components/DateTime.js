@@ -9,7 +9,11 @@ import '../style/index.scss'
 
 const DateTime = (props) => {
     const {required, labelName, value, readOnly, kind, onChange} = props;
-    const valueText = kind === 'date' ? value.format('YYYY-MM-DD') : value.format('YYYY-MM-DD HH:mm');
+    let valueText = <span>&nbsp;</span>;
+
+    if(value){
+        valueText = kind === 'date' ? value.format('YYYY-MM-DD') : value.format('YYYY-MM-DD HH:mm');
+    }
 
     return (
         <div className="zby-form-line-box select">
