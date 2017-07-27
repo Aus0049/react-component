@@ -11,8 +11,8 @@ class DataRangePage extends React.Component {
     constructor (props) {
         super(props);
         this.state = {
-            value1: {required: true, startLabelName: '开始时间啊', startValue: moment(), endLabelName: '结束时间啊', endValue: moment(), rangeLabelName: '时长'},
-            value2: {required: false, startLabelName: 'start', startValue: moment(), endLabelName: 'end', endValue: moment(), rangeLabelName: 'range', kind: 'datetime'},
+            value1: {required: true, startLabelName: '开始时间啊', startValue: moment([2017, 6, 27]), endLabelName: '结束时间啊', endValue: moment([2017, 6, 27]), rangeLabelName: '时长'},
+            value2: {required: false, startLabelName: 'start', startValue: moment([2017, 6, 27, 19, 20]), endLabelName: 'end', endValue: moment([2017, 6, 27, 19, 30]), rangeLabelName: 'range', kind: 'datetime'},
         };
     }
     handleChange (type, value) {

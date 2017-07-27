@@ -96,7 +96,7 @@ const DateRange = (props) => {
 
             <div className="zby-form-line-box select">
                 <div className="title">
-                    <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
+                    <i className="fa fa-asterisk"></i>
                     <div className="label-name">{rangeLabelName}</div>
                 </div>
                 <div className="content">
