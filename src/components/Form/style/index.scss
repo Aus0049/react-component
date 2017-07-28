@@ -80,8 +80,8 @@ textarea {
         position: absolute;
         left: 50%;
         top: 50%;
-        width: 42px;
-        height: 42px;
+        width: 46px;
+        height: 46px;
         border-radius: 50%;
         perspective: 1000;
         -webkit-perspective: 1000;
@@ -119,8 +119,8 @@ textarea {
           top: 0;
           left: 0;
           display: block;
-          width: 42px;
-          height: 42px;
+          width: 46px;
+          height: 46px;
           font-size: 42px;
           border-radius: 50%;
           color: #46ab39;
@@ -128,6 +128,13 @@ textarea {
           -webkit-transform: rotateY(180deg);
           backface-visibility: hidden;
           -webkit-backface-visibility: hidden;
+
+          .fa {
+            display: block;
+            text-align: center;
+
+            transform: scale(1.2);
+          }
         }
       }
     }

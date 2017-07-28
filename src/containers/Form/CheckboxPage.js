@@ -14,15 +14,16 @@ class CheckboxPage extends React.Component {
         };
     }
     handleChange (type, value) {
-        this.setState({
-            [type]: value
+        this.setState((previousState)=>{
+            previousState[type] = Object.assign(previousState[type], value);
+            return {...previousState}
         });
     }
     render () {
         const {value1} = this.state;
         const options1 = [
             {label: '苹果', value: 'apple'}, {label: '香蕉', value: 'banana'},
-            {label: '樱桃', value: 'cherry'}, {label: '枣', value: 'date', disabled: true}
+            {label: '樱桃', value: 'cherry', disabled: true}, {label: '枣', value: 'date'}
         ];
 
         return (

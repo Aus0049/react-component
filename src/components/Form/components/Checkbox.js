@@ -24,13 +24,13 @@ const Checkbox = (props) => {
     options.map((item, i)=>{
         itemDOM.push(
             <div key={`${i}-${item.value}`}
-                 className={classNames(['checkbox-item-line', 'checkbox-item', {readonly: readOnly || item.readonly}])}
-                 onClick={()=>{readOnly || item.readonly ? empty() : handleChange(item.value)}}>
+                 className={classNames(['checkbox-item-line', 'checkbox-item', {readonly: readOnly || item.disabled}])}
+                 onClick={()=>{readOnly || item.disabled ? empty() : handleChange(item.value)}}>
                 <div className="check-box-box">
                     <div className={classNames(['check-box', {checked: value.indexOf(item.value) !== -1}])}>
                         <span className="front"></span>
                         <span className="back">
-                            <i className="icon icon-success"></i>
+                            <i className="fa fa-check-circle"></i>
                         </span>
                     </div>
                 </div>
