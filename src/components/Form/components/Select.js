@@ -31,7 +31,7 @@ const Select = (props) => {
                         value={[value]}
                         onChange={handleChange}
                     >
-                        <List.Item icon="horizontal">{value}</List.Item>
+                        <List.Item icon="down">{value}</List.Item>
                     </Picker>}
             </div>
         </div>
