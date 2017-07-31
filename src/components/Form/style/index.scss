@@ -150,6 +150,27 @@ textarea {
     }
   }
 
+  &.number {
+    .content {
+      position: relative;
+
+      input {
+        padding-right: 120px;
+      }
+
+      .unit {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 120px;
+        color: #999;
+        text-align: center;
+        font-size: 26px;
+        line-height: 100px;
+      }
+    }
+  }
+
   .title {
     position: relative;
     padding: 0;
@@ -195,6 +216,8 @@ textarea {
       line-height: 40px;
       color: #333;
       border: none;
+
+      box-sizing: border-box;
     }
 
     .input-readonly {

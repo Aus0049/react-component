@@ -13,9 +13,9 @@ const Number = (props) => {
     }
 
     return (
-        <div className="form-line-box number">
+        <div className="zby-form-line-box number">
             <div className="title">
-                <i className={classNames(['icon', 'icon-required', {required: required}])}></i>
+                <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
                 <div className="label-name">{labelName}</div>
             </div>
             <div className="content">

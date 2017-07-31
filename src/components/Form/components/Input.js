@@ -8,6 +8,10 @@ import '../style/index.scss'
 const Input = (props) => {
     const {required, labelName, readOnly, controlled, value, placeHolder, onChange} = props;
 
+    function handleChange (e) {
+        onChange({value: e.target.value});
+    }
+
     return (
         <div className="zby-form-line-box">
             <div className="title">
@@ -16,7 +20,7 @@ const Input = (props) => {
             </div>
             <div className="content">
                 {readOnly ? <p className="input-readonly">{value ? value : placeHolder}</p> :
-                    controlled ? <input type="text" value={value} placeholder={placeHolder} onChange={onChange} /> :
+                    controlled ? <input type="text" value={value} placeholder={placeHolder} onChange={handleChange} /> :
                         <input type="text" defaultValue={value} placeholder={placeHolder} />}
             </div>
         </div>
