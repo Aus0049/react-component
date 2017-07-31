@@ -9,6 +9,7 @@ import PickerView from '../containers/DataEntry/PickerViewPage'
 import Uploader from '../containers/DataEntry/UploaderPage'
 import Input from '../containers/Form/InputPage'
 import TextArea from '../containers/Form/TextAreaPage'
+import Number from '../containers/Form/NumberPage'
 import Select from '../containers/Form/SelectPage'
 import DateRange from '../containers/Form/DateRangePage'
 import DateTime from '../containers/Form/DateTimePage'
@@ -40,6 +41,7 @@ export const createRoutes = () => ({
         {path: '/form', childRoutes: [
             {path: 'input', component: Input},
             {path: 'textarea', component: TextArea},
+            {path: 'number', component: Number},
             {path: 'select', component: Select},
             {path: 'date-range', component: DateRange},
             {path: 'date-time', component: DateTime},
