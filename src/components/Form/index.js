@@ -8,6 +8,7 @@ import DateTime from './components/DateTime'
 import Select from './components/Select'
 import Checkbox from './components/Checkbox'
 import Number from './components/Number'
+import Switch from './components/Switch'
 
 export {
     Input,
@@ -16,5 +17,6 @@ export {
     DateRange,
     DateTime,
     Select,
-    Checkbox
+    Checkbox,
+    Switch
 }

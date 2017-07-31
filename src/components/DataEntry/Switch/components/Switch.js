@@ -14,7 +14,7 @@ class Switch extends React.Component {
         let checked = true;
 
         // 如果传入checked 说明是受控组件
-        if('checked' in props){
+        if('checked' in props && props.checked !== undefined){
             checked = !!props.checked;
         } else {
             // 否则不受控
@@ -42,11 +42,12 @@ class Switch extends React.Component {
         this.setChecked(checked);
     }
     setChecked (checked) {
-        if (!('checked' in this.props)) {
+        if (!('checked' in this.props && this.props.checked !== undefined)) {
             this.setState({
                 checked,
             });
         }
+
         this.props.onChange(checked);
     }
     getClassName () {
@@ -98,6 +99,7 @@ Switch.propTypes = {
     checked: React.PropTypes.bool,
     defaultChecked: React.PropTypes.bool,
     attachedText: React.PropTypes.array,
+    disabled: React.PropTypes.bool,
     onChange: React.PropTypes.func,
 };
 

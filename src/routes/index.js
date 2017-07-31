@@ -10,6 +10,7 @@ import Uploader from '../containers/DataEntry/UploaderPage'
 import Input from '../containers/Form/InputPage'
 import TextArea from '../containers/Form/TextAreaPage'
 import Number from '../containers/Form/NumberPage'
+import FormSwitch from '../containers/Form/SwitchPage'
 import Select from '../containers/Form/SelectPage'
 import DateRange from '../containers/Form/DateRangePage'
 import DateTime from '../containers/Form/DateTimePage'
@@ -42,6 +43,7 @@ export const createRoutes = () => ({
             {path: 'input', component: Input},
             {path: 'textarea', component: TextArea},
             {path: 'number', component: Number},
+            {path: 'switch', component: FormSwitch},
             {path: 'select', component: Select},
             {path: 'date-range', component: DateRange},
             {path: 'date-time', component: DateTime},

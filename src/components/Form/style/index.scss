@@ -171,6 +171,14 @@ textarea {
     }
   }
 
+  &.switch {
+    .content {
+      height: 100px;
+      text-align: right;
+      padding-top: 20px;
+    }
+  }
+
   .title {
     position: relative;
     padding: 0;
@@ -207,6 +215,7 @@ textarea {
   }
 
   .content {
+    box-sizing: border-box;
     margin-left: 230px;
 
     input {
