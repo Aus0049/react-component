@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import '../style/index.scss'
 
 const Number = (props) => {
-    const {required, labelName, readOnly, value, placeHolder, unit, onChange} = props;
+    const {required, labelName, readOnly, controlled, value, placeHolder, unit, onChange} = props;
 
     function handleChange (e) {
         onChange({value: e.target.value});
@@ -20,7 +20,8 @@ const Number = (props) => {
             </div>
             <div className="content">
                 {readOnly ? <p className="input-readonly">{value ? value : placeHolder}</p> :
-                    <input type="text" value={value} placeholder={placeHolder} onChange={handleChange} />}
+                    controlled ? <input type="text" value={value} placeholder={placeHolder} onChange={handleChange} /> :
+                        <input type="text" defaultValue={value} placeholder={placeHolder} />}
                 <span className="unit">{unit}</span>
             </div>
         </div>
@@ -33,7 +34,8 @@ Number.PropTypes = {
     required: React.PropTypes.bool,
     labelName: React.PropTypes.string.isRequired,
     readOnly: React.PropTypes.bool,
-    value: React.PropTypes.oneOfType(['string', 'number']),
+    controlled: React.PropTypes.bool,
+    value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
     placeHolder: React.PropTypes.string,
     unit: React.PropTypes.string.isRequired,
     onChange: React.PropTypes.func,
@@ -42,6 +44,7 @@ Number.PropTypes = {
 Number.defaultProps = {
     required: false,
     readOnly: false,
+    controlled: true,
     onChange: empty
 };
 

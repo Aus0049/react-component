@@ -11,8 +11,8 @@ class NumberPage extends React.Component {
         super(props);
         this.state = {
             value1: 12.2,
-            value2: 100,
-            value3: '一二三'
+            value2: 0,
+            value3: '1.2'
         };
     }
     handleChange (type, value) {
@@ -42,9 +42,17 @@ class NumberPage extends React.Component {
                         onChange={this.handleChange.bind(this, 'value1')}
                     />
                     <Number
+                        required
+                        controlled={false}
+                        labelName="不受控组件"
+                        value={value2}
+                        placeHolder="请输入数值"
+                        unit="万"
+                    />
+                    <Number
                         readOnly
                         labelName="readOnly"
-                        value={value2}
+                        value={value3}
                         placeHolder="请输入数值"
                         unit="单位"
                     />
