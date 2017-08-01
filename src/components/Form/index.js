@@ -9,6 +9,7 @@ import Select from './components/Select'
 import Checkbox from './components/Checkbox'
 import Number from './components/Number'
 import Switch from './components/Switch'
+import Form from './components/Form'
 
 export {
     Input,
@@ -18,5 +19,6 @@ export {
     DateTime,
     Select,
     Checkbox,
-    Switch
+    Switch,
+    Form
 }
