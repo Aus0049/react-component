@@ -6,7 +6,7 @@ textarea {
 
 // form表单最外层div 只负责样式
 .zby-form-box {
-  margin: 30px 0;
+  margin-bottom: 30px;
   padding: 0 20px;
   background: #fff;
 }
@@ -251,6 +251,14 @@ textarea {
       }
     }
   }
+}
+
+.zby-form-title {
+  height: 60px;
+  padding: 0 20px;
+  line-height: 60px;
+  font-size: 26px;
+  color: #333;
 }
 
 .zby-form-box > .zby-form-line-box {

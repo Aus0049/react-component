@@ -15,6 +15,7 @@ import Select from '../containers/Form/SelectPage'
 import DateRange from '../containers/Form/DateRangePage'
 import DateTime from '../containers/Form/DateTimePage'
 import Checkbox from '../containers/Form/CheckboxPage'
+import Form from '../containers/Form/FormPage'
 import List from '../containers/DataDisplay/ListPage'
 import Carousel from '../containers/DataDisplay/CarouselPage'
 import ToastPage from '../containers/Feedback/ToastPage'
@@ -48,6 +49,7 @@ export const createRoutes = () => ({
             {path: 'date-range', component: DateRange},
             {path: 'date-time', component: DateTime},
             {path: 'checkbox', component: Checkbox},
+            {path: 'form', component: Form},
         ]},
         {path: '/feedback', childRoutes: [
             {path: 'list', component: ToastPage}

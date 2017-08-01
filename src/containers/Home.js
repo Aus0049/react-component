@@ -34,6 +34,7 @@ const Home = () => {
                 <Item subtitle="DateTime" icon="horizontal" onClick={()=>{Tools.linkTo("/form/date-time")}}>日期时刻</Item>
                 <Item subtitle="Select" icon="horizontal" onClick={()=>{Tools.linkTo("/form/select")}}>单选框</Item>
                 <Item subtitle="Checkbox" icon="horizontal" onClick={()=>{Tools.linkTo("/form/checkbox")}}>复选框</Item>
+                <Item subtitle="Form" icon="horizontal" onClick={()=>{Tools.linkTo("/form/form")}}>表单</Item>
             </List>
             <ListTitle title="操作反馈" />
             <List>

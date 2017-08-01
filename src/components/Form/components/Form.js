@@ -69,7 +69,7 @@ class Form extends React.Component {
                 const item = obj.children[j];
 
                 switch (item.type) {
-                    case 1:
+                    case 'input':
                         // 单行文本
                         itemDOM.push(
                             <Input
@@ -79,11 +79,12 @@ class Form extends React.Component {
                                 readOnly={readOnly ? true : item.readonly ? true : false}
                                 value={item.value}
                                 placeHolder={item.placeholder}
+                                kind={item.kind}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
                         );
                         break;
-                    case 2:
+                    case 'textarea':
                         // 多行文本
                         itemDOM.push(
                             <TextArea
@@ -97,22 +98,7 @@ class Form extends React.Component {
                             />
                         );
                         break;
-                    case 3:
-                        // 数字
-                        itemDOM.push(
-                            <Number
-                                key={j}
-                                required={item.require}
-                                labelName={item.labelName}
-                                readOnly={readOnly ? true : item.readonly ? true : false}
-                                value={item.value}
-                                placeHolder={item.placeholder}
-                                unit={item.unit}
-                                onChange={_this.handleChange.bind(_this, i, j)}
-                            />
-                        );
-                        break;
-                    case 4:
+                    case 'switch':
                         // 开关
                         itemDOM.push(
                             <Switch
@@ -128,7 +114,7 @@ class Form extends React.Component {
                             />
                         );
                         break;
-                    case 5:
+                    case 'date-range':
                         // 日期区间
                         itemDOM.push(
                             <DateRange
@@ -146,7 +132,7 @@ class Form extends React.Component {
                             />
                         );
                         break;
-                    case 6:
+                    case 'date-time':
                         // 时间点
                         itemDOM.push(
                             <DateTime
@@ -160,7 +146,7 @@ class Form extends React.Component {
                             />
                         );
                         break;
-                    case 7:
+                    case 'select':
                         // 单选框
                         itemDOM.push(
                             <Select
@@ -174,7 +160,7 @@ class Form extends React.Component {
                             />
                         );
                         break;
-                    case 8:
+                    case 'checkbox':
                         // 多选框
                         itemDOM.push(
                             <Checkbox
@@ -192,9 +178,9 @@ class Form extends React.Component {
                 }
             }
 
-            result.push(<Title key={i} content={obj.value} />);
+            result.push(<div className="zby-form-title" key={i}>{obj.value}</div>);
             result.push(
-                <div className='form-box'>
+                <div className='zby-form-box'>
                     {itemDOM}
                 </div>
             );

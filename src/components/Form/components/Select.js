@@ -14,10 +14,21 @@ const Select = (props) => {
         onChange({value: value[0]});
     }
 
+    const valueText = function () {
+        let result;
+        for (let i of data) {
+            if (i.value === value) {
+                result = i.label;
+            }
+        }
+
+        return result;
+    }();
+
     return (
         <div className="zby-form-line-box select">
             <div className="title">
-                <i className={classNames(['icon', 'icon-required', {required: required}])}></i>
+                <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
                 <div className="label-name">{labelName}</div>
             </div>
             <div className="content">
@@ -31,7 +42,7 @@ const Select = (props) => {
                         value={[value]}
                         onChange={handleChange}
                     >
-                        <List.Item icon="down">{value}</List.Item>
+                        <List.Item icon="down">{valueText}</List.Item>
                     </Picker>}
             </div>
         </div>
