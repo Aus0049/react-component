@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const config = require('../config')
 const px2rem = require('postcss-px2rem');
+const autoprefixer = require('autoprefixer');
 const debug = require('debug')('app:webpack:config')
 
 const paths = config.utils_paths
@@ -127,7 +128,8 @@ webpackConfig.module.loaders.push({
   loaders: [
     'style',
     BASE_CSS_LOADER,
-    'postcss'
+    'postcss',
+      'postcss-loader'
   ]
 })
 
@@ -136,7 +138,8 @@ webpackConfig.sassLoader = {
 }
 
 webpackConfig.postcss = [
-   px2rem({remUnit: 75})
+   px2rem({remUnit: 75}),
+    autoprefixer({browsers:['last 2 versions']})
 ];
 webpackConfig.module.loaders.push(
   { test: /\.woff(\?.*)?$/,  loader: 'url?name=fonts/[name].[ext]' },
