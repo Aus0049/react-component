@@ -12,6 +12,23 @@ const Input = (props) => {
         onChange({value: e.target.value});
     }
 
+    let inputType;
+
+    switch (kind) {
+        case 'number':
+            inputType = 'number';
+            break;
+        case 'phone':
+            inputType = 'number';
+            break;
+        case 'password':
+            inputType = 'password';
+            break;
+        default:
+            inputType = 'text';
+            break;
+    }
+
     return (
         <div className="zby-form-line-box">
             <div className="title">
@@ -20,8 +37,8 @@ const Input = (props) => {
             </div>
             <div className="content">
                 {readOnly ? <p className="input-readonly">{value ? value : placeHolder}</p> :
-                    controlled ? <input type={kind} value={value} placeholder={placeHolder} onChange={handleChange} /> :
-                        <input type={kind} defaultValue={value} placeholder={placeHolder} />}
+                    controlled ? <input type={inputType} value={value} placeholder={placeHolder} onChange={handleChange} /> :
+                        <input type={inputType} defaultValue={value} placeholder={placeHolder} />}
             </div>
         </div>
     )
