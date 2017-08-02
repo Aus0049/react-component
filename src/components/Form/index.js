@@ -10,6 +10,7 @@ import Checkbox from './components/Checkbox'
 import Number from './components/Number'
 import Switch from './components/Switch'
 import Form from './components/Form'
+import Validate from './components/Validate'
 
 export {
     Input,
@@ -20,5 +21,6 @@ export {
     Select,
     Checkbox,
     Switch,
-    Form
+    Form,
+    Validate
 }
