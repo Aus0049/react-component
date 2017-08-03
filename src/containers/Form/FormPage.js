@@ -2,7 +2,7 @@
  * Created by Aus on 2017/8/1.
  */
 import React from 'react'
-import {Form} from '../../components/Form/'
+import {Form, Validate} from '../../components/Form/'
 import Tools from '../../components/Tools/Tools'
 
 class FormPage extends React.Component {
@@ -23,6 +23,14 @@ class FormPage extends React.Component {
     }
     render () {
         const {formData} = this.state;
+
+        console.log(Validate([
+            {id: '1', name: 'a', value: '', require: true},
+            {id: '2', name: 'b', value: 'as1.2', type: 'email'},
+            {id: '3', name: 'c', value: '19999123', type: 'phone'},
+            {id: '4', name: 'd', value: 'asd', min: 4},
+            {id: '4', name: 'd', value: 2, type: 'number', min: 4},
+        ]));
 
         return (
             <div className="page form">

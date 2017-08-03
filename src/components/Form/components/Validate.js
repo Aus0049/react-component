@@ -15,12 +15,13 @@
 //  验证会将输入的值全部验证
 
 // 准备输出结果
-const result = [];
+let result = [];
 
 const Validate = (validateArray) => {
     // 验证validateArray
     if(!validateArray || !(validateArray instanceof Array)) return;
 
+    result = [];
     // 策略模式
     for(let item of validateArray){
         const {id, name, value, require, type, customVerify, errorText, max, min} = item;
@@ -44,10 +45,10 @@ const Validate = (validateArray) => {
 
         // 2.验证required
         if(require){
-            if(value && value.length > 0){
+            if(!(value && value.length > 0)){
                 validateErrorText = name + "不能为空!";
 
-                updateErrorInResult(id, name, validateErrorText, errorText);
+                updateErrorInResult(id, validateErrorText, errorText);
                 continue;
             }
         }
@@ -62,7 +63,7 @@ const Validate = (validateArray) => {
                 if(value.length < min){
                     validateErrorText = name + "长度不能少于" + min;
 
-                    updateErrorInResult(id, name, validateErrorText, errorText);
+                    updateErrorInResult(id, validateErrorText, errorText);
 
                 }
                 // 验证通过
@@ -72,14 +73,14 @@ const Validate = (validateArray) => {
                 if(max < value.length){
                     validateErrorText = name + "长度不能超过" + max;
 
-                    updateErrorInResult(id, name, validateErrorText, errorText);
+                    updateErrorInResult(id, validateErrorText, errorText);
                 }
                 pass = true;
             } else if (max && min && typeof max === 'number' && typeof min === 'number') {
                 if(value.length < min || value.length > max){
                     validateErrorText = name + "长度应在" + min + "~" + max + "之间";
 
-                    updateErrorInResult(id, name, validateErrorText, errorText);
+                    updateErrorInResult(id, validateErrorText, errorText);
                 }
                 pass = true;
             }
@@ -93,13 +94,13 @@ const Validate = (validateArray) => {
                 // 正则验证
                 if(!/[\w-\.]+@([\w-]+\.)+[a-z]{2,3}/.test(value)){
                     validateErrorText = name + '格式不正确！';
-                    updateErrorInResult(id, name, validateErrorText, errorText);
+                    updateErrorInResult(id, validateErrorText, errorText);
                 }
                 break;
             case 'phone':
                 if(!(/^1(3|4|5|7|8)\d{9}$/.test(value))){
                     validateErrorText = name + '格式不正确！';
-                    updateErrorInResult(id, name, validateErrorText, errorText);
+                    updateErrorInResult(id, validateErrorText, errorText);
                 }
                 break;
             case 'number':
@@ -110,7 +111,7 @@ const Validate = (validateArray) => {
                     if(value < min){
                         validateErrorText = name + "不能少于" + min;
 
-                        updateErrorInResult(id, name, validateErrorText, errorText);
+                        updateErrorInResult(id, validateErrorText, errorText);
 
                     }
                 } else if (max && !min && typeof max === 'number') {
@@ -118,13 +119,13 @@ const Validate = (validateArray) => {
                     if(max < value){
                         validateErrorText = name + "不能超过" + max;
 
-                        updateErrorInResult(id, name, validateErrorText, errorText);
+                        updateErrorInResult(id, validateErrorText, errorText);
                     }
                 } else if (max && min && typeof max === 'number' && typeof min === 'number') {
                     if(value < min || value > max){
                         validateErrorText = name + "应在" + min + "~" + max + "之间";
 
-                        updateErrorInResult(id, name, validateErrorText, errorText);
+                        updateErrorInResult(id, validateErrorText, errorText);
                     }
                 }
                 break;
@@ -134,11 +135,11 @@ const Validate = (validateArray) => {
     return result;
 };
 
-const updateErrorInResult = (id, name, validateErrorText, errorText) => {
+const updateErrorInResult = (id, validateErrorText, errorText) => {
 
     if(errorText) validateErrorText = errorText;
 
-    const errorItem = {status: false, name: name, error: validateErrorText};
+    const errorItem = {error: validateErrorText};
 
     if(id) errorItem.id = id;
 
