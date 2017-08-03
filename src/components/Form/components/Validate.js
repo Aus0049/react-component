@@ -14,16 +14,16 @@
 // ]);
 //  验证会将输入的值全部验证
 
+// 准备输出结果
+const result = [];
+
 const Validate = (validateArray) => {
     // 验证validateArray
     if(!validateArray || !(validateArray instanceof Array)) return;
 
-    // 准备输出结果
-    const result = [];
-
     // 策略模式
     for(let item of validateArray){
-        const {id, name, value, require, customVerify, errorText} = item;
+        const {id, name, value, require, type, customVerify, errorText, max, min} = item;
         let validateErrorText = '';
 
         // 1.最高优先级：自定义验证规则
@@ -33,7 +33,12 @@ const Validate = (validateArray) => {
             // 自定义验证规则的结果：true / 报错文案
             if(customVerifyResult !== true){
                 // 有报错
-                return {status: false, name: name, error: customVerifyResult};
+                const errorItem = {status: false, name: name, error: customVerifyResult};
+
+                if(id) errorItem.id = id;
+
+                result.push(errorItem);
+                continue;
             }
         }
 
@@ -42,130 +47,102 @@ const Validate = (validateArray) => {
             if(value && value.length > 0){
                 validateErrorText = name + "不能为空!";
 
-                if(errorText) validateErrorText = errorText;
-
-                const errorItem = {status: false, name: name, error: text};
-
-                if(id) errorItem.id = id;
-
-                result.push(errorItem);
+                updateErrorInResult(id, name, validateErrorText, errorText);
+                continue;
             }
         }
 
+        // 3.根据不同type验证
+        if(!type){
+            let pass = false;
 
+            // 没有type 长度验证
+            if(min && !max && typeof min === 'number'){
+                // 只有最小
+                if(value.length < min){
+                    validateErrorText = name + "长度不能少于" + min;
+
+                    updateErrorInResult(id, name, validateErrorText, errorText);
+
+                }
+                // 验证通过
+                pass = true;
+            } else if (max && !min && typeof max === 'number') {
+                // 只有最大
+                if(max < value.length){
+                    validateErrorText = name + "长度不能超过" + max;
+
+                    updateErrorInResult(id, name, validateErrorText, errorText);
+                }
+                pass = true;
+            } else if (max && min && typeof max === 'number' && typeof min === 'number') {
+                if(value.length < min || value.length > max){
+                    validateErrorText = name + "长度应在" + min + "~" + max + "之间";
+
+                    updateErrorInResult(id, name, validateErrorText, errorText);
+                }
+                pass = true;
+            }
+
+            if(!pass) continue;
+        }
+
+        // 4.type
+        switch (type) {
+            case 'email':
+                // 正则验证
+                if(!/[\w-\.]+@([\w-]+\.)+[a-z]{2,3}/.test(value)){
+                    validateErrorText = name + '格式不正确！';
+                    updateErrorInResult(id, name, validateErrorText, errorText);
+                }
+                break;
+            case 'phone':
+                if(!(/^1(3|4|5|7|8)\d{9}$/.test(value))){
+                    validateErrorText = name + '格式不正确！';
+                    updateErrorInResult(id, name, validateErrorText, errorText);
+                }
+                break;
+            case 'number':
+                // 数值
+                // 没有type 长度验证
+                if(min && !max && typeof min === 'number'){
+                    // 只有最小
+                    if(value < min){
+                        validateErrorText = name + "不能少于" + min;
+
+                        updateErrorInResult(id, name, validateErrorText, errorText);
+
+                    }
+                } else if (max && !min && typeof max === 'number') {
+                    // 只有最大
+                    if(max < value){
+                        validateErrorText = name + "不能超过" + max;
+
+                        updateErrorInResult(id, name, validateErrorText, errorText);
+                    }
+                } else if (max && min && typeof max === 'number' && typeof min === 'number') {
+                    if(value < min || value > max){
+                        validateErrorText = name + "应在" + min + "~" + max + "之间";
+
+                        updateErrorInResult(id, name, validateErrorText, errorText);
+                    }
+                }
+                break;
+        }
     }
+
+    return result;
 };
-// const Validate = (dataArray) => {
-//     // 策略模式
-//     for(let i of dataArray){
-//         // 有自定义验证规则 则忽略其他规则
-//         if(i.customVerify){
-//             const customVerifyResult = i.customVerify(i.name, i.value);
-//
-//             if(customVerifyResult !== true){
-//                 // 有报错
-//                 return {status: false, name: i.name, error: customVerifyResult};
-//             }
-//         }
-//
-//         let text;
-//         // 没有自定义规则 常规验证
-//         // required
-//         if(i.required === true){
-//             if(i.value === undefined || i.value === null || i.value === ""){
-//                 text = i.name + "不能为空!";
-//
-//                 if(i.errorText){
-//                     text = i.errorText;
-//                 }
-//
-//                 return {status: false, name: i.name, error: text};
-//             }
-//         }
-//
-//
-//         if(i.length === true){
-//             if(i.min !== undefined && i.max === undefined && typeof i.min === "number"){
-//                 if(i.value.length < i.min){
-//                     text = i.name + "不能少于" + i.min + "个字";
-//
-//                     if(i.errorText){
-//                         text = i.errorText;
-//                     }
-//
-//                     return {status: false, name: i.name, error: text};
-//                 }
-//             }
-//             if(i.max !== undefined && i.min === undefined && typeof i.max === "number"){
-//                 if(i.value.length > i.max){
-//                     text = i.name + "不能超过" + i.max + "个字";
-//
-//                     if(i.errorText){
-//                         text = i.errorText;
-//                     }
-//
-//                     return {status: false, name: i.name, error: text};
-//                 }
-//             }
-//             if(i.max !== undefined && i.min !== undefined && typeof i.max === "number" && typeof i.min === "number"){
-//                 if(i.value.length > i.max || i.value.length < i.min){
-//                     text = i.name + "长度应在" + i.min + "~" + i.max + "之间";
-//
-//                     if(i.errorText){
-//                         text = i.errorText;
-//                     }
-//
-//                     return {status: false, name: i.name, error: text};
-//                 }
-//             }
-//         } else {
-//             // 先验证最多两位小数
-//             if(i.value && !/^[-+]?[0-9]+([.]\d{1,2})?$/.test(i.value)){
-//                 text = i.name + "最多两位小数";
-//                 return {status: false, name: i.name, error: text};
-//             }
-//             // 长度验证 最小
-//             if(i.min !== undefined && i.max === undefined && typeof i.min === "number"){
-//                 if(i.value < i.min){
-//                     text = i.name + "不能小于" + i.min;
-//
-//                     if(i.errorText){
-//                         text = i.errorText;
-//                     }
-//
-//                     return {status: false, name: i.name, error: text};
-//                 }
-//             }
-//
-//             // 最大
-//             if(i.max !== undefined && i.min === undefined && typeof i.max === "number"){
-//                 if(i.value > i.max){
-//                     text = i.name + "不能超过" + i.max;
-//
-//                     if(i.errorText){
-//                         text = i.errorText;
-//                     }
-//
-//                     return {status: false, name: i.name, error: text};
-//                 }
-//             }
-//
-//             // 区间
-//             if(i.max !== undefined && i.min !== undefined && typeof i.max === "number" && typeof i.min === "number"){
-//                 if(i.value > i.max || i.value < i.min){
-//                     text = i.name + "应在" + i.min + "~" + i.max + "之间";
-//
-//                     if(i.errorText){
-//                         text = i.errorText;
-//                     }
-//
-//                     return {status: false, name: i.name, error: text};
-//                 }
-//             }
-//         }
-//     }
-//
-//     return {status: true};
-// };
+
+const updateErrorInResult = (id, name, validateErrorText, errorText) => {
+
+    if(errorText) validateErrorText = errorText;
+
+    const errorItem = {status: false, name: name, error: validateErrorText};
+
+    if(id) errorItem.id = id;
+
+    result.push(errorItem);
+};
 
 export default Validate;
