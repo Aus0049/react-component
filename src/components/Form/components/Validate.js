@@ -29,16 +29,7 @@ const Validate = (validateArray) => {
 
         // 1.最高优先级：自定义验证规则
         if(customVerify){
-            const customVerifyResult = customVerify(name, value);
-
-            // 自定义验证规则的结果：true / 报错文案
-            if(customVerifyResult !== true){
-                // 有报错
-                const errorItem = {status: false, name: name, error: customVerifyResult};
-
-                if(id) errorItem.id = id;
-
-                result.push(errorItem);
+            if(!verifyCustomVerify(customVerify, id, name, value)){
                 continue;
             }
         }
@@ -133,6 +124,20 @@ const Validate = (validateArray) => {
     }
 
     return result;
+};
+
+const verifyCustomVerify = (customVerify, id, name, value) => {
+    const customVerifyResult = customVerify(name, value);
+    let pass = true;
+
+    // 自定义验证规则的结果：true / 报错文案
+    if(customVerifyResult !== true){
+        // 有报错
+        updateErrorInResult(id, customVerifyResult);
+        pass = false;
+    }
+
+    return pass;
 };
 
 const updateErrorInResult = (id, validateErrorText, errorText) => {
