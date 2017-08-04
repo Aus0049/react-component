@@ -29,7 +29,7 @@ class FormPage extends React.Component {
             {id: '2', name: 'b', value: 'as1.2', type: 'email'},
             {id: '3', name: 'c', value: '19999123', type: 'phone'},
             {id: '4', name: 'd', value: 'asd', min: 4},
-            {id: '4', name: 'd', value: 2, type: 'number', min: 4},
+            {id: '5', name: 'd', value: 2, type: 'number', min: 5},
         ]));
 
         return (

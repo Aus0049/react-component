@@ -25,7 +25,6 @@ const Validate = (validateArray) => {
     // 策略模式
     for(let item of validateArray){
         const {id, name, value, require, type, customVerify, errorText, max, min} = item;
-        let validateErrorText = '';
 
         // 1.最高优先级：自定义验证规则
         if(customVerify){
@@ -36,14 +35,14 @@ const Validate = (validateArray) => {
 
         // 2.验证required
         if(require){
-            if(verifyRequire(id, name, value)){
+            if(!verifyRequire(id, name, value)){
                 continue;
             }
         }
 
         // 3.根据不同type验证
         if(!type){
-            if(verifyLength(id, name, value, errorText, max, min)){
+            if(!verifyLength(id, name, value, errorText, min, max)){
                 continue;
             }
         }
@@ -51,42 +50,18 @@ const Validate = (validateArray) => {
         // 4.type
         switch (type) {
             case 'email':
-                // 正则验证
-                if(!/[\w-\.]+@([\w-]+\.)+[a-z]{2,3}/.test(value)){
-                    validateErrorText = name + '格式不正确！';
-                    updateErrorInResult(id, validateErrorText, errorText);
+                if(!verifyEmail(id, name, value, errorText)){
+                    continue;
                 }
                 break;
             case 'phone':
-                if(!(/^1(3|4|5|7|8)\d{9}$/.test(value))){
-                    validateErrorText = name + '格式不正确！';
-                    updateErrorInResult(id, validateErrorText, errorText);
+                if(!verifyPhone(id, name, value, errorText)){
+                    continue;
                 }
                 break;
             case 'number':
-                // 数值
-                // 没有type 长度验证
-                if(min && !max && typeof min === 'number'){
-                    // 只有最小
-                    if(value < min){
-                        validateErrorText = name + "不能少于" + min;
-
-                        updateErrorInResult(id, validateErrorText, errorText);
-
-                    }
-                } else if (max && !min && typeof max === 'number') {
-                    // 只有最大
-                    if(max < value){
-                        validateErrorText = name + "不能超过" + max;
-
-                        updateErrorInResult(id, validateErrorText, errorText);
-                    }
-                } else if (max && min && typeof max === 'number' && typeof min === 'number') {
-                    if(value < min || value > max){
-                        validateErrorText = name + "应在" + min + "~" + max + "之间";
-
-                        updateErrorInResult(id, validateErrorText, errorText);
-                    }
+                if(!verifyNumber(id, name, value, errorText, min, max)){
+                    continue;
                 }
                 break;
         }
@@ -127,7 +102,7 @@ const verifyRequire = (id, name, value, errorText) => {
 
 // 验证最大最小值
 const verifyLength = (id, name, value, errorText, min, max) => {
-    let pass = false;
+    let pass = true;
     let validateErrorText = "";
 
     // 没有type 长度验证
@@ -150,6 +125,71 @@ const verifyLength = (id, name, value, errorText, min, max) => {
     } else if (max && min && typeof max === 'number' && typeof min === 'number') {
         if(value.length < min || value.length > max){
             validateErrorText = name + "长度应在" + min + "~" + max + "之间";
+
+            updateErrorInResult(id, validateErrorText, errorText);
+            pass = false;
+        }
+    }
+
+    return pass;
+};
+
+// 验证邮箱
+const verifyEmail = (id, name, value, errorText) => {
+    let pass = true;
+    let validateErrorText = "";
+
+    // 正则验证
+    if(!/[\w-\.]+@([\w-]+\.)+[a-z]{2,3}/.test(value)){
+        validateErrorText = name + '格式不正确！';
+        updateErrorInResult(id, validateErrorText, errorText);
+        pass = false;
+    }
+
+    return pass;
+};
+
+// 验证手机号
+const verifyPhone = (id, name, value, errorText) => {
+    let pass = true;
+    let validateErrorText = "";
+
+    // 正则验证
+    if(!(/^1(3|4|5|7|8)\d{9}$/.test(value))){
+        validateErrorText = name + '格式不正确！';
+        updateErrorInResult(id, validateErrorText, errorText);
+        pass = false;
+    }
+
+    return pass;
+};
+
+// 验证数值
+const verifyNumber = (id, name, value, errorText, min, max) => {
+    let pass = true;
+    let validateErrorText = "";
+
+    // 数值
+    // 没有type 长度验证
+    if(min && !max && typeof min === 'number'){
+        // 只有最小
+        if(value < min){
+            validateErrorText = name + "不能少于" + min;
+
+            updateErrorInResult(id, validateErrorText, errorText);
+            pass = false;
+        }
+    } else if (max && !min && typeof max === 'number') {
+        // 只有最大
+        if(max < value){
+            validateErrorText = name + "不能超过" + max;
+
+            updateErrorInResult(id, validateErrorText, errorText);
+            pass = false;
+        }
+    } else if (max && min && typeof max === 'number' && typeof min === 'number') {
+        if(value < min || value > max){
+            validateErrorText = name + "应在" + min + "~" + max + "之间";
 
             updateErrorInResult(id, validateErrorText, errorText);
             pass = false;
