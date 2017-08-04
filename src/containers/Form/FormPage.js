@@ -2,8 +2,10 @@
  * Created by Aus on 2017/8/1.
  */
 import React from 'react'
-import {Form, Validate} from '../../components/Form/'
+import {Form} from '../../components/Form/'
 import Tools from '../../components/Tools/Tools'
+import Button from '../../components/DataEntry/Button'
+import moment from 'moment'
 
 class FormPage extends React.Component {
     constructor (props) {
@@ -15,22 +17,17 @@ class FormPage extends React.Component {
                     {type: 'input', id: 'password', labelName: '密码', value: 'asdf1234', kind: 'password', require: true, min: 4},
                     {type: 'input', id: 're-password', labelName: '重复密码', value: 'asdf1234', kind: 'password', require: true, min: 4},
                     {type: 'select', id: 'gender', labelName: '性别', value: '1', data: [{label: '男', value: '1'}, {label: '女', value: '2'}, {label: '外星人', value: '3'}]},
+                    {type: 'date-time', id: 'datetime', labelName: '出生日期', value: moment()},
                     {type: 'input', id: 'email', labelName: '邮箱', value: undefined, kind: 'email', placeholder: '请输入邮箱'},
                     {type: 'input', id: 'phone', labelName: '手机号', value: undefined, kind: 'phone', placeholder: '请输入手机号'},
+                    {type: 'switch', id: 'message', labelName: '开启消息推送', value: true},
+                    {type: 'checkbox', id: 'specialty', labelName: '擅长语言', value: ['JS'], options: [{label: 'JS', value: 'JS'}, {label: 'JAVA', value: 'JAVA'}, {label: 'PHP', value: 'PHP'}, {label: 'C++', value: 'C++'}]},
                 ]}
             ]
         }
     }
     render () {
         const {formData} = this.state;
-
-        console.log(Validate([
-            {id: '1', name: 'a', value: '', require: true},
-            {id: '2', name: 'b', value: 'as1.2', type: 'email'},
-            {id: '3', name: 'c', value: '19999123', type: 'phone'},
-            {id: '4', name: 'd', value: 'asd', min: 4},
-            {id: '5', name: 'd', value: 2, type: 'number', min: 5},
-        ]));
 
         return (
             <div className="page form">
@@ -42,8 +39,11 @@ class FormPage extends React.Component {
                 <Form
                     data={formData}
                 >
-
                 </Form>
+
+                <div className="button-box">
+                    <Button type='primary'>提交</Button>
+                </div>
 
             </div>
         )

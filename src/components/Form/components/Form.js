@@ -169,7 +169,7 @@ class Form extends React.Component {
                                 readOnly={readOnly ? true : item.readonly ? true : false}
                                 labelName={item.labelName}
                                 value={item.value}
-                                data={item.data}
+                                options={item.options}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
                         );
