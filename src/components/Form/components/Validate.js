@@ -36,47 +36,16 @@ const Validate = (validateArray) => {
 
         // 2.验证required
         if(require){
-            if(!(value && value.length > 0)){
-                validateErrorText = name + "不能为空!";
-
-                updateErrorInResult(id, validateErrorText, errorText);
+            if(verifyRequire(id, name, value)){
                 continue;
             }
         }
 
         // 3.根据不同type验证
         if(!type){
-            let pass = false;
-
-            // 没有type 长度验证
-            if(min && !max && typeof min === 'number'){
-                // 只有最小
-                if(value.length < min){
-                    validateErrorText = name + "长度不能少于" + min;
-
-                    updateErrorInResult(id, validateErrorText, errorText);
-
-                }
-                // 验证通过
-                pass = true;
-            } else if (max && !min && typeof max === 'number') {
-                // 只有最大
-                if(max < value.length){
-                    validateErrorText = name + "长度不能超过" + max;
-
-                    updateErrorInResult(id, validateErrorText, errorText);
-                }
-                pass = true;
-            } else if (max && min && typeof max === 'number' && typeof min === 'number') {
-                if(value.length < min || value.length > max){
-                    validateErrorText = name + "长度应在" + min + "~" + max + "之间";
-
-                    updateErrorInResult(id, validateErrorText, errorText);
-                }
-                pass = true;
+            if(verifyLength(id, name, value, errorText, max, min)){
+                continue;
             }
-
-            if(!pass) continue;
         }
 
         // 4.type
@@ -126,6 +95,7 @@ const Validate = (validateArray) => {
     return result;
 };
 
+// 验证自定义验证
 const verifyCustomVerify = (customVerify, id, name, value) => {
     const customVerifyResult = customVerify(name, value);
     let pass = true;
@@ -135,6 +105,55 @@ const verifyCustomVerify = (customVerify, id, name, value) => {
         // 有报错
         updateErrorInResult(id, customVerifyResult);
         pass = false;
+    }
+
+    return pass;
+};
+
+// 验证必填
+const verifyRequire = (id, name, value, errorText) => {
+    let pass = true;
+    let validateErrorText = "";
+
+    if(!(value && value.length > 0)){
+        validateErrorText = name + "不能为空!";
+
+        updateErrorInResult(id, validateErrorText, errorText);
+        pass = false;
+    }
+
+    return pass;
+};
+
+// 验证最大最小值
+const verifyLength = (id, name, value, errorText, min, max) => {
+    let pass = false;
+    let validateErrorText = "";
+
+    // 没有type 长度验证
+    if(min && !max && typeof min === 'number'){
+        // 只有最小
+        if(value.length < min){
+            validateErrorText = name + "长度不能少于" + min;
+
+            updateErrorInResult(id, validateErrorText, errorText);
+            pass = false;
+        }
+    } else if (max && !min && typeof max === 'number') {
+        // 只有最大
+        if(max < value.length){
+            validateErrorText = name + "长度不能超过" + max;
+
+            updateErrorInResult(id, validateErrorText, errorText);
+            pass = false;
+        }
+    } else if (max && min && typeof max === 'number' && typeof min === 'number') {
+        if(value.length < min || value.length > max){
+            validateErrorText = name + "长度应在" + min + "~" + max + "之间";
+
+            updateErrorInResult(id, validateErrorText, errorText);
+            pass = false;
+        }
     }
 
     return pass;
