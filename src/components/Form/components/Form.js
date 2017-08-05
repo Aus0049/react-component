@@ -28,8 +28,8 @@ class Form extends React.Component {
             const formItem = {};
             for(let j of i.children){
                 // 解析出验证信息
-                if(j.require || j.min || j.max || j.type === 4){
-                    validateState[j.id] = {type: j.type, require: j.require, min: j.min, max: j.max};
+                if(j.require || j.min || j.max || j.kind || j.customValidate || j.errorText){
+                    validateState[j.id] = {id: j.id, type: j.type, require: j.require, min: j.min, max: j.max, kind: j.kind, customValidate: j.customValidate, errorText: j.errorText};
                 }
                 // 解析出显示信息
                 formItem[j.id] = j;
@@ -54,6 +54,37 @@ class Form extends React.Component {
         });
 
         onChange({formId, itemId, value});
+    }
+    getValue () {
+        // 获取state的平铺信息
+        const {valueState} = this.state;
+        let result = {};
+
+        for(let i in valueState){
+            result = Object.assign(result, valueState[i].children);
+        }
+
+        return result;
+    }
+    validate () {
+        // 验证表单
+        const {validateState} = this.state;
+        const value = this.getValue();
+        const validateArray = [];
+
+        for(let i in validateState) {
+            validateArray.push({
+                id: value[i].id,
+                name: value[i].labelName,
+                value: value[i].labelName,
+                customVerify: value[i].customVerify,
+                required: value[i].require,
+                kind: value[i].kind,
+                min: value[i].min,
+                max: value[i].max,
+                errorText: value[i].errorText
+            });
+        }
     }
     getFormDOM () {
         const {valueState} = this.state;

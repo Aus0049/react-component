@@ -24,7 +24,11 @@ class FormPage extends React.Component {
                     {type: 'checkbox', id: 'specialty', labelName: '擅长语言', value: ['JS'], options: [{label: 'JS', value: 'JS'}, {label: 'JAVA', value: 'JAVA'}, {label: 'PHP', value: 'PHP'}, {label: 'C++', value: 'C++'}]},
                 ]}
             ]
-        }
+        };
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+    handleSubmit () {
+        this.refs.form.validate();
     }
     render () {
         const {formData} = this.state;
@@ -37,12 +41,13 @@ class FormPage extends React.Component {
                 </h1>
 
                 <Form
+                    ref="form"
                     data={formData}
                 >
                 </Form>
 
                 <div className="button-box">
-                    <Button type='primary'>提交</Button>
+                    <Button type='primary' onClick={this.handleSubmit}>提交</Button>
                 </div>
 
             </div>
