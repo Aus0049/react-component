@@ -2,8 +2,8 @@
  * Created by Aus on 2017/8/1.
  */
 import React from 'react'
-import {Input, TextArea, Number, Switch, DateRange,
-    DateTime, Select, Checkbox} from '../index'
+import {Input, TextArea, Switch, DateRange,
+    DateTime, Select, Checkbox, Validate} from '../index'
 import '../style/index.scss'
 import moment from 'moment'
 
@@ -72,11 +72,12 @@ class Form extends React.Component {
         const value = this.getValue();
         const validateArray = [];
 
+        // 获取验证数组
         for(let i in validateState) {
             validateArray.push({
                 id: value[i].id,
                 name: value[i].labelName,
-                value: value[i].labelName,
+                value: value[i].value,
                 customVerify: value[i].customVerify,
                 required: value[i].require,
                 kind: value[i].kind,
@@ -85,6 +86,15 @@ class Form extends React.Component {
                 errorText: value[i].errorText
             });
         }
+
+        // 验证
+        const validateResult = Validate(validateArray);
+
+        // 将有错误的添加到对应的状态上
+        this.combineErrorToState(validateResult);
+    }
+    combineErrorToState (validateErrorArray) {
+
     }
     getFormDOM () {
         const {valueState} = this.state;
