@@ -36,7 +36,7 @@ class Form extends React.Component {
             }
 
             // 表单组件 寻找里面的数据
-            valueState[i.id] = {type: 0, value: i.name, children: formItem};
+            valueState[i.id] = {type: 'group', value: i.name, children: formItem};
         }
 
         this.setState({
@@ -94,7 +94,27 @@ class Form extends React.Component {
         this.combineErrorToState(validateResult);
     }
     combineErrorToState (validateErrorArray) {
+        const {valueState} = this.state;
+        const state = {...valueState};
 
+        for(let i in state){
+            if(state[i].type !== 'group') continue;
+
+            for(let j in state[i].children){
+                for(let x = 0; x < validateErrorArray.length; x++){
+                    if(validateErrorArray[x].id === j){
+                        state[i].children[j].error = validateErrorArray[x].error;
+                        // 删除该项
+                        validateErrorArray.splice(x, 1);
+                        // 退出循环
+                        break;
+                    }
+                }
+            }
+        }
+
+        console.log(state);
+        return state;
     }
     getFormDOM () {
         const {valueState} = this.state;
