@@ -89,24 +89,29 @@ class Form extends React.Component {
         // 验证
         const validateResult = Validate(validateArray);
 
+        if(validateResult.length === 0) return;
+
         // 将有错误的添加到对应的状态上
         const valueStateWithError = this.combineErrorToState(validateResult);
 
-        this.setState({validateState: valueStateWithError});
+        this.setState({valueState: valueStateWithError});
+
+        return validateResult;
     }
     combineErrorToState (validateErrorArray) {
         const {valueState} = this.state;
         const state = {...valueState};
+        const errorArray = [].concat(validateErrorArray);
 
         for(let i in state){
             if(state[i].type !== 'group') continue;
 
             for(let j in state[i].children){
-                for(let x = 0; x < validateErrorArray.length; x++){
-                    if(validateErrorArray[x].id === j){
-                        state[i].children[j].error = validateErrorArray[x].error;
+                for(let x = 0; x < errorArray.length; x++){
+                    if(errorArray[x].id === j){
+                        state[i].children[j].error = errorArray[x].error;
                         // 删除该项
-                        validateErrorArray.splice(x, 1);
+                        errorArray.splice(x, 1);
                         // 退出循环
                         break;
                     }

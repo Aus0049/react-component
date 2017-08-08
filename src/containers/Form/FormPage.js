@@ -5,6 +5,7 @@ import React from 'react'
 import {Form} from '../../components/Form/'
 import Tools from '../../components/Tools/Tools'
 import Button from '../../components/DataEntry/Button'
+import Toast from '../../components/Feedback/Toast'
 import moment from 'moment'
 
 class FormPage extends React.Component {
@@ -28,7 +29,13 @@ class FormPage extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleSubmit () {
-        this.refs.form.validate();
+        const validateResult = this.refs.form.validate();
+
+        if(validateResult.length === 0){
+            Toast.success('提交成功！', 3000, 'fa-check', false);
+            return;
+        }
+        Toast.error('提交失败！', 3000, 'fa-times', false);
     }
     render () {
         const {formData} = this.state;
