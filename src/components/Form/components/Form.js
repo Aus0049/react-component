@@ -5,7 +5,6 @@ import React from 'react'
 import {Input, TextArea, Switch, DateRange,
     DateTime, Select, Checkbox, Validate} from '../index'
 import '../style/index.scss'
-import moment from 'moment'
 
 class Form extends React.Component {
     constructor (props) {
@@ -91,7 +90,9 @@ class Form extends React.Component {
         const validateResult = Validate(validateArray);
 
         // 将有错误的添加到对应的状态上
-        this.combineErrorToState(validateResult);
+        const valueStateWithError = this.combineErrorToState(validateResult);
+
+        this.setState({validateState: valueStateWithError});
     }
     combineErrorToState (validateErrorArray) {
         const {valueState} = this.state;
@@ -113,7 +114,6 @@ class Form extends React.Component {
             }
         }
 
-        console.log(state);
         return state;
     }
     getFormDOM () {
@@ -140,6 +140,7 @@ class Form extends React.Component {
                                 readOnly={readOnly ? true : item.readonly ? true : false}
                                 value={item.value}
                                 placeHolder={item.placeholder}
+                                error={item.error}
                                 kind={item.kind}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
@@ -155,6 +156,7 @@ class Form extends React.Component {
                                 readOnly={readOnly ? true : item.readonly ? true : false}
                                 value={item.value}
                                 placeHolder={item.placeholder}
+                                error={item.error}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
                         );
@@ -171,6 +173,7 @@ class Form extends React.Component {
                                 attachedText={item.attachedText}
                                 theme={item.theme}
                                 controlled={item.controlled}
+                                error={item.error}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
                         );
@@ -189,6 +192,7 @@ class Form extends React.Component {
                                 rangeLabelName={item.rangeLabelName}
                                 kind={item.kind}
                                 format={item.format}
+                                error={item.error}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
                         );
@@ -203,6 +207,7 @@ class Form extends React.Component {
                                 labelName={item.labelName}
                                 value={item.value}
                                 kind={item.kind}
+                                error={item.error}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
                         );
@@ -217,6 +222,7 @@ class Form extends React.Component {
                                 labelName={item.labelName}
                                 value={item.value}
                                 data={item.data}
+                                error={item.error}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
                         );
@@ -231,6 +237,7 @@ class Form extends React.Component {
                                 labelName={item.labelName}
                                 value={item.value}
                                 options={item.options}
+                                error={item.error}
                                 onChange={_this.handleChange.bind(_this, i, j)}
                             />
                         );
