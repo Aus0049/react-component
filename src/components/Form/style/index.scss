@@ -276,3 +276,25 @@ textarea {
     border-bottom: none;
   }
 }
+
+// 报错样式
+.zby-form-error {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 19px 10px;
+  background: #f04134;
+
+  font-size: 28px;
+  color: #fff;
+  text-align: center;
+
+  box-shadow: 0 10px 20px 5px rgba(0,0,0,.3);
+  animation: slideDown .3s;
+}
+
+@keyframes slideDown {
+  from {transform: translateY(-100%);}
+  to {transform: translateY(0);}
+}
