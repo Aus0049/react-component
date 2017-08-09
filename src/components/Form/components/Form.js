@@ -20,14 +20,14 @@ class Form extends React.Component {
         const {data} = this.props;
         const valueState = [];
         const validateState = [];
+        let num = 0;
 
-        // valueState validateState必须是数组 需要保证form展示顺序
         for(let i of data){
             if(i.type !== 'group') continue;
 
-            const formItem = {};
-
+            const formItem = [];
             for(let j of i.children){
+                // 解析出验证信息
                 if(j.require || j.min || j.max || j.kind || j.customValidate || j.errorText){
                     validateState.push({
                         id: j.id,
@@ -37,9 +37,11 @@ class Form extends React.Component {
                         max: j.max,
                         kind: j.kind,
                         customValidate: j.customValidate,
-                        errorText: j.errorText
+                        errorText: j.errorText,
+                        position: num++
                     });
                 }
+                // 解析出显示信息
                 formItem.push(j);
             }
 
@@ -70,10 +72,10 @@ class Form extends React.Component {
     getValue () {
         // 获取state的平铺信息
         const {valueState} = this.state;
-        let result = {};
+        let result = [];
 
         for(let i in valueState){
-            result = Object.assign(result, valueState[i].children);
+            result = result.concat(valueState[i].children);
         }
 
         return result;
@@ -85,17 +87,18 @@ class Form extends React.Component {
         const validateArray = [];
 
         // 获取验证数组
-        for(let i in validateState) {
+        for(let item of validateState) {
+
             validateArray.push({
-                id: value[i].id,
-                name: value[i].labelName,
-                value: value[i].value,
-                customVerify: value[i].customVerify,
-                required: value[i].require,
-                kind: value[i].kind,
-                min: value[i].min,
-                max: value[i].max,
-                errorText: value[i].errorText
+                id: item.id,
+                name: value[item.position].labelName,
+                value: value[item.position].value,
+                customVerify: item.customVerify,
+                required: item.require,
+                kind: item.kind,
+                min: item.min,
+                max: item.max,
+                errorText: item.errorText
             });
         }
 
