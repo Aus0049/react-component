@@ -18,24 +18,33 @@ class Form extends React.Component {
     componentDidMount () {
         // 循环数组 解析出验证信息和显示信息
         const {data} = this.props;
-        const valueState = {};
-        const validateState = {};
+        const valueState = [];
+        const validateState = [];
 
+        // valueState validateState必须是数组 需要保证form展示顺序
         for(let i of data){
             if(i.type !== 'group') continue;
 
             const formItem = {};
+
             for(let j of i.children){
-                // 解析出验证信息
                 if(j.require || j.min || j.max || j.kind || j.customValidate || j.errorText){
-                    validateState[j.id] = {id: j.id, type: j.type, require: j.require, min: j.min, max: j.max, kind: j.kind, customValidate: j.customValidate, errorText: j.errorText};
+                    validateState.push({
+                        id: j.id,
+                        type: j.type,
+                        require: j.require,
+                        min: j.min,
+                        max: j.max,
+                        kind: j.kind,
+                        customValidate: j.customValidate,
+                        errorText: j.errorText
+                    });
                 }
-                // 解析出显示信息
-                formItem[j.id] = j;
+                formItem.push(j);
             }
 
             // 表单组件 寻找里面的数据
-            valueState[i.id] = {type: 'group', value: i.name, children: formItem};
+            valueState.push({type: 'group', value: i.name, children: formItem});
         }
 
         this.setState({
