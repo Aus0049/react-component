@@ -53,15 +53,19 @@ class Form extends React.Component {
             originalData: data
         });
     }
-    handleChange (formId, itemId, value) {
+    handleChange (formIndex, itemIndex, value) {
         const {onChange} = this.props;
 
         this.setState((previousState)=>{
-            previousState.valueState[formId].children[itemId] = Object.assign(previousState.valueState[formId].children[itemId], value);
+            previousState.valueState[formIndex].children[itemIndex] = Object.assign(previousState.valueState[formIndex].children[itemIndex], value);
             return {...previousState};
         });
 
-        onChange({formId, itemId, value});
+        onChange({
+            formIndex: formIndex,
+            itemIndex: itemIndex,
+            value: value
+        });
     }
     getValue () {
         // 获取state的平铺信息
@@ -136,11 +140,11 @@ class Form extends React.Component {
         const result = [];
         const _this = this;
 
-        for (let i in valueState) {
+        for(let i = 0; i < valueState.length; i++){
             const obj = valueState[i];
             const itemDOM = [];
 
-            for(let j in obj.children) {
+            for(let j = 0; j < obj.children.length; j++) {
                 const item = obj.children[j];
 
                 switch (item.type) {
@@ -148,7 +152,7 @@ class Form extends React.Component {
                         // 单行文本
                         itemDOM.push(
                             <Input
-                                key={j}
+                                key={item.id}
                                 required={item.require}
                                 labelName={item.labelName}
                                 readOnly={readOnly ? true : item.readonly ? true : false}
@@ -164,7 +168,7 @@ class Form extends React.Component {
                         // 多行文本
                         itemDOM.push(
                             <TextArea
-                                key={j}
+                                key={item.id}
                                 required={item.require}
                                 labelName={item.labelName}
                                 readOnly={readOnly ? true : item.readonly ? true : false}
@@ -179,7 +183,7 @@ class Form extends React.Component {
                         // 开关
                         itemDOM.push(
                             <Switch
-                                key={j}
+                                key={item.id}
                                 required={item.require}
                                 labelName={item.labelName}
                                 readOnly={readOnly ? true : item.readonly ? true : false}
@@ -196,7 +200,7 @@ class Form extends React.Component {
                         // 日期区间
                         itemDOM.push(
                             <DateRange
-                                key={j}
+                                key={item.id}
                                 required={item.require}
                                 readOnly={readOnly ? true : item.readonly ? true : false}
                                 startLabelName={item.startLabelName}
@@ -215,7 +219,7 @@ class Form extends React.Component {
                         // 时间点
                         itemDOM.push(
                             <DateTime
-                                key={j}
+                                key={item.id}
                                 required={item.require}
                                 readOnly={readOnly ? true : item.readonly ? true : false}
                                 labelName={item.labelName}
@@ -230,7 +234,7 @@ class Form extends React.Component {
                         // 单选框
                         itemDOM.push(
                             <Select
-                                key={j}
+                                key={item.id}
                                 required={item.require}
                                 readOnly={readOnly ? true : item.readonly ? true : false}
                                 labelName={item.labelName}
@@ -245,7 +249,7 @@ class Form extends React.Component {
                         // 多选框
                         itemDOM.push(
                             <Checkbox
-                                key={j}
+                                key={item.id}
                                 required={item.require}
                                 readOnly={readOnly ? true : item.readonly ? true : false}
                                 labelName={item.labelName}
