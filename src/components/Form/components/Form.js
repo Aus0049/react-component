@@ -116,16 +116,16 @@ class Form extends React.Component {
     }
     combineErrorToState (validateErrorArray) {
         const {valueState} = this.state;
-        const state = {...valueState};
-        const errorArray = [].concat(validateErrorArray);
+        const state = [...valueState];
+        const errorArray = [...validateErrorArray];
 
-        for(let i in state){
-            if(state[i].type !== 'group') continue;
+        for(let i of state){
+            if(i.type !== 'group') continue;
 
-            for(let j in state[i].children){
+            for(let j of i.children){
                 for(let x = 0; x < errorArray.length; x++){
-                    if(errorArray[x].id === j){
-                        state[i].children[j].error = errorArray[x].error;
+                    if(errorArray[x].id === j.id){
+                        j.error = errorArray[x].error;
                         // 删除该项
                         errorArray.splice(x, 1);
                         // 退出循环
