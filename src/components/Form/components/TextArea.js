@@ -4,9 +4,26 @@
 import React from 'react'
 import classNames from 'classnames'
 import '../style/index.scss'
+import {showError, clearError} from './Func'
 
 const TextArea = (props) => {
-    const {required, labelName, readOnly, controlled, value, placeHolder, onChange} = props;
+    const {required, labelName, readOnly, controlled, value, placeHolder, error, onChange} = props;
+
+    function handleChange (e) {
+        onChange({value: e.target.value});
+    }
+
+    function handleFocus () {
+        if(!!error){
+            showError(error);
+        }
+    }
+
+    function handleBlur () {
+        if(!!error){
+            clearError(error);
+        }
+    }
 
     return (
         <div className="zby-form-line-box text-area">
@@ -16,8 +33,8 @@ const TextArea = (props) => {
             </div>
             <div className="content">
                 {readOnly ? <p className="input-readonly">{value ? value : placeHolder}</p> :
-                    controlled ? <textarea value={value} placeholder={placeHolder} onChange={onChange} ></textarea> :
-                        <textarea defaultValue={value} placeholder={placeHolder}></textarea>}
+                    controlled ? <textarea value={value} placeholder={placeHolder} onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur}></textarea> :
+                        <textarea defaultValue={value} placeholder={placeHolder} onFocus={handleFocus} onBlur={handleBlur}></textarea>}
             </div>
         </div>
     )
@@ -32,6 +49,7 @@ TextArea.PropTypes = {
     controlled: React.PropTypes.bool,
     value: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
     placeHolder: React.PropTypes.string,
+    error: React.PropTypes.string,
     onChange: React.PropTypes.func,
 };
 

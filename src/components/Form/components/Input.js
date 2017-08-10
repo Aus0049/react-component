@@ -51,7 +51,7 @@ const Input = (props) => {
             <div className="content">
                 {readOnly ? <p className="input-readonly">{value ? value : placeHolder}</p> :
                     controlled ? <input type={inputType} value={value} placeholder={placeHolder} onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} /> :
-                        <input type={inputType} defaultValue={value} placeholder={placeHolder} />}
+                        <input type={inputType} defaultValue={value} placeholder={placeHolder} onFocus={handleFocus} onBlur={handleBlur} />}
             </div>
         </div>
     )
