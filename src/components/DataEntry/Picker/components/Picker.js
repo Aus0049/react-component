@@ -33,7 +33,7 @@ class Picker extends React.Component {
         this.setState({show: true});
 
         const t = this;
-        let timer = setTimeout(()=>{
+        const timer = setTimeout(()=>{
             t.setState({
                 animation: "in"
             });
@@ -47,7 +47,7 @@ class Picker extends React.Component {
         this.setState({animation: "out"});
 
         const t = this;
-        let timer = setTimeout(()=>{
+        const timer = setTimeout(()=>{
             t.setState({
                 show: false
             });

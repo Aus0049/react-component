@@ -8,7 +8,7 @@ import classNames from 'classnames'
 import '../style/index.scss'
 
 const Select = (props) => {
-    const {required, labelName, value, data, readOnly, onChange} = props;
+    const {required, labelName, value, data, readOnly, error, onChange} = props;
 
     function handleChange (value) {
         onChange({value: value[0]});
@@ -57,6 +57,7 @@ Select.PropTypes = {
     data: React.PropTypes.array.isRequired,
     value: React.PropTypes.string,
     readOnly: React.PropTypes.bool,
+    error: React.PropTypes.string,
     onChange: React.PropTypes.func
 };
 
