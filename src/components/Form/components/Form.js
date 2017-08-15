@@ -6,6 +6,11 @@ import {Input, TextArea, Switch, DateRange,
     DateTime, Select, Checkbox, Validate} from '../index'
 import '../style/index.scss'
 
+// Form为非受控组件
+// 无法动态删除增加表单项
+// 以及实时掌控表单数据等问题
+// 而且对于非输入框表单项 怎么显示错误信息是个问题
+// 所以Form适合简单的表单场景
 class Form extends React.Component {
     constructor (props) {
         super(props);
@@ -66,7 +71,7 @@ class Form extends React.Component {
         onChange({
             formIndex: formIndex,
             itemIndex: itemIndex,
-            value: value
+            value: value.value
         });
     }
     getValue () {

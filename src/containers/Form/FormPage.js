@@ -50,6 +50,7 @@ class FormPage extends React.Component {
                 <Form
                     ref="form"
                     data={formData}
+                    onChange={(data)=>{console.log(data)}}
                 >
                 </Form>
 
