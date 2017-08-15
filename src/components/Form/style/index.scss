@@ -1,5 +1,7 @@
 @charset "UTF-8";
 
+$viColor: #00b4a5;
+
 textarea {
   box-sizing: border-box;
 }
@@ -227,6 +229,38 @@ textarea {
   .content {
     box-sizing: border-box;
     margin-left: 230px;
+
+    &.has-feedback {
+      position: relative;
+
+      input {
+        padding-right: 10px;
+      }
+
+      .fa {
+        position: absolute;
+        top: 50%;
+        right: 60px;
+        margin-top: -20px;
+        font-size: 40px;
+
+        &.fa-check-circle {
+          color: $viColor;
+        }
+
+        &.fa-exclamation-circle {
+          color: #ffbf00;
+        }
+
+        &.fa-times-circle {
+          color: #f04134;
+        }
+
+        &.fa-circle-o-notch {
+          color: #108ee9;
+        }
+      }
+    }
 
     input {
       width: 100%;

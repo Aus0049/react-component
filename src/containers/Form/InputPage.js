@@ -12,7 +12,8 @@ class InputPage extends React.Component {
         this.state = {
             value1: 'abc',
             value2: 'ABC',
-            value3: '一二三'
+            value3: '一二三',
+            value4: 'asd',
         };
     }
     handleChange (type, value) {
@@ -21,7 +22,7 @@ class InputPage extends React.Component {
         });
     }
     render () {
-        const {value1, value2, value3} = this.state;
+        const {value1, value2, value3, value4} = this.state;
 
         return (
             <div className="page input">
@@ -36,6 +37,7 @@ class InputPage extends React.Component {
                     <Input labelName="受控组件" value={value1} required placeHolder="受控组件" onChange={this.handleChange.bind(this, 'value1')} />
                     <Input labelName="不受控组件" value={value2} placeHolder="不受控组件" controlled={false} />
                     <Input labelName="readOnly" value={value3} readOnly placeHolder="readOnly" />
+                    <Input labelName="操作反馈" value={value4} placeHolder="操作反馈icon" controlled={false} feedbackIcon='loading' />
                 </div>
             </div>
         )
