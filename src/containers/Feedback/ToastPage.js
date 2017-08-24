@@ -4,7 +4,7 @@
 import React from 'react'
 import ListTitle from '../../components/DataDisplay/ListTitle/'
 import Button from '../../components/DataEntry/Button/components/Button'
-import Toast from '../../components/Feedback/Toast'
+import Toast from '../../components/Feedback/Toast/'
 import Tools from '../../components/Tools/Tools'
 
 const ToastPage = () => {

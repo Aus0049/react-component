@@ -5,7 +5,7 @@ import React from 'react'
 import {Form} from '../../components/Form/'
 import Tools from '../../components/Tools/Tools'
 import Button from '../../components/DataEntry/Button'
-import Toast from '../../components/Feedback/Toast'
+import Toast from '../../components/Feedback/Toast/components/Toast'
 import moment from 'moment'
 
 class FormPage extends React.Component {

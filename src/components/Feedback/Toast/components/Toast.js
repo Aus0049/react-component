@@ -4,6 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Notification from './Notification'
+import '../style/index.scss'
 
 // Toast组件比较特殊
 // 因为<Toast />不会被直接渲染在DOM中
