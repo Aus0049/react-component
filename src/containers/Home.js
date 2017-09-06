@@ -39,6 +39,7 @@ const Home = () => {
             <ListTitle title="操作反馈" />
             <List>
                 <Item subtitle="Toast" icon="horizontal" onClick={()=>{Tools.linkTo("/feedback/list")}}>提示</Item>
+                <Item subtitle="Popover" icon="horizontal" onClick={()=>{Tools.linkTo("/feedback/popover")}}>气泡提示</Item>
             </List>
         </div>
     )

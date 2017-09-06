@@ -20,6 +20,7 @@ import List from '../containers/DataDisplay/ListPage'
 import Carousel from '../containers/DataDisplay/CarouselPage'
 import ToastPage from '../containers/Feedback/ToastPage'
 import TagPage from '../containers/DataDisplay/TagPage'
+import PopoverPage from '../containers/Feedback/PopoverPage'
 
 export const createRoutes = () => ({
     path: '/',
@@ -52,7 +53,8 @@ export const createRoutes = () => ({
             {path: 'form', component: Form},
         ]},
         {path: '/feedback', childRoutes: [
-            {path: 'list', component: ToastPage}
+            {path: 'list', component: ToastPage},
+            {path: 'popover', component: PopoverPage},
         ]}
     ]
 });
