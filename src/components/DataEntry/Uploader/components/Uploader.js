@@ -217,7 +217,7 @@ class Uploader extends React.Component{
         return (
             <div className="zby-uploader-box">
                 {imagesList}
-                <input ref="input" type="file" className="file-input" name="image" accept="image/*" onChange={this.handleInputChange} />
+                <input ref="input" type="file" className="file-input" name="image" accept="image/*" multiple="multiple" onChange={this.handleInputChange} />
             </div>
         )
     }
