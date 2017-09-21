@@ -23,20 +23,38 @@ class Uploader extends React.Component{
         this.handleInputChange = this.handleInputChange.bind(this);
     }
     handleInputChange (event) {
-        const file = event.target.files[0];
-        const {typeArray, maxSize} = this.props;
-        // 图片类型检查
-        if(typeArray.indexOf(file.type.split('/')[1]) === -1){
-            Toast.error('不支持文件类型', 2000, undefined, false);
-            return;
-        }
-        // 图片尺寸检查
-        if(file.size > maxSize * 1024){
-            Toast.error('文件大小超过限制', 2000, undefined, false);
-            return;
-        }
+        console.log(event.target.files);
+
+        // const file = event.target.files[0];
+        // const {typeArray, maxSize} = this.props;
+        // // 图片类型检查
+        // if(typeArray.indexOf(file.type.split('/')[1]) === -1){
+        //     Toast.error('不支持文件类型', 2000, undefined, false);
+        //     return;
+        // }
+        // // 图片尺寸检查
+        // if(file.size > maxSize * 1024){
+        //     Toast.error('文件大小超过限制', 2000, undefined, false);
+        //     return;
+        // }
+        // // 图片转dataUrl
+        // this.transformFileToDataUrl(file);
+
+        const uploadGen = this.uploadGenerator();
+    }
+    *uploadGenerator (filesArray) {
+        // 遍历数组 给每个item加上状态
+        filesArray.map((item)=>({file: item, status: 'waiting'}));
+
+        // 第一次执行的时候，取前三个数据上传
         // 图片转dataUrl
-        this.transformFileToDataUrl(file);
+        this.transformFileToDataUrl(filesArray[0].file);
+        this.transformFileToDataUrl(filesArray[1].file);
+        this.transformFileToDataUrl(filesArray[2].file);
+
+        yield "first";
+
+        //
     }
     transformFileToDataUrl (file) {
         const _this = this;
