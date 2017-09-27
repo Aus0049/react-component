@@ -4,6 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 
+// Figure就是每个图片的容器 以及实现预览的容器
 const Figure = (props) => {
     const {status, imgUrl, dataUrl, id, onDelete} = props;
     const src = imgUrl ? imgUrl : dataUrl;
@@ -20,6 +21,23 @@ const Figure = (props) => {
             {status === 2 || status === 3 ? <div className="close" onClick={handleDelete}><i className="fa fa-times"></i></div> : ''}
         </div>
     )
+};
+
+function empty() {}
+
+Figure.propTypes = {
+    id: React.PropTypes.string.isRequired, // 图片的id
+    status: React.PropTypes.oneOf([1,2,3]).isRequired, // 此图片上传的状态 1:上传中,2:上传成功,3:上传失败
+    dataUrl: React.PropTypes.string, // 图片的base64编码
+    imgKey: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]), // 图片的key 很多后端只保存key 图片的url是可变的
+    imgUrl: React.PropTypes.string, // 图片的路径
+    onDelete: React.PropTypes.func, // 删除的回调
+};
+
+Figure.defaultProps = {
+    dataUrl: '',
+    imgUrl: '',
+    onDelete: empty
 };
 
 export default Figure;
