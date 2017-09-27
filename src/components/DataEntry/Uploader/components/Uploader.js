@@ -72,9 +72,7 @@ class Uploader extends React.Component{
             );
         });
 
-        this.setState({
-            imgArray: uploadedImgArray
-        });
+        this.setState({imgArray: uploadedImgArray});
 
         // 通过该函数拿到要上传的图片及个数
         this.uploadGen = this.uploadGenerator(uploadQueue);
@@ -86,24 +84,24 @@ class Uploader extends React.Component{
             this.transformFileToDataUrl(item, this.compress, this.processData);
         });
     }
-    *uploadGenerator (selectedFiles) {
+    *uploadGenerator (uploadQueue) {
         // 获取相应的图片进行上传
         // 第一次执行的时候，取前三个数据上传
         // 判断图片张数
-        if(selectedFiles.length > 3){
+        if(uploadQueue.length > 3){
             // return 3张图片
-            yield [selectedFiles[0], selectedFiles[1], selectedFiles[2]];
+            yield [uploadQueue[0], uploadQueue[1], uploadQueue[2]];
 
             // 后面每次取一张
-            for(let i = 3; i < selectedFiles.length; i++){
-                yield selectedFiles[i];
+            for(let i = 3; i < uploadQueue.length; i++){
+                yield [uploadQueue[i]];
             }
 
         } else {
-            yield selectedFiles.map((item)=>(item));
+            yield uploadQueue.map((item)=>(item));
         }
     }
-    transformFileToDataUrl (item, callback, compressCallback) {
+    transformFileToDataUrl (data, callback, compressCallback) {
         const {compress} = this.props;
         const imgCompassMaxSize = 200 * 1024; // 超过 200k 就压缩
 
@@ -112,22 +110,27 @@ class Uploader extends React.Component{
 
         reader.onload = function(e) {
             const result = e.target.result;
+            data.dataUrl = result;
 
             if(compress && result.length > imgCompassMaxSize){
-                callback({file: item.file, dataUrl: result, compress: true}, compressCallback); // 图片压缩
+                data.compress = true;
+
+                callback(data, compressCallback); // 图片压缩
             } else {
-                callback({file: item.file, dataUrl: result, compress: false}, compressCallback); // 图片不压缩
+                data.compress = false;
+
+                callback(data, compressCallback); // 图片不压缩
             }
         };
 
-        reader.readAsDataURL(item.file);
+        reader.readAsDataURL(data.file);
     }
     compress (data, callback) {
         const {compressionRatio} = this.props;
         const imgFile = data.file;
         const img = new window.Image();
 
-        img.src = data.dataURL;
+        img.src = data.dataUrl;
 
         img.onload = function () {
             const canvas = document.createElement('canvas');
@@ -206,16 +209,16 @@ class Uploader extends React.Component{
         const {uploadUrl} = this.props;
 
         // 进度监听
-        xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this, imgFile.uuid), false);
+        xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this, data.uuid), false);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200 || xhr.status === 201) {
                     // 上传成功
-                    _this.handleUploaded(imgFile, 2);
+                    _this.handleUploaded(data, 2);
                 } else {
                     // 上传失败
-                    _this.handleUploaded(imgFile, 3);
+                    _this.handleUploaded(data, 3);
                 }
             }
         };
@@ -231,25 +234,29 @@ class Uploader extends React.Component{
         text.innerHTML = number;
         progress.style.width = number;
     }
-    handleUploaded (file, status) {
+    handleUploaded (data, status) {
         // 准备一条标准数据
         const _this = this;
-        const obj = {id: file.uuid, imgKey: '', imgUrl: '', name: file.name, dataUrl: file.dataUrl, status: status};
+        const obj = {id: data.uuid, imgKey: '', imgUrl: '', name: data.file.name, dataUrl: data.dataUrl, status: status};
 
         // 更改状态
         this.setState((previousState)=>{
-            return previousState.map((item)=>{
-                if(item.uuid === file.uuid){
+            previousState.imgArray = previousState.imgArray.map((item)=>{
+                if(item.id === data.uuid){
                     item = obj;
                 }
+
+                return item;
             });
+            return previousState;
         });
 
         // 上传下一个
         const nextUpload = this.uploadGen.next();
+        console.log(nextUpload);
 
-        if(nextUpload.status){
-            nextUpload.map((item)=>{
+        if(!nextUpload.status){
+            nextUpload.value.map((item)=>{
                 _this.transformFileToDataUrl(item, _this.compress, _this.processData);
             });
         }
