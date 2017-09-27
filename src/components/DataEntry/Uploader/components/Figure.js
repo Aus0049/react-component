@@ -28,6 +28,7 @@ function empty() {}
 Figure.propTypes = {
     id: React.PropTypes.string.isRequired, // 图片的id
     status: React.PropTypes.oneOf([1,2,3]).isRequired, // 此图片上传的状态 1:上传中,2:上传成功,3:上传失败
+    canPreview: React.PropTypes.bool, // 是否使用预览功能
     dataUrl: React.PropTypes.string, // 图片的base64编码
     imgKey: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]), // 图片的key 很多后端只保存key 图片的url是可变的
     imgUrl: React.PropTypes.string, // 图片的路径
@@ -35,8 +36,11 @@ Figure.propTypes = {
 };
 
 Figure.defaultProps = {
+    canPreview: true,
     dataUrl: '',
+    imgKey: '',
     imgUrl: '',
+    isPreview: false,
     onDelete: empty
 };
 
