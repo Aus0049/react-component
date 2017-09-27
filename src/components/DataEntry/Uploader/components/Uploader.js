@@ -26,7 +26,7 @@ class Uploader extends React.Component{
         this.compress = this.compress.bind(this);
         this.processData = this.processData.bind(this);
     }
-    componentDidmount () {
+    componentDidMount () {
         // 判断是否有初始化的数据传入
         const {data} = this.props;
 
@@ -336,10 +336,13 @@ class Uploader extends React.Component{
             }
         });
 
+        // 图片数量达到最大值
+        if(result.length >= max ) return result;
+
         let onPress = ()=>{_this.refs.input.click();};
 
-        // 图片数量达到最大值 或者有正在上传的图片的时候 不可再上传图片
-        if(result.length >= max || uploadingArray.length > 0) {
+        //  或者有正在上传的图片的时候 不可再上传图片
+        if(uploadingArray.length > 0) {
             onPress = undefined;
         }
 
