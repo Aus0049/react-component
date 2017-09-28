@@ -130,7 +130,7 @@ class Uploader extends React.Component{
 
         // 没错误准备上传
         // 页面先显示一共上传图片个数
-        this.setState({imgArray: uploadedImgArray});
+        this.setState({imgArray: imgArray.concat(uploadedImgArray)});
 
         // 通过该函数获取每次要上传的数组
         this.uploadGen = this.uploadGenerator(uploadQueue);
@@ -309,10 +309,18 @@ class Uploader extends React.Component{
 
         // 进度监听
         xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this, data.uuid), false);
-        // 上传成功
-        xhr.upload.addEventListener('load', _this.handleUploadEnd.bind(_this, data, 2), false);
-        // 上传失败
-        xhr.upload.addEventListener('error', _this.handleUploadEnd.bind(_this, data, 3), false);
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200 || xhr.status === 201) {
+                    // 上传成功
+                    _this.handleUploadEnd(data, 2);
+                } else {
+                    // 上传失败
+                    _this.handleUploadEnd(data, 3);
+                }
+            }
+        };
 
         xhr.open('POST', uploadUrl , true);
         xhr.send(formData);

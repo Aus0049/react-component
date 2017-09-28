@@ -14,7 +14,7 @@ const Figure = (props) => {
     };
 
     return (
-        <div className={classNames('zby-img-preview-box', {loading: status === 1}, {loaded: status === 2}, {error: status === 3}, {deleted: status == 'deleted'})}>
+        <div className={classNames('zby-img-preview-box', {loading: status === 1}, {loaded: status === 2}, {error: status === 3})}>
             {src ? <img src={src} onClick={()=>{imgUrl ? window.open(imgUrl) : ''}}/> : <div className="uploading"><i className="fa fa-picture-o"></i></div>}
             {status === 1 ? <div className="progress-text" id={`text-${id}`}></div> : ''}
             {status === 1 ? <div className="progress" id={`progress-${id}`}></div> : ''}
