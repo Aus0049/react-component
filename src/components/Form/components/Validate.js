@@ -88,10 +88,10 @@ const verifyCustomVerify = (customVerify, id, name, value) => {
 // 验证必填
 const verifyRequire = (id, name, value, errorText) => {
     let pass = true;
-    let validateErrorText = "";
+    let validateErrorText = '';
 
     if(!(value && value.length > 0)){
-        validateErrorText = name + "不能为空!";
+        validateErrorText = name + '不能为空!';
 
         updateErrorInResult(id, validateErrorText, errorText);
         pass = false;
@@ -103,13 +103,13 @@ const verifyRequire = (id, name, value, errorText) => {
 // 验证最大最小值
 const verifyLength = (id, name, value, errorText, min, max) => {
     let pass = true;
-    let validateErrorText = "";
+    let validateErrorText = '';
 
     // 没有type 长度验证
     if(min && !max && typeof min === 'number'){
         // 只有最小
         if(value.length < min){
-            validateErrorText = name + "长度不能少于" + min;
+            validateErrorText = name + '长度不能少于' + min;
 
             updateErrorInResult(id, validateErrorText, errorText);
             pass = false;
@@ -117,14 +117,14 @@ const verifyLength = (id, name, value, errorText, min, max) => {
     } else if (max && !min && typeof max === 'number') {
         // 只有最大
         if(max < value.length){
-            validateErrorText = name + "长度不能超过" + max;
+            validateErrorText = name + '长度不能超过' + max;
 
             updateErrorInResult(id, validateErrorText, errorText);
             pass = false;
         }
     } else if (max && min && typeof max === 'number' && typeof min === 'number') {
         if(value.length < min || value.length > max){
-            validateErrorText = name + "长度应在" + min + "~" + max + "之间";
+            validateErrorText = name + '长度应在' + min + '~' + max + '之间';
 
             updateErrorInResult(id, validateErrorText, errorText);
             pass = false;
@@ -137,7 +137,7 @@ const verifyLength = (id, name, value, errorText, min, max) => {
 // 验证邮箱
 const verifyEmail = (id, name, value, errorText) => {
     let pass = true;
-    let validateErrorText = "";
+    let validateErrorText = '';
 
     // 正则验证
     if(!/[\w-\.]+@([\w-]+\.)+[a-z]{2,3}/.test(value)){
@@ -152,7 +152,7 @@ const verifyEmail = (id, name, value, errorText) => {
 // 验证手机号
 const verifyPhone = (id, name, value, errorText) => {
     let pass = true;
-    let validateErrorText = "";
+    let validateErrorText = '';
 
     // 正则验证
     if(!(/^1(3|4|5|7|8)\d{9}$/.test(value))){
@@ -167,14 +167,14 @@ const verifyPhone = (id, name, value, errorText) => {
 // 验证数值
 const verifyNumber = (id, name, value, errorText, min, max) => {
     let pass = true;
-    let validateErrorText = "";
+    let validateErrorText = '';
 
     // 数值
     // 没有type 长度验证
     if(min && !max && typeof min === 'number'){
         // 只有最小
         if(value < min){
-            validateErrorText = name + "不能少于" + min;
+            validateErrorText = name + '不能少于' + min;
 
             updateErrorInResult(id, validateErrorText, errorText);
             pass = false;
@@ -182,14 +182,14 @@ const verifyNumber = (id, name, value, errorText, min, max) => {
     } else if (max && !min && typeof max === 'number') {
         // 只有最大
         if(max < value){
-            validateErrorText = name + "不能超过" + max;
+            validateErrorText = name + '不能超过' + max;
 
             updateErrorInResult(id, validateErrorText, errorText);
             pass = false;
         }
     } else if (max && min && typeof max === 'number' && typeof min === 'number') {
         if(value < min || value > max){
-            validateErrorText = name + "应在" + min + "~" + max + "之间";
+            validateErrorText = name + '应在' + min + '~' + max + '之间';
 
             updateErrorInResult(id, validateErrorText, errorText);
             pass = false;

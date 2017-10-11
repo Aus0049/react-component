@@ -8,18 +8,18 @@ import Touchable from 'rc-touchable'
 import moment from 'moment'
 
 const monthArray = [
-    {label: "1月", value: "0"},{label: "2月", value: "1"},{label: "3月", value: "2"},{label: "4月", value: "3"},
-    {label: "5月", value: "4"},{label: "6月", value: "5"},{label: "7月", value: "6"},{label: "8月", value: "7"},
-    {label: "9月", value: "8"},{label: "10月", value: "9"},{label: "11月", value: "10"},{label: "12月", value: "11"}
+    {label: '1月', value: '0'},{label: '2月', value: '1'},{label: '3月', value: '2'},{label: '4月', value: '3'},
+    {label: '5月', value: '4'},{label: '6月', value: '5'},{label: '7月', value: '6'},{label: '8月', value: '7'},
+    {label: '9月', value: '8'},{label: '10月', value: '9'},{label: '11月', value: '10'},{label: '12月', value: '11'}
 ];
 
 const hourArray = [
-    {label: "0点", value: "0"},{label: "1点", value: "1"},{label: "2点", value: "2"},{label: "3点", value: "3"},
-    {label: "4点", value: "4"},{label: "5点", value: "5"},{label: "6点", value: "6"},{label: "7点", value: "7"},
-    {label: "8点", value: "8"},{label: "9点", value: "9"},{label: "10点", value: "10"},{label: "11点", value: "11"},
-    {label: "12点", value: "12"},{label: "13点", value: "13"},{label: "14点", value: "14"},{label: "15点", value: "15"},
-    {label: "16点", value: "16"},{label: "17点", value: "17"},{label: "18点", value: "18"},{label: "19点", value: "19"},
-    {label: "20点", value: "20"},{label: "21点", value: "21"},{label: "22点", value: "22"},{label: "23点", value: "23"}
+    {label: '0点', value: '0'},{label: '1点', value: '1'},{label: '2点', value: '2'},{label: '3点', value: '3'},
+    {label: '4点', value: '4'},{label: '5点', value: '5'},{label: '6点', value: '6'},{label: '7点', value: '7'},
+    {label: '8点', value: '8'},{label: '9点', value: '9'},{label: '10点', value: '10'},{label: '11点', value: '11'},
+    {label: '12点', value: '12'},{label: '13点', value: '13'},{label: '14点', value: '14'},{label: '15点', value: '15'},
+    {label: '16点', value: '16'},{label: '17点', value: '17'},{label: '18点', value: '18'},{label: '19点', value: '19'},
+    {label: '20点', value: '20'},{label: '21点', value: '21'},{label: '22点', value: '22'},{label: '23点', value: '23'}
 ];
 
 // 日期时间选择器
@@ -29,7 +29,7 @@ class DatePicker extends React.Component {
         this.state = {
             defaultValue: undefined,
             selectedValue: undefined,
-            animation: "out",
+            animation: 'out',
             show: false
         }
     }
@@ -46,37 +46,37 @@ class DatePicker extends React.Component {
         const {mode} = this.props;
 
         switch (mode) {
-            case "date":
+            case 'date':
                 // 检验新日期是否合法
                 // 年月一定合法 主要就是检验日
-                newValue = this.checkNewValue(newValue, ["date"]);
+                newValue = this.checkNewValue(newValue, ['date']);
 
                 const newDateMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2])]);
                 this.setState({selectedValue: newDateMoment});
 
                 break;
-            case "time":
+            case 'time':
                 // 时间切换
-                newValue = this.checkNewValue(newValue, ["time"]);
+                newValue = this.checkNewValue(newValue, ['time']);
 
-                const newTimeMoment = moment(`${newValue[0]}:${newValue[1]}`, "HH:mm");
+                const newTimeMoment = moment(`${newValue[0]}:${newValue[1]}`, 'HH:mm');
                 this.setState({selectedValue: newTimeMoment});
 
                 break;
-            case "datetime":
+            case 'datetime':
 
-                newValue = this.checkNewValue(newValue, ["date", "time"]);
+                newValue = this.checkNewValue(newValue, ['date', 'time']);
 
                 const newDateTimeMoment = moment([Number.parseInt(newValue[0]), Number.parseInt(newValue[1]), Number.parseInt(newValue[2]), Number.parseInt(newValue[3]), Number.parseInt(newValue[4])]);
                 this.setState({selectedValue: newDateTimeMoment});
 
                 break;
-            case "year":
+            case 'year':
                 this.setState({selectedValue: moment(newValue)});
 
                 break;
-            case "month":
-                this.setState({selectedValue: moment(Number.parseInt(newValue[0]) + 1, "MM")});
+            case 'month':
+                this.setState({selectedValue: moment(Number.parseInt(newValue[0]) + 1, 'MM')});
 
                 break;
         }
@@ -90,7 +90,7 @@ class DatePicker extends React.Component {
         const t = this;
         let timer = setTimeout(()=>{
             t.setState({
-                animation: "in"
+                animation: 'in'
             });
             clearTimeout(timer);
         }, 0);
@@ -99,7 +99,7 @@ class DatePicker extends React.Component {
 
         if(e) e.preventDefault();
 
-        this.setState({animation: "out"});
+        this.setState({animation: 'out'});
 
         const t = this;
         let timer = setTimeout(()=>{
@@ -157,7 +157,7 @@ class DatePicker extends React.Component {
         // 从月份开始检查
         const {maxValue, minValue} = this.props;
 
-        if(mode.indexOf("date") >= 0){
+        if(mode.indexOf('date') >= 0){
             if(minValue){
                 if(Number.parseInt(newValue[0]) == minValue.year()){
                     const array = this.getMonthArray(newValue.slice(0,1));
@@ -173,7 +173,7 @@ class DatePicker extends React.Component {
                     }
                 }
 
-                if(mode.indexOf("time") >= 0){
+                if(mode.indexOf('time') >= 0){
                     if(Number.parseInt(newValue[0]) == minValue.year() && Number.parseInt(newValue[1]) == minValue.month() && Number.parseInt(newValue[2]) == minValue.date()){
                         const array = this.getHourArray(newValue.slice(0,3), true);
                         if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
@@ -205,7 +205,7 @@ class DatePicker extends React.Component {
                     }
                 }
 
-                if(mode.indexOf("time") >= 0){
+                if(mode.indexOf('time') >= 0){
                     if(Number.parseInt(newValue[0]) == maxValue.year() && Number.parseInt(newValue[1]) == maxValue.month() && Number.parseInt(newValue[2]) == maxValue.date()){
                         const array = this.getHourArray(newValue.slice(0,3), true);
                         if(Number.parseInt(newValue[3]) < Number.parseInt(array[0].value) || Number.parseInt(newValue[3]) > Number.parseInt(array[array.length - 1].value)){
@@ -224,7 +224,7 @@ class DatePicker extends React.Component {
             }
         }
 
-        if(mode.indexOf("time") >= 0){
+        if(mode.indexOf('time') >= 0){
             // 验证分钟就行
             if(minValue){
                 if(Number.parseInt(newValue[0]) == minValue.hour()){
@@ -281,7 +281,7 @@ class DatePicker extends React.Component {
         let latest = maxValue ? maxValue.year() : currentYear + 5;
 
         for(let i = earliest; i <= latest; i++){
-            yearArray.push({label: i + "年", value: i + ''});
+            yearArray.push({label: i + '年', value: i + ''});
         }
 
         return yearArray;
@@ -326,7 +326,7 @@ class DatePicker extends React.Component {
 
         // 先生成一个数组
         for(let i = 1; i < daysMax + 1; i++){
-            dayArray.push({label: i + "日", value: i + ''});
+            dayArray.push({label: i + '日', value: i + ''});
         }
 
         // 根据大小值过滤
@@ -401,12 +401,12 @@ class DatePicker extends React.Component {
             if(newValue.length == 4){
                 selectedValue = moment(newValue);
             } else {
-                selectedValue = moment(newValue, "HH");
+                selectedValue = moment(newValue, 'HH');
             }
         }
 
         for(let i = 0; i < length; i++){
-            result.push({label: timeStep * i + "分", value: timeStep * i + ""});
+            result.push({label: timeStep * i + '分', value: timeStep * i + ''});
         }
 
         if(connectDate){
@@ -449,7 +449,7 @@ class DatePicker extends React.Component {
         let result = [];
 
         switch (mode) {
-            case "date":
+            case 'date':
                 // 只有日期
                 // 选取今年的前后5年
                 const dateYearArray = this.getYearArray();
@@ -462,7 +462,7 @@ class DatePicker extends React.Component {
 
                 result = [dateYearArray, dateMonthArray, dateDateArray];
                 break;
-            case "time":
+            case 'time':
 
                 const timeHourArray = this.getHourArray();
 
@@ -470,7 +470,7 @@ class DatePicker extends React.Component {
 
                 result = [timeHourArray, timeMinuteArray];
                 break;
-            case "datetime":
+            case 'datetime':
                 // 时间日期选择器
                 const datetimeYearArray = this.getYearArray();
 
@@ -484,13 +484,13 @@ class DatePicker extends React.Component {
 
                 result = [datetimeYearArray, datetimeMonthArray, datetimeDateArray, datetimeHourArray, datetimeMinuteArray];
                 break;
-            case "year":
+            case 'year':
                 // 年份选择器
                 const yearArray = this.getYearArray();
 
                 result = [yearArray];
                 break;
-            case "month":
+            case 'month':
                 // 月份选择
                 const monthArray = this.getMonthArray();
 
@@ -509,51 +509,51 @@ class DatePicker extends React.Component {
         if(selectedValue != undefined && show){
             const data = this.getDateByMode(mode);
 
-            if(mode == "date"){
+            if(mode == 'date'){
                 return <PickerView
                     col={3}
                     data={data}
                     value={[selectedValue.year() + '', selectedValue.month() + '', selectedValue.date() + '']}
                     cascade={false}
-                    controlled={true}
-                    onChange={this.handlePickerViewChange.bind(this)}>
-                </PickerView>;
-            } else if (mode == "time") {
+                    controlled
+                    onChange={this.handlePickerViewChange.bind(this)}
+                       />;
+            } else if (mode == 'time') {
                 return <PickerView
                     col={2}
                     data={data}
                     value={[selectedValue.hour() + '', selectedValue.minute() + '']}
                     cascade={false}
-                    controlled={true}
-                    onChange={this.handlePickerViewChange.bind(this)}>
-                </PickerView>;
-            } else if (mode == "datetime") {
+                    controlled
+                    onChange={this.handlePickerViewChange.bind(this)}
+                       />;
+            } else if (mode == 'datetime') {
                 return <PickerView
                     col={5}
                     data={data}
                     value={[selectedValue.year() + '', selectedValue.month() + '', selectedValue.date() + '', selectedValue.hour() + '', selectedValue.minute() + '']}
                     cascade={false}
-                    controlled={true}
-                    onChange={this.handlePickerViewChange.bind(this)}>
-                </PickerView>;
-            } else if (mode == "year") {
+                    controlled
+                    onChange={this.handlePickerViewChange.bind(this)}
+                       />;
+            } else if (mode == 'year') {
                 return <PickerView
                     col={1}
                     data={data}
                     value={[selectedValue.year() + '']}
                     cascade={false}
-                    controlled={true}
-                    onChange={this.handlePickerViewChange.bind(this)}>
-                </PickerView>;
-            } else if (mode == "month") {
+                    controlled
+                    onChange={this.handlePickerViewChange.bind(this)}
+                       />;
+            } else if (mode == 'month') {
                 return <PickerView
                     col={1}
                     data={data}
                     value={[selectedValue.month() + '']}
                     cascade={false}
-                    controlled={true}
-                    onChange={this.handlePickerViewChange.bind(this)}>
-                </PickerView>;
+                    controlled
+                    onChange={this.handlePickerViewChange.bind(this)}
+                       />;
             }
         }
     }
@@ -565,18 +565,21 @@ class DatePicker extends React.Component {
         if(show){
             return <div>
                 <Touchable
-                    onPress={this.handleCancel.bind(this)}>
-                    <div className={classNames(['zby-picker-popup-mask', {'hide': animation == "out"}])}></div>
+                    onPress={this.handleCancel.bind(this)}
+                >
+                    <div className={classNames(['zby-picker-popup-mask', {'hide': animation == 'out'}])} />
                 </Touchable>
-                <div className={classNames(['zby-picker-popup-wrap', {'popup': animation == "in"}])}>
+                <div className={classNames(['zby-picker-popup-wrap', {'popup': animation == 'in'}])}>
                     <div className="zby-picker-popup-header">
                         <Touchable
-                            onPress={this.handleCancel.bind(this)}>
+                            onPress={this.handleCancel.bind(this)}
+                        >
                             <span className="zby-picker-popup-item zby-header-left">取消</span>
                         </Touchable>
                         <span className="zby-picker-popup-item zby-header-title">{title}</span>
                         <Touchable
-                            onPress={this.handleConfirm.bind(this)}>
+                            onPress={this.handleConfirm.bind(this)}
+                        >
                             <span className="zby-picker-popup-item zby-header-right">确定</span>
                         </Touchable>
                     </div>
@@ -584,7 +587,7 @@ class DatePicker extends React.Component {
                         {pickerViewDOM}
                     </div>
                 </div>
-            </div>
+                   </div>
         }
     }
     render () {
@@ -594,7 +597,8 @@ class DatePicker extends React.Component {
             <div className="zby-picker-box">
                 {popupDOM}
                 <Touchable
-                    onPress={this.handleClickOpen.bind(this)}>
+                    onPress={this.handleClickOpen.bind(this)}
+                >
                     {this.props.children}
                 </Touchable>
             </div>
@@ -612,7 +616,7 @@ DatePicker.propTypes = {
 };
 
 DatePicker.defaultProps = {
-    mode: "date",
+    mode: 'date',
     value: moment(),
     timeStep: 1
 };

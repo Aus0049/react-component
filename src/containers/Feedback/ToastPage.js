@@ -15,7 +15,7 @@ const ToastPage = () => {
         Toast.success('操作成功', 3000, 'fa-check');
     };
     const commonError = () => {
-        Toast.error('有错误！！', 3000, undefined, false, ()=>{console.log("callback");});
+        Toast.error('有错误！！', 3000, undefined, false, ()=>{console.log('callback');});
     };
     const commonToast = () => {
         Toast.info('欢迎来到本直播间', 3000, undefined, false);
@@ -40,7 +40,7 @@ const ToastPage = () => {
     return (
         <div className="page toast">
             <h1 className="title">
-                <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                 Toast
             </h1>
 

@@ -30,7 +30,7 @@ class CheckboxPage extends React.Component {
         return (
             <div className="page checkbox">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     Checkbox
                 </h1>
 

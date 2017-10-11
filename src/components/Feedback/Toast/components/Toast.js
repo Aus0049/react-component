@@ -37,8 +37,9 @@ const notice = (content, type, icon, duration = 3000, onClose, mask = true) => {
                     {'warning': type === 'warning'},
                     {'error': type === 'error'}
                 ])
-            }>
-                <div className="zby-toast-icon"><i className={"fa " + icon}></i></div>
+            }
+            >
+                <div className="zby-toast-icon"><i className={'fa ' + icon} /></div>
                 <div className="zby-toast-content">{content}</div>
             </div>
         ) : (
@@ -49,7 +50,8 @@ const notice = (content, type, icon, duration = 3000, onClose, mask = true) => {
                     {'warning': type === 'warning'},
                     {'error': type === 'error'}
                 ])
-            }>
+            }
+            >
                 <div className="zby-toast-content">{content}</div>
             </div>
         ),

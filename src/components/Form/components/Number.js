@@ -15,13 +15,19 @@ const Number = (props) => {
     return (
         <div className="zby-form-line-box number">
             <div className="title">
-                <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
+                <i className={classNames(['fa', 'fa-asterisk', {required: required}])} />
                 <div className="label-name">{labelName}</div>
             </div>
             <div className="content">
                 {readOnly ? <p className="input-readonly">{value ? value : placeHolder}</p> :
-                    controlled ? <input type="text" value={value} placeholder={placeHolder} onChange={handleChange} /> :
-                        <input type="text" defaultValue={value} placeholder={placeHolder} />}
+                    controlled ? <input
+type="text" value={value}
+placeholder={placeHolder} onChange={handleChange}
+                                 /> :
+                        <input
+type="text" defaultValue={value}
+placeholder={placeHolder}
+                        />}
                 <span className="unit">{unit}</span>
             </div>
         </div>

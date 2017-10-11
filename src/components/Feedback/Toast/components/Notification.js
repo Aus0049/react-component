@@ -56,7 +56,10 @@ class Notification extends React.Component {
             };
 
             result.push(
-                <Notice key={notice.key} {...notice} onClose={closeCallback} />
+                <Notice
+key={notice.key} {...notice}
+onClose={closeCallback}
+                />
             );
         });
 
@@ -66,7 +69,7 @@ class Notification extends React.Component {
         const {notices, hasMask} = this.state;
         // notices为空的时候 不显示蒙版
         // 始终只有一个蒙版
-        if(notices.length > 0 && hasMask == true) return <div className="zby-mask"></div>;
+        if(notices.length > 0 && hasMask == true) return <div className="zby-mask" />;
     }
     render () {
         const noticesDOM = this.getNoticeDOM();
@@ -86,7 +89,7 @@ let noticeNumber = 0;
 
 // 生成唯一的id
 const getUuid = () => {
-    return "notification-" + new Date().getTime() + "-" + noticeNumber++;
+    return 'notification-' + new Date().getTime() + '-' + noticeNumber++;
 };
 
 // Notification增加一个重写方法

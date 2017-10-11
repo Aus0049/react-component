@@ -94,6 +94,17 @@ if (!__TEST__) {
 // ------------------------------------
 // Loaders
 // ------------------------------------
+// eslint
+webpackConfig.eslint = {
+    configFile: './.eslintrc',
+}
+
+webpackConfig.module.preLoaders = [{
+    test: /\.js$/,
+    loader: 'eslint-loader',
+    exclude: /node_modules/,
+}]
+
 // JavaScript / JSON
 webpackConfig.module.loaders = [{
   test: /\.(js|jsx)$/,

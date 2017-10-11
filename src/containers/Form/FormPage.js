@@ -43,7 +43,7 @@ class FormPage extends React.Component {
         return (
             <div className="page form">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     Form
                 </h1>
 
@@ -51,8 +51,7 @@ class FormPage extends React.Component {
                     ref="form"
                     data={formData}
                     onChange={(data)=>{console.log(data)}}
-                >
-                </Form>
+                />
 
                 <div className="button-box">
                     <Button type='primary' onClick={this.handleSubmit}>提交</Button>

@@ -64,7 +64,7 @@ class Carousel extends React.Component {
             // 拖动中
             listHammer.on('panmove', (e)=>{
                 // 拖动
-                list.style.marginLeft = _this.getMovePosition(e.deltaX - positionX, currentMarginLeft) + "px";
+                list.style.marginLeft = _this.getMovePosition(e.deltaX - positionX, currentMarginLeft) + 'px';
             });
 
             // 拖动结束 判断是否翻页
@@ -84,7 +84,7 @@ class Carousel extends React.Component {
 
                     _this.animation(list, {marginLeft: move}, 300, ()=>{
                         // 改变当前index
-                        list.style.marginLeft = -_this.carouselWidth + "px";
+                        list.style.marginLeft = -_this.carouselWidth + 'px';
                         _this.setState({
                             loopData: _this.getLoopData(true, nextIndex),
                             currentFigureIndex: nextIndex
@@ -147,7 +147,7 @@ class Carousel extends React.Component {
             }
 
             if(animation){
-                this.animation(list, {'marginLeft': -nextIndex * this.carouselWidth + "px"}, 300, ()=>{
+                this.animation(list, {'marginLeft': -nextIndex * this.carouselWidth + 'px'}, 300, ()=>{
                     this.setState({currentFigureIndex: nextIndex});
                 });
             } else {
@@ -156,7 +156,7 @@ class Carousel extends React.Component {
             if(onFigureChange) onFigureChange(nextIndex);
         } else {
             if(animation){
-                this.animation(list, {'marginLeft': - 2 * this.carouselWidth + "px"}, 300, ()=>{
+                this.animation(list, {'marginLeft': - 2 * this.carouselWidth + 'px'}, 300, ()=>{
                     let nextIndex = this.state.currentFigureIndex + 1;
 
                     if(nextIndex < 0){
@@ -165,7 +165,7 @@ class Carousel extends React.Component {
                         nextIndex = 0;
                     }
 
-                    list.style.marginLeft = -this.carouselWidth + "px";
+                    list.style.marginLeft = -this.carouselWidth + 'px';
                     this.setState({
                         loopData: this.getLoopData(true, nextIndex),
                         currentFigureIndex: nextIndex
@@ -181,7 +181,7 @@ class Carousel extends React.Component {
                     nextIndex = 0;
                 }
 
-                list.style.marginLeft = -this.carouselWidth + "px";
+                list.style.marginLeft = -this.carouselWidth + 'px';
                 this.setState({
                     loopData: this.getLoopData(true, nextIndex),
                     currentFigureIndex: nextIndex
@@ -255,14 +255,14 @@ class Carousel extends React.Component {
         let nextIndex;
 
         if(move / this.carouselWidth >= 0.5){
-            move = this.carouselWidth + currentMarginLeft + "px";
+            move = this.carouselWidth + currentMarginLeft + 'px';
             nextIndex = this.state.currentFigureIndex - 1;
         } else if (move / this.carouselWidth <= -0.5) {
-            move = -this.carouselWidth + currentMarginLeft + "px";
+            move = -this.carouselWidth + currentMarginLeft + 'px';
             nextIndex = this.state.currentFigureIndex + 1;
         } else {
             // 归位
-            move = -this.carouselWidth + "px";
+            move = -this.carouselWidth + 'px';
             nextIndex = this.state.currentFigureIndex;
         }
 
@@ -330,21 +330,21 @@ class Carousel extends React.Component {
         // 处理list的宽度和当前的marginLeft
         const {currentFigureIndex, data, loopData} = this.state;
         const {loopFromStart} = this.props;
-        const result = loopFromStart ? {'width': (data.length * 100) + "%"} : {'width': (loopData.length * 100) + "%"};
+        const result = loopFromStart ? {'width': (data.length * 100) + '%'} : {'width': (loopData.length * 100) + '%'};
 
         // 获取轮播图宽度
         if(this.carouselWidth) {
             if(loopFromStart){
-                result.marginLeft = - (this.carouselWidth * currentFigureIndex) + "px";
+                result.marginLeft = - (this.carouselWidth * currentFigureIndex) + 'px';
             } else {
-                result.marginLeft = - (this.carouselWidth * 1) + "px";
+                result.marginLeft = - (this.carouselWidth * 1) + 'px';
             }
         } else {
             // 不存在 归0
             if(loopFromStart){
-                result.marginLeft = "0px";
+                result.marginLeft = '0px';
             } else {
-                result.marginLeft = "-33.33%";
+                result.marginLeft = '-33.33%';
             }
         }
 
@@ -358,24 +358,32 @@ class Carousel extends React.Component {
 
         if(loopFromStart){
             // 从头循环
-            const width = (100 / data.length) + "%";
+            const width = (100 / data.length) + '%';
 
             data.map((item, index)=>{
                 const {content, style, ...props} = item;
                 result.push(
-                    <div className="zby-carousel-figure" key={index} style={Object.assign({'width': width}, style)} {...props}>{content}</div>
+                    <div
+className="zby-carousel-figure" key={index}
+style={Object.assign({'width': width}, style)} {...props}
+                    >{content}
+                    </div>
                 );
             });
 
             return result;
         }
 
-        const width = (100 / loopData.length) + "%";
+        const width = (100 / loopData.length) + '%';
 
         loopData.map((item, index)=>{
             const {content, style, ...props} = item;
             result.push(
-                <div className="zby-carousel-figure" key={index} style={Object.assign({'width': width}, style)} {...props}>{content}</div>
+                <div
+className="zby-carousel-figure" key={index}
+style={Object.assign({'width': width}, style)} {...props}
+                >{content}
+                </div>
             );
         });
 
@@ -391,13 +399,13 @@ class Carousel extends React.Component {
 
         data.map((item, index)=>{
             result.push(
-                <span key={index} className={classNames(['zby-carousel-dot', {'active': index == currentFigureIndex}])}></span>
+                <span key={index} className={classNames(['zby-carousel-dot', {'active': index == currentFigureIndex}])} />
             );
         });
 
         return <div className="zby-carousel-dot-box">
             {result}
-        </div>;
+               </div>;
     }
     render () {
         const listStyle = this.getListStyle();
@@ -406,7 +414,10 @@ class Carousel extends React.Component {
 
         return (
             <div className="zby-carousel-box" ref="box">
-                <div className="zby-carousel-list" ref="list" style={listStyle}>
+                <div
+className="zby-carousel-list" ref="list"
+style={listStyle}
+                >
                     {listDOM}
                 </div>
                 {dotDOM}

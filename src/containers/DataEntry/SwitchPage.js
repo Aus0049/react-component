@@ -27,7 +27,7 @@ class SwitchPage extends React.Component {
         return (
             <div className="page switch">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     Switch
                 </h1>
 
@@ -40,21 +40,41 @@ class SwitchPage extends React.Component {
                 <ListTitle title="安卓风格" />
                 <List>
                     <Item subtitle={<Switch defaultChecked={this.state.switch2} theme="android" />}>不受控组件</Item>
-                    <Item subtitle={<Switch checked={this.state.switch2} theme="android" onChange={this.handleChange.bind(this, 'switch2')} />}>受控组件：{this.state.switch2 ? '开启' : '关闭'}</Item>
+                    <Item subtitle={<Switch
+checked={this.state.switch2} theme="android"
+onChange={this.handleChange.bind(this, 'switch2')}
+                                    />}
+                    >受控组件：{this.state.switch2 ? '开启' : '关闭'}
+                    </Item>
                 </List>
 
                 <ListTitle title="禁止🚫" />
                 <List>
                     <Item subtitle={<Switch defaultChecked={false} disabled />}>iOS关闭状态</Item>
-                    <Item subtitle={<Switch defaultChecked={true} disabled />}>iOS开启状态</Item>
-                    <Item subtitle={<Switch defaultChecked={true} theme="android" disabled />}>安卓关闭状态</Item>
-                    <Item subtitle={<Switch defaultChecked={true} theme="android" disabled />}>安卓开启状态</Item>
+                    <Item subtitle={<Switch defaultChecked disabled />}>iOS开启状态</Item>
+                    <Item subtitle={<Switch
+defaultChecked theme="android"
+disabled
+                                    />}
+                    >安卓关闭状态
+                    </Item>
+                    <Item subtitle={<Switch
+defaultChecked theme="android"
+disabled
+                                    />}
+                    >安卓开启状态
+                    </Item>
                 </List>
 
                 <ListTitle title="带文字" />
                 <List>
                     <Item subtitle={<Switch defaultChecked={false} attachedText={['开', '关']} />}>iOS关闭状态</Item>
-                    <Item subtitle={<Switch defaultChecked={true} attachedText={['ON', 'OFF']} theme="android" />}>安卓关闭状态</Item>
+                    <Item subtitle={<Switch
+defaultChecked attachedText={['ON', 'OFF']}
+theme="android"
+                                    />}
+                    >安卓关闭状态
+                    </Item>
                 </List>
             </div>
         )

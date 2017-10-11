@@ -11,7 +11,7 @@ const PopoverPage = () => {
     return (
         <div className="page popover">
             <h1 className="title">
-                <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                 Toast
             </h1>
             <ListTitle title="基本" />

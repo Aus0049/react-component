@@ -18,18 +18,18 @@ class PickerPage extends React.Component {
         }
     }
     handleChange (newValue) {
-        console.log("value change");
+        console.log('value change');
         console.log(newValue);
         this.setState({
             areaValue: newValue
         });
     }
     handlePickerChange (newValue) {
-        console.log("picker change");
+        console.log('picker change');
         console.log(newValue);
     }
     handleNumberChange (newValue) {
-        console.log("number change");
+        console.log('number change');
         console.log(newValue);
         this.setState({
             numberValue: newValue
@@ -89,7 +89,7 @@ class PickerPage extends React.Component {
         return (
             <div className="page picker">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     Picker
                 </h1>
 
@@ -102,7 +102,8 @@ class PickerPage extends React.Component {
                         value={areaValue}
                         title="选择地区"
                         onChange={this.handleChange.bind(this)}
-                        onPickerChange={this.handlePickerChange.bind(this)}>
+                        onPickerChange={this.handlePickerChange.bind(this)}
+                    >
                         <Item subtitle={areaValue.join('')} icon="horizontal">级联选择</Item>
                     </Picker>
                     <Picker
@@ -110,7 +111,8 @@ class PickerPage extends React.Component {
                         data={numberArray}
                         value={numberValue}
                         cascade={false}
-                        onChange={this.handleNumberChange.bind(this)}>
+                        onChange={this.handleNumberChange.bind(this)}
+                    >
                         <Item subtitle={numberValue.join(' ')} icon="horizontal">不级联选择</Item>
                     </Picker>
                 </List>

@@ -28,13 +28,20 @@ const TextArea = (props) => {
     return (
         <div className="zby-form-line-box text-area">
             <div className="title">
-                <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
+                <i className={classNames(['fa', 'fa-asterisk', {required: required}])} />
                 <div className="label-name">{labelName}</div>
             </div>
             <div className="content">
                 {readOnly ? <p className="input-readonly">{value ? value : placeHolder}</p> :
-                    controlled ? <textarea value={value} placeholder={placeHolder} onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur}></textarea> :
-                        <textarea defaultValue={value} placeholder={placeHolder} onFocus={handleFocus} onBlur={handleBlur}></textarea>}
+                    controlled ? <textarea
+value={value} placeholder={placeHolder}
+onChange={handleChange} onFocus={handleFocus}
+onBlur={handleBlur}
+                                 /> :
+                        <textarea
+defaultValue={value} placeholder={placeHolder}
+onFocus={handleFocus} onBlur={handleBlur}
+                        />}
             </div>
         </div>
     )

@@ -23,8 +23,9 @@ const Tag = (props) => {
         closeDOM.push(
             <Touchable
                 key="close-t"
-                onPress={ handleClose }>
-                <div key="close" className="close"><i className="fa fa-times"></i></div>
+                onPress={ handleClose }
+            >
+                <div key="close" className="close"><i className="fa fa-times" /></div>
             </Touchable>
         );
     }
@@ -34,7 +35,8 @@ const Tag = (props) => {
                 <Touchable
                     key="content-t"
                     onPress={ handleClick }
-                    disabled={disabled}>
+                    disabled={disabled}
+                >
                 <div key="content">{content}</div>
                 </Touchable>
                 {closeDOM}

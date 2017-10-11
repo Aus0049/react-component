@@ -102,7 +102,7 @@ class PickerColumn extends React.Component {
         const result = [];
 
         for(let i = 0; i < data.length; i++){
-            result.push(<div key={index + "-" + i} className={classNames(['zby-picker-view-col', {'selected': data[i].value === value}])}>{data[i].label}</div>);
+            result.push(<div key={index + '-' + i} className={classNames(['zby-picker-view-col', {'selected': data[i].value === value}])}>{data[i].label}</div>);
         }
 
         return result;
@@ -113,8 +113,8 @@ class PickerColumn extends React.Component {
         return (
             <div className="zby-picker-view-item">
                 <div className="zby-picker-view-list">
-                    <div className="zby-picker-view-window"></div>
-                    <div className="zby-picker-view-indicator" ref="indicator"></div>
+                    <div className="zby-picker-view-window" />
+                    <div className="zby-picker-view-indicator" ref="indicator" />
                     <div className="zby-picker-view-content" ref="content">
                         {cols}
                     </div>

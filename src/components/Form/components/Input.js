@@ -52,19 +52,27 @@ const Input = (props) => {
     return (
         <div className={classNames(['zby-form-line-box', {'error': !!error}])}>
             <div className="title">
-                <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
+                <i className={classNames(['fa', 'fa-asterisk', {required: required}])} />
                 <div className="label-name">{labelName}</div>
             </div>
             <div className={classNames(['content', {'has-feedback': feedbackIcon}])}>
                 {readOnly ?
                     <p className="input-readonly">{value ? value : placeHolder}</p>
                     : controlled ?
-                        <input type={inputType} value={value} placeholder={placeHolder} onChange={handleChange} onFocus={handleFocus} onBlur={handleBlur} />
+                        <input
+type={inputType} value={value}
+placeholder={placeHolder} onChange={handleChange}
+onFocus={handleFocus} onBlur={handleBlur}
+                        />
                         :
-                        <input type={inputType} defaultValue={value} placeholder={placeHolder} onFocus={handleFocus} onBlur={handleBlur} />
+                        <input
+type={inputType} defaultValue={value}
+placeholder={placeHolder} onFocus={handleFocus}
+onBlur={handleBlur}
+                        />
                 }
                 {!readOnly && feedbackIcon ?
-                    <span className={`fa fa-${feedbackIconMap[feedbackIcon]}`}></span>
+                    <span className={`fa fa-${feedbackIconMap[feedbackIcon]}`} />
                     :
                     ''
                 }

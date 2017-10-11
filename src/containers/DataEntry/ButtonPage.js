@@ -13,7 +13,7 @@ const ButtonPage = () => {
     return (
         <div className="page button">
             <h1 className="title">
-                <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                 Button
             </h1>
 
@@ -26,7 +26,7 @@ const ButtonPage = () => {
                 <Button type="primary" iconClass="fa-circle-o-notch fa-spin">带icon 按钮</Button>
                 <Button type="ghost">幽灵 按钮</Button>
                 <Button type="ghost" disabled>disabled 幽灵 按钮</Button>
-                <Button type="primary" onClick={()=>{alert("click")}}>点击事件</Button>
+                <Button type="primary" onClick={()=>{alert('click')}}>点击事件</Button>
             </div>
 
             <ListTitle title="按钮组按钮" />

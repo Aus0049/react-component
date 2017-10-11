@@ -30,7 +30,7 @@ class DateTimePage extends React.Component {
         return (
             <div className="page date-range">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     DateTime
                 </h1>
 

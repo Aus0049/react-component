@@ -27,17 +27,31 @@ class InputPage extends React.Component {
         return (
             <div className="page input">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     Input
                 </h1>
 
                 <ListTitle title="普通" />
 
                 <div className='zby-form-box'>
-                    <Input labelName="受控组件" value={value1} required placeHolder="受控组件" onChange={this.handleChange.bind(this, 'value1')} />
-                    <Input labelName="不受控组件" value={value2} placeHolder="不受控组件" controlled={false} />
-                    <Input labelName="readOnly" value={value3} readOnly placeHolder="readOnly" />
-                    <Input labelName="操作反馈" value={value4} placeHolder="操作反馈icon" controlled={false} feedbackIcon='loading' />
+                    <Input
+labelName="受控组件" value={value1}
+required placeHolder="受控组件"
+onChange={this.handleChange.bind(this, 'value1')}
+                    />
+                    <Input
+labelName="不受控组件" value={value2}
+placeHolder="不受控组件" controlled={false}
+                    />
+                    <Input
+labelName="readOnly" value={value3}
+readOnly placeHolder="readOnly"
+                    />
+                    <Input
+labelName="操作反馈" value={value4}
+placeHolder="操作反馈icon" controlled={false}
+feedbackIcon='loading'
+                    />
                 </div>
             </div>
         )

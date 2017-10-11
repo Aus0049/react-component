@@ -14,7 +14,7 @@ class Picker extends React.Component {
         this.state = {
             defaultValue: undefined,
             selectedValue: undefined,
-            animation: "out",
+            animation: 'out',
             show: false
         }
     }
@@ -35,7 +35,7 @@ class Picker extends React.Component {
         const t = this;
         const timer = setTimeout(()=>{
             t.setState({
-                animation: "in"
+                animation: 'in'
             });
             clearTimeout(timer);
         }, 0);
@@ -44,7 +44,7 @@ class Picker extends React.Component {
 
         if(e) e.preventDefault();
 
-        this.setState({animation: "out"});
+        this.setState({animation: 'out'});
 
         const t = this;
         const timer = setTimeout(()=>{
@@ -93,18 +93,21 @@ class Picker extends React.Component {
         if(show){
             return <div>
                 <Touchable
-                    onPress={this.handleCancel.bind(this)}>
-                    <div className={classNames(['zby-picker-popup-mask', {'hide': animation == "out"}])}></div>
+                    onPress={this.handleCancel.bind(this)}
+                >
+                    <div className={classNames(['zby-picker-popup-mask', {'hide': animation == 'out'}])} />
                 </Touchable>
-                <div className={classNames(['zby-picker-popup-wrap', {'popup': animation == "in"}])}>
+                <div className={classNames(['zby-picker-popup-wrap', {'popup': animation == 'in'}])}>
                     <div className="zby-picker-popup-header">
                         <Touchable
-                            onPress={this.handleCancel.bind(this)}>
+                            onPress={this.handleCancel.bind(this)}
+                        >
                             <span className="zby-picker-popup-item zby-header-left">{cancelText}</span>
                         </Touchable>
                         <span className="zby-picker-popup-item zby-header-title">{title}</span>
                         <Touchable
-                            onPress={this.handleConfirm.bind(this)}>
+                            onPress={this.handleConfirm.bind(this)}
+                        >
                             <span className="zby-picker-popup-item zby-header-right">{confirmText}</span>
                         </Touchable>
                     </div>
@@ -112,7 +115,7 @@ class Picker extends React.Component {
                         {pickerViewDOM}
                     </div>
                 </div>
-            </div>
+                   </div>
         }
 
     }
@@ -127,8 +130,7 @@ class Picker extends React.Component {
                 value={selectedValue}
                 cascade={cascade}
                 onChange={this.handlePickerViewChange.bind(this)}
-            >
-            </PickerView>;
+                   />;
         }
     }
     render () {
@@ -138,7 +140,8 @@ class Picker extends React.Component {
             <div className="zby-picker-box">
                 {popupDOM}
                 <Touchable
-                    onPress={this.handleClickOpen.bind(this)}>
+                    onPress={this.handleClickOpen.bind(this)}
+                >
                     {this.props.children}
                 </Touchable>
             </div>
@@ -160,8 +163,8 @@ Picker.propTypes = {
 
 Picker.defaultProps = {
     col: 1,
-    cancelText: "取消",
-    confirmText: "确定",
+    cancelText: '取消',
+    confirmText: '确定',
     cascade: true
 };
 

@@ -15,10 +15,10 @@ const Figure = (props) => {
 
     return (
         <div className={classNames('zby-img-preview-box', {loading: status === 1}, {loaded: status === 2}, {error: status === 3})}>
-            {src ? <img src={src} onClick={()=>{imgUrl ? window.open(imgUrl) : ''}}/> : <div className="uploading"><i className="fa fa-picture-o"></i></div>}
-            {status === 1 ? <div className="progress-text" id={`text-${id}`}></div> : ''}
-            {status === 1 ? <div className="progress" id={`progress-${id}`}></div> : ''}
-            {status === 2 || status === 3 ? <div className="close" onClick={handleDelete}><i className="fa fa-times"></i></div> : ''}
+            {src ? <img src={src} onClick={()=>{imgUrl ? window.open(imgUrl) : ''}}/> : <div className="uploading"><i className="fa fa-picture-o" /></div>}
+            {status === 1 ? <div className="progress-text" id={`text-${id}`} /> : ''}
+            {status === 1 ? <div className="progress" id={`progress-${id}`} /> : ''}
+            {status === 2 || status === 3 ? <div className="close" onClick={handleDelete}><i className="fa fa-times" /></div> : ''}
         </div>
     )
 };

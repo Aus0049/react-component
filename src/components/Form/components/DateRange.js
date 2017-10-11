@@ -60,7 +60,7 @@ const DateRange = (props) => {
 
             <div className="zby-form-line-box select">
                 <div className="title">
-                    <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
+                    <i className={classNames(['fa', 'fa-asterisk', {required: required}])} />
                     <div className="label-name">{startLabelName}</div>
                 </div>
                 <div className="content">
@@ -81,7 +81,7 @@ const DateRange = (props) => {
 
             <div className="zby-form-line-box select">
                 <div className="title">
-                    <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
+                    <i className={classNames(['fa', 'fa-asterisk', {required: required}])} />
                     <div className="label-name">{endLabelName}</div>
                 </div>
                 <div className="content">
@@ -102,7 +102,7 @@ const DateRange = (props) => {
 
             <div className="zby-form-line-box select">
                 <div className="title">
-                    <i className="fa fa-asterisk"></i>
+                    <i className="fa fa-asterisk" />
                     <div className="label-name">{rangeLabelName}</div>
                 </div>
                 <div className="content">

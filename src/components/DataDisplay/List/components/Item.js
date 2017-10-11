@@ -28,15 +28,15 @@ class Item extends React.Component {
         if(!icon) return;
 
         switch (icon) {
-            case "horizontal":
+            case 'horizontal':
                 // 水平向右的箭头
-                return <i className="icon fa fa-angle-right"></i>;
-            case "vertical":
+                return <i className="icon fa fa-angle-right" />;
+            case 'vertical':
                 // 垂直向下的箭头
-                return <i className="icon fa fa-angle-down"></i>;
+                return <i className="icon fa fa-angle-down" />;
         }
 
-        return <i className="icon fa fa-angle-down"></i>;
+        return <i className="icon fa fa-angle-down" />;
     }
     render () {
         const {subtitle, icon, multipleLine, disabled, className, onClick, onLongPress, ...resProps} = this.props;
@@ -49,7 +49,8 @@ class Item extends React.Component {
                 activeClassName={!disabled ? 'zby-list-item-tap-active' : ''}
                 disabled={disabled}
                 onPress={onClick}
-                onLongPress={onLongPress}>
+                onLongPress={onLongPress}
+            >
                 <div className="zby-list-item" {...resProps}>
                     <div className={classNames}>
                         <div className="zby-item">{this.props.children}</div>

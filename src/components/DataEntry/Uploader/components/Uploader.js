@@ -13,7 +13,7 @@ let imgNumber = 0;
 
 // 生成唯一的id
 const getUuid = () => {
-    return "img-" + new Date().getTime() + "-" + imgNumber++;
+    return 'img-' + new Date().getTime() + '-' + imgNumber++;
 };
 
 class Uploader extends React.Component{
@@ -42,7 +42,7 @@ class Uploader extends React.Component{
     }
     handleProgress (id, e) {
         // 监听上传进度 操作DOM 显示进度
-        const number = Number.parseInt((e.loaded / e.total) * 100) + "%";
+        const number = Number.parseInt((e.loaded / e.total) * 100) + '%';
         const text = document.querySelector('#text-'+id);
         const progress = document.querySelector('#progress-'+id);
 
@@ -335,7 +335,10 @@ class Uploader extends React.Component{
 
         imgArray.map((item)=>{
             result.push(
-                <Figure key={item.id} {...item} onDelete={_this.handleDelete.bind(_this)} />
+                <Figure
+key={item.id} {...item}
+onDelete={_this.handleDelete.bind(_this)}
+                />
             );
 
             // 正在上传的图片
@@ -382,7 +385,12 @@ class Uploader extends React.Component{
         return (
             <div className="zby-uploader-box">
                 {imagesList}
-                <input ref="input" type="file" className="file-input" name="image" accept="image/*" multiple="multiple" onChange={this.handleInputChange} />
+                <input
+ref="input" type="file"
+className="file-input" name="image"
+accept="image/*" multiple="multiple"
+onChange={this.handleInputChange}
+                />
             </div>
         )
     }

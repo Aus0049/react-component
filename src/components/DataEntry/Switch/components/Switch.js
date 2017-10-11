@@ -82,11 +82,13 @@ class Switch extends React.Component {
         return (
             <Touchable
                 onPress={this.toggle.bind(this)}
-                disabled={this.props.disabled}>
+                disabled={this.props.disabled}
+            >
                 <div
                     className={className}
                     onTouchStart={this.handleTouch.bind(this, 'start')}
-                    onTouchEnd={this.handleTouch.bind(this, 'end')}>
+                    onTouchEnd={this.handleTouch.bind(this, 'end')}
+                >
                     {attachedDOM}
                 </div>
             </Touchable>
@@ -104,7 +106,7 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
-    theme: "iOS",
+    theme: 'iOS',
     defaultChecked: true,
     onChange: empty,
 };

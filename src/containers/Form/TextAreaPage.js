@@ -28,16 +28,26 @@ class TextAreaPage extends React.Component {
         return (
             <div className="page input">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     Input
                 </h1>
 
                 <ListTitle title="普通" />
 
                 <div className='zby-form-box'>
-                    <TextArea labelName="受控组件" value={value1} required placeHolder="受控组件" onChange={this.handleChange.bind(this, 'value1')} />
-                    <TextArea labelName="不受控组件" value={value2} placeHolder="不受控组件" controlled={false} />
-                    <TextArea labelName="readOnly" value={value3} readOnly placeHolder="readOnly" />
+                    <TextArea
+labelName="受控组件" value={value1}
+required placeHolder="受控组件"
+onChange={this.handleChange.bind(this, 'value1')}
+                    />
+                    <TextArea
+labelName="不受控组件" value={value2}
+placeHolder="不受控组件" controlled={false}
+                    />
+                    <TextArea
+labelName="readOnly" value={value3}
+readOnly placeHolder="readOnly"
+                    />
                 </div>
             </div>
         )

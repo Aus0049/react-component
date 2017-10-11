@@ -107,7 +107,7 @@ class PickerView extends React.Component {
                 data={array[i]}
                 index={i}
                 onValueChange={this.handleValueChange.bind(this)}
-            />);
+                        />);
         }
 
         return result;

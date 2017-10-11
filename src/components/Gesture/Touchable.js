@@ -76,10 +76,10 @@ class Touchable extends React.Component {
         const touchType = this._GetEventType(endX, endY, endTimeStamp);
 
         switch (touchType) {
-            case "tap":
+            case 'tap':
                 // 执行tap回调函数
                 let onTap = this.props.onTap;
-                if(onTap && typeof onTap == "function" ) onTap();
+                if(onTap && typeof onTap == 'function' ) onTap();
                 break;
         }
 
@@ -93,7 +93,7 @@ class Touchable extends React.Component {
 
         // 允许手指轻微滑动 按压时间小于500ms
         if( distanceX < 6 && distanceY < 6 && timeDiff < 500){
-            return "tap";
+            return 'tap';
         }
     }
     render () {
@@ -102,7 +102,8 @@ class Touchable extends React.Component {
                 className="touchable-box"
                 onTouchStart={this.handleTouchStart.bind(this)}
                 onTouchMove={this.handleTouchMove.bind(this)}
-                onTouchEnd={this.handleTouchEnd.bind(this)}>
+                onTouchEnd={this.handleTouchEnd.bind(this)}
+            >
                 {this.props.children}
             </div>
         )

@@ -26,7 +26,7 @@ class NumberPage extends React.Component {
         return (
             <div className="page number">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     Number
                 </h1>
 

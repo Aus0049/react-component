@@ -18,7 +18,7 @@ const DateTime = (props) => {
     return (
         <div className="zby-form-line-box select">
             <div className="title">
-                <i className={classNames(['fa', 'fa-asterisk', {required: required}])}></i>
+                <i className={classNames(['fa', 'fa-asterisk', {required: required}])} />
                 <div className="label-name">{labelName}</div>
             </div>
             <div className="content">

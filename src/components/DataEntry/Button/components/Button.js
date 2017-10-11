@@ -13,18 +13,19 @@ const Button = (props) => {
     const cn = classNames(['zby-button',{
         'inline': inline,
         'group': group,
-        'primary': type === "primary",
-        'ghost': type === "ghost",
+        'primary': type === 'primary',
+        'ghost': type === 'ghost',
         'disabled': disabled
     }, className]);
 
     return (
         <Touchable
-            activeClassName={activeClassName ? activeClassName : "zby-button-active"}
+            activeClassName={activeClassName ? activeClassName : 'zby-button-active'}
             onPress={onClick}
-            disabled={disabled}>
+            disabled={disabled}
+        >
             <a className={cn}>
-                {iconClass ? <i className={`fa ${iconClass}`}></i> : ''}
+                {iconClass ? <i className={`fa ${iconClass}`} /> : ''}
                 <span className="zby-button-text">{children}</span>
             </a>
         </Touchable>

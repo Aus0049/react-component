@@ -59,7 +59,7 @@ class PickerViewPage extends React.Component {
         return (
             <div className="page picker-view">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo("/index")}}></i>
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
                     PickerView
                 </h1>
 
@@ -69,7 +69,8 @@ class PickerViewPage extends React.Component {
                     col={2}
                     data={array1}
                     value={value1}
-                    onChange={this.handleChange.bind(this)}/>
+                    onChange={this.handleChange.bind(this)}
+                />
 
                 <ListTitle title="不级联" />
 
@@ -78,7 +79,8 @@ class PickerViewPage extends React.Component {
                     data={array2}
                     value={value2}
                     cascade={false}
-                    onChange={this.handleChange.bind(this)}/>
+                    onChange={this.handleChange.bind(this)}
+                />
             </div>
         );
     }
