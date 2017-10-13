@@ -20,7 +20,7 @@ let render = () => {
 }
 
 // 开发环境下 开启开发工具调试
-if (__DEV__) {
+if (window.__DEV__) {
   if (window.devToolsExtension) {
     window.devToolsExtension.open()
   }
@@ -28,7 +28,7 @@ if (__DEV__) {
 
 // This code is excluded from production bundle
 // 开发环境下的报错
-if (__DEV__) {
+if (window.__DEV__) {
   if (module.hot) {
     // Development render functions
     const renderApp = render
