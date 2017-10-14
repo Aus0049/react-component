@@ -1,7 +1,7 @@
 import React from 'react'
 import 'normalize.css'
-import '../static/sass/index.scss'
-import '../static/sass/component.scss'
+import 'sass/index.scss'
+import 'sass/component.scss'
 import '../static/icon/font.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 

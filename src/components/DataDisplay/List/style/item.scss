@@ -1,0 +1,58 @@
+@charset "UTF-8";
+
+@import '../../../../static/sass/base.scss';
+
+$prefixCls: 'zby-item';
+
+.#{$prefixCls} {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  padding: 25px 40px;
+  min-height: 88px;
+  vertical-align: middle;
+  overflow: hidden;
+  align-items: center;
+  transition: background-color .3s;
+
+  .#{$prefixCls}-content {
+    flex: 1;
+    font-size: 34px;
+    line-height: 1.5;
+    color: #000;
+    overflow: hidden;
+
+    &.wrap {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .#{$prefixCls}-subtitle {
+      color: #888;
+      font-size: 28px;
+      line-height: 1.5;
+      margin-top: .12rem;
+    }
+  }
+
+  .#{$prefixCls}-extra {
+    flex-basis: 36%;
+    color: #888;
+    font-size: 32px;
+    text-align: right;
+  }
+
+  .#{$prefixCls}-arrow {
+    display: block;
+    width: 30px;
+    height: 56px;
+    margin-left: 10px;
+    text-align: center;
+
+    .fa {
+      display: block;
+      font-size: 56px;
+    }
+  }
+}

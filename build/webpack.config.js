@@ -19,11 +19,14 @@ const webpackConfig = {
         root: paths.client(),
         extensions: ['', '.web.js', '.js', '.jsx', '.json'],
         alias: {
-            'components': config.components
+            'components': config.components,
+            'sass': config.static_style
         }
     },
     module: {}
 }
+
+debug(config.static_style);
 
 // ------------------------------------
 // Entry Points

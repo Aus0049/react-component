@@ -17,6 +17,7 @@ const config = {
     // ----------------------------------
     path_base: path.resolve(__dirname, '..'),
     components: path.resolve(__dirname, '../src/components'),
+    static_style: path.resolve(__dirname, '../src/static/sass'),
     dir_client: 'src',
     dir_dist: 'dist',
     dir_server: 'server',

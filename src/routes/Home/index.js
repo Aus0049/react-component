@@ -15,7 +15,7 @@ const Home = () => {
             <ListTitle title="数据输入" />
             <List>
                 <Item
-                    subtitle="Button" icon="horizontal"
+                    extra="Button" arrow="horizontal"
                     onClick={()=>{Tools.linkTo('/data-entry/button')}}
                 >按钮
                 </Item>
@@ -45,13 +45,13 @@ const Home = () => {
                 {/*>上传预览*/}
                 {/*</Item>*/}
             </List>
-            {/*<ListTitle title="数据展示" />*/}
-            {/*<List>*/}
-                {/*<Item*/}
-                    {/*subtitle="List" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/data-display/list')}}*/}
-                {/*>列表项*/}
-                {/*</Item>*/}
+            <ListTitle title="数据展示" />
+            <List>
+                <Item
+                    extra="List" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-display/list')}}
+                >列表项
+                </Item>
                 {/*<Item*/}
                     {/*subtitle="Carousel" icon="horizontal"*/}
                     {/*onClick={()=>{Tools.linkTo('/data-display/carousel')}}*/}
@@ -62,7 +62,7 @@ const Home = () => {
                     {/*onClick={()=>{Tools.linkTo('/data-display/tag')}}*/}
                 {/*>标签*/}
                 {/*</Item>*/}
-            {/*</List>*/}
+            </List>
             {/*<ListTitle title="表单组件" />*/}
             {/*<List>*/}
                 {/*<Item*/}

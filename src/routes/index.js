@@ -29,6 +29,7 @@ export const createRoutes = () => ({
     getChildRoutes(location, callback) {
         require.ensure([], function (require) {
             callback(null, [
+                require('./DataDisplay').default(),
                 require('./DataEntry').default(),
             ])
         })
