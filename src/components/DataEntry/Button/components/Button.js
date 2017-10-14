@@ -15,7 +15,7 @@ const Button = (props) => {
         'group': group,
         'primary': type === 'primary',
         'ghost': type === 'ghost',
-        'disabled': disabled
+        'disabled': disabled || loading
     }, className]);
 
     // 有loading的时候，显示loading icon
@@ -26,7 +26,7 @@ const Button = (props) => {
     return (
         <Touchable
             activeClassName={activeClassName ? activeClassName : 'zby-button-active'}
-            disabled={disabled}
+            disabled={disabled || loading}
             onPress={onClick}
         >
             <a className={cn}>

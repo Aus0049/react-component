@@ -13,7 +13,7 @@ $darkGray: #bbb;
   height: 100px;
   border-radius: 10px;
   background-color: #fff;
-  border: 1px solid $lightGray;
+  border: 2px solid $lightGray;
   text-align: center;
   line-height: 100px;
   font-size: 32px;
@@ -41,66 +41,58 @@ $darkGray: #bbb;
   //  margin-right: 20px;
   //}
   //
-  //&.disabled {
-  //  background-color: $lightGray;
-  //
-  //  .zby-button-text, .fa {
-  //    color: $darkGray;
-  //  }
-  //}
-  //
-  //&.primary {
-  //  background-color: $viColor;
-  //  border: none;
-  //
-  //  &.disabled {
-  //    background-color: $viColor;
-  //    border: none;
-  //    opacity: .5;
-  //
-  //    &.zby-button-active {
-  //      background-color: $darkViColor;
-  //    }
-  //
-  //    .zby-button-text, .fa {
-  //      color: #fff;
-  //    }
-  //  }
-  //
-  //  &.zby-button-active {
-  //    background-color: $darkViColor;
-  //  }
-  //
-  //  .zby-button-text, .fa {
-  //    color: #fff;
-  //  }
-  //}
-  //
-  //&.ghost {
-  //  background-color: transparent;
-  //  border: 1px solid $viColor;
-  //
-  //  &.disabled {
-  //    background-color: $lightGray;
-  //    border: none;
-  //    opacity: .8;
-  //
-  //    .zby-button-text, .fa {
-  //      color: $darkGray;
-  //    }
-  //  }
-  //
-  //  &.zby-button-active {
-  //    background-color: $viColor;
-  //    .zby-button-text, .fa {
-  //      color: #fff;
-  //    }
-  //  }
-  //
-  //  .zby-button-text, .fa {
-  //    color: $viColor;
-  //  }
-  //}
+  // disabled的时候 default的按钮是灰色的
+  &.disabled {
+    background-color: $lightGray;
+
+    .zby-button-text, .fa {
+      color: $darkGray;
+    }
+
+    // primary 变透明
+    &.primary {
+      opacity: .5;
+    }
+
+    // ghost
+    &.ghost {
+      border-color: $darkGray;
+      opacity: .5;
+
+      .zby-button-text, .fa {
+        color: $darkGray;
+      }
+    }
+  }
+  // primary按钮 绿底白字
+  &.primary {
+    background-color: $viColor;
+    border: none;
+
+    &.zby-button-active {
+      background-color: $darkViColor;
+    }
+
+    .zby-button-text, .fa {
+      color: #fff;
+    }
+  }
+  // 幽灵按钮 底色透明
+  &.ghost {
+    background-color: transparent;
+    border-color: $viColor;
+
+    &.zby-button-active {
+      background-color: $viColor;
+      .zby-button-text, .fa {
+        color: #fff;
+      }
+    }
+
+    .zby-button-text, .fa {
+      color: $viColor;
+    }
+  }
   //
   //&.zby-button-active {
   //  background-color: $lightGray;
@@ -111,9 +103,9 @@ $darkGray: #bbb;
   //  color: #000;
   //}
   //
-  //.fa {
-  //  display: inline-block;
-  //  margin-right: 10px;
-  //  color: #000;
-  //}
+  .fa {
+    display: inline-block;
+    margin-right: 10px;
+    color: #000;
+  }
 }

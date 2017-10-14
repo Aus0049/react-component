@@ -20,12 +20,12 @@ const ButtonPage = () => {
             <ListTitle title="基本" />
             <div className="button-box">
                 <Button>default 按钮</Button>
-                {/*<Button disabled>disabled 按钮</Button>*/}
-                {/*<Button type="primary">primary 按钮</Button>*/}
-                {/*<Button type="primary" disabled>primary disabled 按钮</Button>*/}
-                {/*<Button type="primary" iconClass="fa-circle-o-notch fa-spin">带icon 按钮</Button>*/}
-                {/*<Button type="ghost">幽灵 按钮</Button>*/}
-                {/*<Button type="ghost" disabled>disabled 幽灵 按钮</Button>*/}
+                <Button disabled>disabled 按钮</Button>
+                <Button type="primary">primary 按钮</Button>
+                <Button type="primary" disabled>primary disabled 按钮</Button>
+                <Button type="ghost">幽灵 按钮</Button>
+                <Button type="ghost" disabled>disabled 幽灵 按钮</Button>
+                <Button type="primary" loading>loading 按钮</Button>
                 {/*<Button type="primary" onClick={()=>{alert('click')}}>点击事件</Button>*/}
             </div>
 
