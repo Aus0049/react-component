@@ -48,6 +48,11 @@ body {
   padding: 0 40px;
 }
 
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
 // 进出场动画
 // 飞入
 .slide-in-appear {

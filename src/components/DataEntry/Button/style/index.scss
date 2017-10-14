@@ -33,14 +33,13 @@ $darkGray: #bbb;
   //  line-height: 50px;
   //  vertical-align: middle;
   //}
-  //
-  //&.group {
-  //  display: inline-block;
-  //  padding: 0 40px;
-  //  margin-left: 20px;
-  //  margin-right: 20px;
-  //}
-  //
+  // 按钮组按钮
+  &.group {
+    margin: 20px 10px;
+    padding: 0 40px;
+    flex: 1;
+  }
+
   // disabled的时候 default的按钮是灰色的
   &.disabled {
     background-color: $lightGray;
@@ -93,16 +92,16 @@ $darkGray: #bbb;
       color: $viColor;
     }
   }
-  //
-  //&.zby-button-active {
-  //  background-color: $lightGray;
-  //}
-  //
-  //.zby-button-text {
-  //  display: inline-block;
-  //  color: #000;
-  //}
-  //
+
+  &.zby-button-active {
+    background-color: $lightGray;
+  }
+
+  .zby-button-text {
+    display: inline-block;
+    color: #000;
+  }
+
   .fa {
     display: inline-block;
     margin-right: 10px;

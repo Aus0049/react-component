@@ -3,11 +3,11 @@
  */
 import React from 'react'
 import ListTitle from 'components/DataDisplay/ListTitle/'
-import List from 'components/DataDisplay/List/'
+// import List from 'components/DataDisplay/List/'
 import Button from 'components/DataEntry/Button/'
 import Tools from 'components/Tools/Tools'
 
-const Item = List.Item;
+// const Item = List.Item;
 
 const ButtonPage = () => {
     return (
@@ -26,14 +26,20 @@ const ButtonPage = () => {
                 <Button type="ghost">幽灵 按钮</Button>
                 <Button type="ghost" disabled>disabled 幽灵 按钮</Button>
                 <Button type="primary" loading>loading 按钮</Button>
-                {/*<Button type="primary" onClick={()=>{alert('click')}}>点击事件</Button>*/}
+                <Button type="primary" onClick={()=>{alert('click')}}>点击事件</Button>
             </div>
 
-            {/*<ListTitle title="按钮组按钮" />*/}
-            {/*<div className="button-box">*/}
-                {/*<Button type="primary" group>按钮组 按钮</Button>*/}
-                {/*<Button type="ghost" group>按钮组 按钮</Button>*/}
-            {/*</div>*/}
+            <ListTitle title="按钮组按钮" />
+            <div className="button-box button-group">
+                <Button type="primary" group>登录</Button>
+                <Button type="ghost" group>注册</Button>
+            </div>
+
+            <div className="button-box button-group">
+                <Button type="primary" group>左</Button>
+                <Button type="ghost" group>中</Button>
+                <Button group>右</Button>
+            </div>
 
             {/*<ListTitle title="行内按钮" />*/}
             {/*<div className="button-box">*/}
