@@ -7,7 +7,7 @@ import Touchable from 'rc-touchable'
 import '../style/item.scss'
 
 const Item = (props) => {
-    const {prefixCls, thumb, extra, subtitle, arrow, align, wrap, disabled, onClick, onLongPress, children, ...resProps} = props;
+    const {prefixCls, thumb, extra, subtitle, arrow, wrap, disabled, onClick, onLongPress, children, ...resProps} = props;
 
     return (
         <Touchable
@@ -104,7 +104,6 @@ Item.PropTypes = {
     extra: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]), // 右侧的内容
     subtitle: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.element]), // 列表项的副标题
     arrow: React.PropTypes.oneOf(['horizontal', 'up', 'down', 'empty']), // 列表项的箭头 枚举
-    align: React.PropTypes.oneOf(['top', 'middle', 'bottom']), // 列表子元素对其方式
     wrap: React.PropTypes.bool, // 超出文字是否会被隐藏
     disabled: React.PropTypes.bool, // 列表项不可点击
     onClick: React.PropTypes.func, // 列表项点击回调事件
@@ -114,7 +113,6 @@ Item.PropTypes = {
 Item.defaultProps = {
     prefixCls: 'zby-item',
     arrow: 'empty',
-    align: 'top',
     wrap: true,
     disabled: false,
     onClick: empty,
