@@ -8,7 +8,7 @@ import '../style/index.scss'
 
 // button 组件
 const Button = (props) => {
-    const {inline, group, type, disabled, className, iconClass, activeClassName, onClick, children} = props;
+    const {type, disabled, group, inline, loading, activeClassName, iconClass, className, onClick, children} = props;
 
     const cn = classNames(['zby-button',{
         'inline': inline,
@@ -18,14 +18,19 @@ const Button = (props) => {
         'disabled': disabled
     }, className]);
 
+    // 有loading的时候，显示loading icon
+    const iconDOM = loading ?
+        <span className='fa fa-circle-o-notch fa-spin' />
+        : iconClass ? <span className={`fa ${iconClass}`} /> : '';
+
     return (
         <Touchable
             activeClassName={activeClassName ? activeClassName : 'zby-button-active'}
-            onPress={onClick}
             disabled={disabled}
+            onPress={onClick}
         >
             <a className={cn}>
-                {iconClass ? <i className={`fa ${iconClass}`} /> : ''}
+                {iconDOM}
                 <span className="zby-button-text">{children}</span>
             </a>
         </Touchable>
@@ -33,20 +38,23 @@ const Button = (props) => {
 };
 
 Button.propTypes = {
-    type: React.PropTypes.oneOf(['primary', 'ghost']), // 类型 枚举 有 primary ghost 两种 没写的话 默认白底黑字的button
+    type: React.PropTypes.oneOf(['default', 'primary', 'ghost']), // 类型 枚举 有 default（白底黑字） primary（绿底白字） ghost（白底绿字） 三种
     disabled: React.PropTypes.bool, // 是否不可点击 不可点击时 样式会有调整 默认false
     group: React.PropTypes.bool, // 是否 按按钮组显示 默认是false
     inline: React.PropTypes.bool, // 是否是行内显示 默认false
-    iconClass: React.PropTypes.string, // icon类名 只支持awesome的icon
-    onClick: React.PropTypes.func, // 点击的回调函数
+    loading: React.PropTypes.bool, // 是否显示loading loading时候按钮显示loading icon并且不可点击
     activeClassName: React.PropTypes.string, // 点击时候的类名
-    className: React.PropTypes.string // 自定义class
+    iconClass: React.PropTypes.string, // icon类名 只支持awesome的icon
+    className: React.PropTypes.string, // 自定义class
+    onClick: React.PropTypes.func, // 点击的回调函数
 };
 
 Button.defaultProps = {
+    type: 'default',
     disabled: false,
     group: false,
-    inline: false
+    inline: false,
+    loading: false,
 };
 
 export default Button
