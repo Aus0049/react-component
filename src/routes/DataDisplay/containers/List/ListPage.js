@@ -17,48 +17,35 @@ const ListPage = () => {
 
             <List renderHeader="基本">
                 <Item extra="extra">基本标题</Item>
+                <Item extra="onClick" onClick={()=>{alert('click')}}>点击事件</Item>
+                <Item extra="onLongPress" onLongPress={()=>{alert('long-press')}}>长按事件</Item>
+                <Item extra="disabled" disabled>禁止点击</Item>
+                <Item extra="activeClassName" activeClassName="">无点击效果</Item>
+                <Item
+                    thumb={<img src='https://avatars1.githubusercontent.com/u/12423008?s=460&v=4' />}
+                    arrow="horizontal"
+                    subtitle="前端工程师 💻&🎧️️"
+                >
+                    Aus
+                </Item>
+                <Item thumb="fa-commenting" arrow="horizontal">我的消息</Item>
+                <Item thumb="fa-file-text" arrow="horizontal">我的订单</Item>
             </List>
 
-            <List renderHeader="副标题">
-                <Item subtitle="subtitle" arrow="horizontal">基本标题</Item>
+            <List renderHeader="溢出效果">
+                <Item>
+                    由于 React 的设计思想极其独特，属于革命性创新，性能出众，代码逻辑却非常简单。所以，越来越多的人开始关注和使用，认为它可能是将来 Web 开发的主流工具。
+                </Item>
+                <Item wrap={false}>
+                    由于 React 的设计思想极其独特，属于革命性创新，性能出众，代码逻辑却非常简单。所以，越来越多的人开始关注和使用，认为它可能是将来 Web 开发的主流工具。
+                </Item>
+                <Item extra="wrap">
+                    由于 React 的设计思想极其独特，属于革命性创新，性能出众，代码逻辑却非常简单。所以，越来越多的人开始关注和使用，认为它可能是将来 Web 开发的主流工具。
+                </Item>
+                <Item extra="no-wrap" wrap={false}>
+                    由于 React 的设计思想极其独特，属于革命性创新，性能出众，代码逻辑却非常简单。所以，越来越多的人开始关注和使用，认为它可能是将来 Web 开发的主流工具。
+                </Item>
             </List>
-
-            {/*<ListTitle title="添加icon" />*/}
-            {/*<List>*/}
-                {/*<Item icon="horizontal">基本标题</Item>*/}
-            {/*</List>*/}
-            {/*<ListTitle title="添加副标题" />*/}
-            {/*<List>*/}
-                {/*<Item subtitle="副标题在右" icon="horizontal">基本标题</Item>*/}
-                {/*<Item*/}
-                    {/*subtitle="副标题在下" icon="vertical"*/}
-                    {/*multipleLine*/}
-                {/*>基本标题*/}
-                {/*</Item>*/}
-            {/*</List>*/}
-
-            {/*<ListTitle title="点击事件" />*/}
-            {/*<List>*/}
-                {/*<Item*/}
-                    {/*subtitle="请点击" icon="horizontal"*/}
-                    {/*onClick={()=>{alert('点击成功')}}*/}
-                {/*>基本标题*/}
-                {/*</Item>*/}
-                {/*<Item*/}
-                    {/*subtitle="请长按" icon="horizontal"*/}
-                    {/*onLongPress={()=>{alert('长按成功')}}*/}
-                {/*>基本标题*/}
-                {/*</Item>*/}
-            {/*</List>*/}
-
-            {/*<ListTitle title="禁止点击" />*/}
-            {/*<List>*/}
-                {/*<Item*/}
-                    {/*subtitle="副标题在右" icon="horizontal"*/}
-                    {/*disabled*/}
-                {/*>基本标题*/}
-                {/*</Item>*/}
-            {/*</List>*/}
         </div>
     )
 };

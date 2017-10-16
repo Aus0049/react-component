@@ -8,16 +8,46 @@ $prefixCls: 'zby-item';
   box-sizing: border-box;
   position: relative;
   display: flex;
-  padding: 25px 40px;
+  padding: 20px 40px;
   min-height: 88px;
   vertical-align: middle;
   overflow: hidden;
   align-items: center;
   transition: background-color .3s;
 
+  &.#{$prefixCls}-active {
+    background-color: $lightGray;
+  }
+
+  &.disabled {
+    .#{$prefixCls}-content,
+    .#{$prefixCls}-extra,
+    .#{$prefixCls}-subtitle {
+      color: $darkGray;
+    }
+  }
+
+  // 缩略图
+  img {
+    display: inline-block;
+    margin-right: 20px;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  .fa-thumb {
+    display: inline-block;
+    margin-right: 20px;
+    font-size: 32px;
+    line-height: 1.5;
+  }
+
+  // 主题
   .#{$prefixCls}-content {
     flex: 1;
-    font-size: 34px;
+    font-size: 32px;
     line-height: 1.5;
     color: #000;
     overflow: hidden;
@@ -28,21 +58,24 @@ $prefixCls: 'zby-item';
       white-space: nowrap;
     }
 
+    // 副标题
     .#{$prefixCls}-subtitle {
-      color: #888;
+      color: $textGray;
       font-size: 28px;
       line-height: 1.5;
       margin-top: .12rem;
     }
   }
 
+  // 右侧额外提示
   .#{$prefixCls}-extra {
     flex-basis: 36%;
-    color: #888;
-    font-size: 32px;
+    color: $textGray;
+    font-size: 28px;
     text-align: right;
   }
 
+  // 右侧箭头
   .#{$prefixCls}-arrow {
     display: block;
     width: 30px;
@@ -52,7 +85,8 @@ $prefixCls: 'zby-item';
 
     .fa {
       display: block;
-      font-size: 56px;
+      font-size: 48px;
+      color: $textGray;
     }
   }
 }

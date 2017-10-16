@@ -3,7 +3,7 @@
 @import '../../../../static/sass/base.scss';
 
 $prefixCls: 'zby-list';
-$itemPrefixCls: 'zby-list';
+$itemPrefixCls: 'zby-item';
 
 /* List */
 .#{$prefixCls} {
@@ -33,125 +33,13 @@ $itemPrefixCls: 'zby-list';
     @include border-top();
 
     &:after {
-      @include list-item-bottom-line();
+      @include list-item-bottom-line(0px);
     }
 
-    .div:not(:last-child) {
+    div:not(:last-child) {
       &.#{$itemPrefixCls}:after {
         @include list-item-bottom-line();
       }
     }
   }
 }
-
-//.zby-list-box {
-//  background-color: #fff;
-//  line-height: 100px;
-//  -webkit-box-sizing: border-box;
-//  box-sizing: border-box;
-//  border-top: 1px solid #ccc;
-//  border-bottom: 1px solid #ccc;
-//}
-//
-//.zby-list-item {
-//  padding: 0 40px;
-//  line-height: 100px;
-//
-//  &.zby-list-item-tap-active {
-//    background-color: $lightGray;
-//  }
-//
-//  .zby-item-box {
-//    display: -webkit-flex;
-//    display: flex;
-//    font-size: 32px;
-//    color: #333;
-//    -webkit-box-sizing: border-box;
-//    box-sizing: border-box;
-//
-//    &.with-icon {
-//      position: relative;
-//      padding-right: 40px;
-//    }
-//
-//    &.multiple {
-//      padding: 25px 0 25px 0;
-//      display: block;
-//
-//      .zby-item {
-//        display: block;
-//        line-height: 50px;
-//      }
-//
-//      .subtitle {
-//        display: block;
-//        max-width: 100%;
-//        margin-top: 10px;
-//        line-height: 40px;
-//      }
-//
-//      .icon {
-//        line-height: 150px;
-//      }
-//    }
-//
-//    &.disabled {
-//      color: #bbb;
-//    }
-//
-//    .zby-item {
-//      display: inline-block;
-//      flex: 1;
-//      overflow: hidden;
-//      text-overflow: ellipsis;
-//      white-space:nowrap;
-//      vertical-align: top;
-//    }
-//
-//    .subtitle {
-//      max-width: 35%;
-//      color: #999;
-//      font-size: 28px;
-//      overflow: hidden;
-//      text-overflow: ellipsis;
-//      white-space:nowrap;
-//      vertical-align: top;
-//    }
-//
-//    .icon {
-//      position: absolute;
-//      display: block;
-//      right: -10px;
-//      top: 0;
-//      font-size: 48px;
-//      line-height: 100px;
-//      color: #999;
-//    }
-//  }
-//}
-//
-//.zby-list-box {
-//  .zby-list-item {
-//    .zby-item-box {
-//      border-bottom: 1px solid #ccc;
-//    }
-//  }
-//}
-//
-//.zby-list-box .zby-picker-box {
-//  &:last-of-type {
-//    .zby-list-item {
-//      .zby-item-box {
-//        border-bottom: none;
-//      }
-//    }
-//  }
-//}
-//
-//.zby-list-box > .zby-list-item {
-//  &:last-of-type {
-//    .zby-item-box {
-//      border-bottom: none;
-//    }
-//  }
-//}
