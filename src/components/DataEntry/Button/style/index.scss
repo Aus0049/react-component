@@ -24,15 +24,15 @@ $darkGray: #bbb;
 
   transition: opacity .5s;
 
-  //&.inline {
-  //  display: inline-block;
-  //  margin: 0 10px;
-  //  padding: 0 20px;
-  //  height: auto;
-  //  font-size: 28px;
-  //  line-height: 50px;
-  //  vertical-align: middle;
-  //}
+  &.inline {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 0 20px;
+    height: auto;
+    font-size: 28px;
+    line-height: 50px;
+    vertical-align: middle;
+  }
   // 按钮组按钮
   &.group {
     margin: 20px 10px;

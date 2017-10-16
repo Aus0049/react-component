@@ -3,11 +3,11 @@
  */
 import React from 'react'
 import ListTitle from 'components/DataDisplay/ListTitle/'
-// import List from 'components/DataDisplay/List/'
+import List from 'components/DataDisplay/List/'
 import Button from 'components/DataEntry/Button/'
 import Tools from 'components/Tools/Tools'
 
-// const Item = List.Item;
+const Item = List.Item;
 
 const ButtonPage = () => {
     return (
@@ -41,17 +41,16 @@ const ButtonPage = () => {
                 <Button group>右</Button>
             </div>
 
-            {/*<ListTitle title="行内按钮" />*/}
-            {/*<div className="button-box">*/}
-                {/*<Button inline>行内按钮</Button>*/}
-                {/*<Button inline type="primary">行内primary按钮</Button>*/}
-                {/*<Button inline type="ghost">行内幽灵按钮</Button>*/}
-            {/*</div>*/}
-
-            {/*<ListTitle title="结合List使用" />*/}
-            {/*<List>*/}
-                {/*<Item subtitle={<Button inline type="ghost">行内 按钮</Button>}>副标题嵌入button</Item>*/}
-            {/*</List>*/}
+            <List renderHeader="行内按钮">
+                <Item activeClassName="" extra={<Button type="ghost" inline>inline</Button>}>行内按钮</Item>
+                <Item
+                    activeClassName=""
+                    subtitle="多行居中显示"
+                    extra={<Button type="primary" inline>inline</Button>}
+                >
+                    行内按钮
+                </Item>
+            </List>
         </div>
     )
 };
