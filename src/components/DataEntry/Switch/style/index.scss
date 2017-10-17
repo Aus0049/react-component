@@ -1,30 +1,24 @@
 @charset "UTF-8";
 
-$viColor: #00b4a5;
-$darkViColor: #009486;
-$linearViColor: linear-gradient(to right, #31D5A1, #00B4A5);
-$lightGray: #ddd;
-$darkGray: #bbb;
+@import '../../../../static/sass/base.scss';
+
+$prefixCls: 'zby-switch';
 
 // Switch
-.zby-switch-box {
+.#{$prefixCls} {
   position: relative;
   display: inline-block;
   width: 120px;
   border-radius: 30px;
   vertical-align: middle;
   // 清除浏览器默认样式
-  -webkit-appearance:none;
   appearance: none;
-  z-index: 2;
-
   transition: all .3s;
+  z-index: 2;
 
   &.iOS {
     height: 60px;
     border: 2px solid #e5e5e5;
-
-    -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.3) inset;
     box-shadow: 0 2px 5px rgba(0,0,0,.3) inset;
 
     &:after {
@@ -33,8 +27,6 @@ $darkGray: #bbb;
       left: 1px;
       top: 1px;
       background-color: #fff;
-
-      -webkit-box-shadow: 0 8px 20px rgba(0,0,0,.3);
       box-shadow: 0 8px 20px rgba(0,0,0,.3);
     }
 
@@ -45,7 +37,7 @@ $darkGray: #bbb;
 
       &.on {
         &:after {
-          transform: translate(68%);
+          transform: translateX(68%);
         }
       }
     }
@@ -74,7 +66,7 @@ $darkGray: #bbb;
 
       &.on {
         &:after {
-          transform: translate(85%);
+          transform: translateX(85%);
         }
       }
     }
@@ -94,6 +86,7 @@ $darkGray: #bbb;
     }
   }
 
+  // 关闭时候的样式
   &.off {
     &.iOS {
       background-color: #fff;
@@ -104,21 +97,21 @@ $darkGray: #bbb;
     }
 
     &:after {
-      transform: translate(0%);
+      transform: translateX(0%);
     }
 
     .attachedTextFalse {
-      -webkit-transform: translate(0, 0);
-      transform: translate(0, 0);
+      transform: translateX(0);
     }
   }
 
+  // 开的样式
   &.on {
     &.iOS {
       background-color: #4dd865;
 
       &:after {
-        transform: translate(95%);
+        transform: translateX(95%);
       }
     }
 
@@ -126,16 +119,16 @@ $darkGray: #bbb;
       background-color: $viColor;
 
       &:after {
-        transform: translate(112%);
+        transform: translateX(112%);
       }
     }
 
     .attachedTextTrue {
-      -webkit-transform: translate(0, 0);
-      transform: translate(0, 0);
+      transform: translateX(0);
     }
   }
 
+  //
   &:after {
     content: '';
     position: absolute;
@@ -144,45 +137,30 @@ $darkGray: #bbb;
     transition: all .3s;
   }
 
-  .attachedTextTrue {
+  // 开关文字
+  .attachedTextTrue,
+  .attachedTextFalse {
     position: absolute;
-    left: 0;
     top: 0;
     bottom: 0;
     width: 50%;
     font-size: 26px;
-    color: #fff;
     text-align: center;
     line-height: 60px;
     opacity: .8;
 
-    -webkit-transform: translate(-100%, 0);
-    transform: translate(-100%, 0);
-
-    -webkit-transition: all .3s;
     transition: all .3s;
+  }
 
-
-    //transform: translate(-100%, 0);
+  .attachedTextTrue {
+    left: 0;
+    color: #fff;
+    transform: translate3D(-100%, 0, 0);
   }
 
   .attachedTextFalse {
-    position: absolute;
     right: 0;
-    top: 0;
-    bottom: 0;
-    width: 50%;
-    font-size: 26px;
-    text-align: center;
-    line-height: 60px;
-    opacity: .5;
-
-    -webkit-transform: translate(100%, 0);
-    transform: translate(100%, 0);
-
-    -webkit-transition: all .3s;
-    transition: all .3s;
-
-    //transform: translate(-100%, 0);
+    color: #000;
+    transform: translate3D(100%, 0, 0);
   }
 }

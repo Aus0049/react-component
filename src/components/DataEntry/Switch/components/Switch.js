@@ -22,20 +22,19 @@ class Switch extends React.Component {
         }
 
         this.state = {
-            checked: checked,
-            focus: false
-        }
+            checked: checked, // 是否是受控组件
+            focus: false // 是否按住
+        };
+
+        this.toggle = this.toggle.bind(this);
     }
     handleTouch (id) {
-        if('start' == id){
-            this.setState({
-                focus: true
-            });
-        } else {
-            this.setState({
-                focus: false
-            });
+        if('start' === id){
+            this.setState({focus: true});
+            return;
         }
+
+        this.setState({focus: false});
     }
     toggle () {
         const checked = !(this.props.checked !== undefined ? this.props.checked : this.state.checked);
@@ -52,10 +51,10 @@ class Switch extends React.Component {
     }
     getClassName () {
         const checked = this.props.checked !== undefined ? this.props.checked : this.state.checked;
-        const {theme, disabled} = this.props;
+        const {prefixCls, theme, disabled} = this.props;
         const {focus} = this.state;
 
-        return classNames(['zby-switch-box', {
+        return classNames([prefixCls, {
             'iOS': theme === 'iOS',
             'android': theme === 'android',
             'on' : checked,
@@ -67,7 +66,7 @@ class Switch extends React.Component {
     getAttachedDOM () {
         const {attachedText} = this.props;
 
-        if(!attachedText || attachedText.length !== 2){return;}
+        if(!attachedText || attachedText.length !== 2) return;
 
         return  [
             <span key='a-t' className='attachedTextTrue'>{attachedText[0]}</span>,
@@ -81,7 +80,7 @@ class Switch extends React.Component {
 
         return (
             <Touchable
-                onPress={this.toggle.bind(this)}
+                onPress={this.toggle}
                 disabled={this.props.disabled}
             >
                 <div
@@ -97,6 +96,7 @@ class Switch extends React.Component {
 }
 
 Switch.propTypes = {
+    prefixCls: React.PropTypes.string, // 前缀class
     theme: React.PropTypes.oneOf(['iOS', 'android']), // 主题 枚举 iOS风格和Android风格
     checked: React.PropTypes.bool,
     defaultChecked: React.PropTypes.bool,
@@ -106,6 +106,7 @@ Switch.propTypes = {
 };
 
 Switch.defaultProps = {
+    prefixCls: 'zby-switch',
     theme: 'iOS',
     defaultChecked: true,
     onChange: empty,
