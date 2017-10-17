@@ -8,9 +8,9 @@ import '../style/index.scss'
 
 // button 组件
 const Button = (props) => {
-    const {type, disabled, group, inline, loading, activeClassName, iconClass, className, onClick, children} = props;
+    const {prefixCls, type, disabled, group, inline, loading, activeClassName, iconClass, className, onClick, children} = props;
 
-    const cn = classNames(['zby-button',{
+    const cn = classNames([prefixCls,{
         'inline': inline,
         'group': group,
         'primary': type === 'primary',
@@ -25,7 +25,7 @@ const Button = (props) => {
 
     return (
         <Touchable
-            activeClassName={activeClassName ? activeClassName : 'zby-button-active'}
+            activeClassName={activeClassName}
             disabled={disabled || loading}
             onPress={onClick}
         >
@@ -38,6 +38,7 @@ const Button = (props) => {
 };
 
 Button.propTypes = {
+    prefixCls: React.PropTypes.string, // 前缀class
     type: React.PropTypes.oneOf(['default', 'primary', 'ghost']), // 类型 枚举 有 default（白底黑字） primary（绿底白字） ghost（白底绿字） 三种
     disabled: React.PropTypes.bool, // 是否不可点击 不可点击时 样式会有调整 默认false
     group: React.PropTypes.bool, // 是否 按按钮组显示 默认是false
@@ -50,11 +51,13 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+    prefixCls: 'zby-button',
     type: 'default',
     disabled: false,
     group: false,
     inline: false,
     loading: false,
+    activeClassName: 'zby-button-active'
 };
 
 export default Button
