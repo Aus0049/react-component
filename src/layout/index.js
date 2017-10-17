@@ -2,8 +2,9 @@ import React from 'react'
 import 'normalize.css'
 import 'sass/index.scss'
 import 'sass/component.scss'
-import '../static/icon/font.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+require('font-awesome/css/font-awesome.css');
+
 
 class Layout extends React.Component {
     render () {
