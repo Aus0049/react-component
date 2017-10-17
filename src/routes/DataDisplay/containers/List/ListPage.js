@@ -20,7 +20,6 @@ const ListPage = () => {
                 <Item extra="onClick" onClick={()=>{alert('click')}}>点击事件</Item>
                 <Item extra="onLongPress" onLongPress={()=>{alert('long-press')}}>长按事件</Item>
                 <Item extra="disabled" disabled>禁止点击</Item>
-                <Item extra="activeClassName" activeClassName="">无点击效果</Item>
                 <Item
                     thumb={<img src='https://avatars1.githubusercontent.com/u/12423008?s=460&v=4' />}
                     arrow="horizontal"

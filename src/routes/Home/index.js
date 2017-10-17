@@ -17,13 +17,15 @@ const Home = () => {
                 <Item
                     extra="Button" arrow="horizontal"
                     onClick={()=>{Tools.linkTo('/data-entry/button')}}
-                >按钮
+                >
+                    按钮
                 </Item>
-                {/*<Item*/}
-                    {/*subtitle="Switch" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/data-entry/switch')}}*/}
-                {/*>滑动按钮*/}
-                {/*</Item>*/}
+                <Item
+                    extra="Switch" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-entry/switch')}}
+                >
+                    滑动按钮
+                </Item>
                 {/*<Item*/}
                     {/*subtitle="DatePicker" icon="horizontal"*/}
                     {/*onClick={()=>{Tools.linkTo('/data-entry/date-picker')}}*/}

@@ -42,9 +42,8 @@ const ButtonPage = () => {
             </div>
 
             <List renderHeader="行内按钮">
-                <Item activeClassName="" extra={<Button type="ghost" inline>inline</Button>}>行内按钮</Item>
+                <Item extra={<Button type="ghost" inline>inline</Button>}>行内按钮</Item>
                 <Item
-                    activeClassName=""
                     subtitle="多行居中显示"
                     extra={<Button type="primary" inline>inline</Button>}
                 >

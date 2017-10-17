@@ -11,7 +11,7 @@ const Item = (props) => {
 
     return (
         <Touchable
-            activeClassName={activeClassName}
+            activeClassName={(onClick || onLongPress) && !disabled ? activeClassName : null}
             disabled={disabled}
             onPress={onClick}
             onLongPress={onLongPress}
@@ -46,8 +46,6 @@ const Item = (props) => {
     )
 };
 
-function empty() {}
-
 // List中的item 组件
 Item.PropTypes = {
     prefixCls: React.PropTypes.string, // 前缀class
@@ -67,9 +65,7 @@ Item.defaultProps = {
     prefixCls: 'zby-item',
     activeClassName: 'zby-item-active',
     wrap: true,
-    disabled: false,
-    onClick: empty,
-    onLongPress: empty
+    disabled: false
 };
 
 export default Item

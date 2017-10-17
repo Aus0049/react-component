@@ -7,6 +7,7 @@ export default () => ({
         require.ensure([], (require) => {
             callback(null, [
                 require('./containers/Button/index').default(),
+                require('./containers/Switch/index').default(),
             ]);
         }, 'data-entry')
     },
