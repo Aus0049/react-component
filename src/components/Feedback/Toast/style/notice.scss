@@ -1,0 +1,63 @@
+@charset "UTF-8";
+
+@import '../../../../static/sass/base.scss';
+
+$prefixCls: 'zby-notice';
+
+// Notice
+.#{$prefixCls} {
+  position: fixed;
+  left: 50%;
+  top: 30%;
+  padding: 20px 30px;
+  min-width: 200px;
+  max-width: 60%;
+  background: rgba(0,0,0, .7);
+  border-radius: 10px;
+  text-align: center;
+  font-size: 28px;
+  line-height: 42px;
+  color: #fff;
+  z-index: 110;
+
+  transition: all .3s;
+  transform: translate3D(-50%, -50%, 0);
+
+  &.leave {
+    transform: translate3D(-50%, -100%, 0);
+    opacity: 0;
+  }
+
+  // 正常提示
+  &.info {
+    animation: Flop .5s linear;
+  }
+
+  // 成功提示
+  &.success {
+    animation: BombIn .3s;
+  }
+
+  // 警告提示⚠️
+  &.warning {
+    animation: slideInFromBottom .3s;
+  }
+
+  // 错误提示
+  &.error {
+    animation: shake .5s;
+  }
+
+  .#{$prefixCls}-icon {
+    padding: 20px;
+    font-size: 80px;
+    text-align: center;
+    color: #fff;
+  }
+
+  .#{$prefixCls}-content {
+    font-size: 28px;
+    text-align: center;
+    color: #fff;
+  }
+}

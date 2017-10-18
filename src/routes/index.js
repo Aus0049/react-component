@@ -1,8 +1,6 @@
 // 路由入口文件
 import Layout from '../layout/index'
 import Home from './Home/'
-// import Button from '../containers/DataEntry/ButtonPage'
-// import Switch from '../containers/DataEntry/SwitchPage'
 // import DatePicker from '../containers/DataEntry/DatePickerPage'
 // import Picker from '../containers/DataEntry/PickerPage'
 // import PickerView from '../containers/DataEntry/PickerViewPage'
@@ -31,6 +29,7 @@ export const createRoutes = () => ({
             callback(null, [
                 require('./DataDisplay').default(),
                 require('./DataEntry').default(),
+                require('./Feedback').default(),
             ])
         })
     }

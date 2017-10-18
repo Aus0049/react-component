@@ -9,15 +9,24 @@
 // Notice的显示和隐藏收到父组件Notification的绝对控制
 import React from 'react'
 import classNames from 'classnames'
+import '../style/notice.scss'
+
+function empty() {}
 
 class Notice extends React.Component {
     static propTypes = {
-        duration: React.PropTypes.number, // Notice显示时间
+        id: React.PropTypes.string.isRequired, // 唯一id
+        duration: React.PropTypes.number.isRequired, // Notice显示时间
+        prefixCls: React.PropTypes.string, // 前缀class
+        type: React.PropTypes.oneOf(['info', 'success', 'warning', 'error']), // notice类型
+        iconClass: React.PropTypes.string, // icon的class
         content: React.PropTypes.any, // Notice显示的内容
         onClose: React.PropTypes.func // 显示结束回调
     };
     static defaultProps = {
+        prefixCls: 'zby-notice',
         duration: 3000,
+        onClose: empty
     };
     constructor (props) {
         super(props);
@@ -58,10 +67,21 @@ class Notice extends React.Component {
     }
     render () {
         const {shouldClose} = this.state;
+        const {id, prefixCls, type, iconClass, content} = this.props;
 
         return (
-            <div className={classNames(['zby-notice-box', {'leave': shouldClose}])}>
-                {this.props.content}
+            <div
+                id={id}
+                className={classNames([prefixCls,
+                    {'info': type === 'info'},
+                    {'success': type === 'success'},
+                    {'warning': type === 'warning'},
+                    {'error': type === 'error'},
+                    {'leave': shouldClose}
+                ])}
+            >
+                {iconClass ? <div className={`${prefixCls}-icon`}><span className={classNames(['fa', iconClass])} /></div> : null}
+                <div className={`${prefixCls}-content`}>{content}</div>
             </div>
         )
     }

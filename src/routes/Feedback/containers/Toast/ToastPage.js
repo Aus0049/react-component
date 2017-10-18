@@ -1,36 +1,36 @@
 /**
- * Created by Aus on 2017/6/13.
+ * Created by Aus on 2017/10/18.
  */
 import React from 'react'
-import ListTitle from '../../components/DataDisplay/ListTitle/'
-import Button from '../../components/DataEntry/Button/components/Button'
-import Toast from '../../components/Feedback/Toast/'
-import Tools from '../../components/Tools/Tools'
+import ListTitle from 'components/DataDisplay/ListTitle/'
+import Button from 'components/DataEntry/Button/components/Button'
+import Toast from 'components/Feedback/Toast/'
+import Tools from 'components/Tools/Tools'
 
 const ToastPage = () => {
     const commonInfo = () => {
-        Toast.info('普通的Toast我普通的摇！！', 3000);
+        Toast.info('普通的Toast我普通的摇！！', true);
     };
     const commonSuccess = () => {
-        Toast.success('操作成功', 3000, 'fa-check');
+        Toast.success('操作成功', false, 'fa-check');
     };
     const commonError = () => {
-        Toast.error('有错误！！', 3000, undefined, false, ()=>{console.log('callback');});
+        Toast.error('有错误！！', false, undefined, ()=>{console.log('callback');});
     };
     const commonToast = () => {
-        Toast.info('欢迎来到本直播间', 3000, undefined, false);
+        Toast.info('欢迎来到本直播间');
     };
     const successToast = () => {
-        Toast.success('操作成功！', 3000, 'fa-check', false);
+        Toast.success('操作成功！', false, 'fa-check');
     };
     const errorToast = () => {
-        Toast.error('操作失败！', 3000, 'fa-times', false);
+        Toast.error('操作失败！', false, 'fa-times');
     };
     const warningToast = () => {
-        Toast.warning('警告：手机2s后爆炸', 3000, 'fa-exclamation-triangle', false);
+        Toast.warning('警告：手机2s后爆炸', false, 'fa-exclamation-triangle');
     };
     const loadingToast = () => {
-        Toast.show('加载中...', 0, 'fa-circle-o-notch fa-spin', false);
+        Toast.loading();
         const timer = setTimeout(()=>{
             Toast.hide();
             clearTimeout(timer);
@@ -40,7 +40,7 @@ const ToastPage = () => {
     return (
         <div className="page toast">
             <h1 className="title">
-                <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
+                <span className="fa fa-home" onClick={()=>{Tools.linkTo('/')}} />
                 Toast
             </h1>
 

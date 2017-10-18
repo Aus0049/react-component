@@ -10,6 +10,12 @@ import ReactDOM from 'react-dom'
 import Notice from './Notice'
 
 class Notification extends React.Component {
+    static propTypes = {
+        prefixCls: React.PropTypes.string, // 组件class前缀
+    };
+    static defaultProps = {
+        prefixCls: 'zby-notification',
+    };
     constructor (props) {
         super(props);
         this.state = {
@@ -24,6 +30,8 @@ class Notification extends React.Component {
         const key = notice.key ? notice.key : notice.key = getUuid();
         const mask = notice.mask ? notice.mask : false;
         const temp = notices.filter((item) => item.key === key).length;
+        // 没有id的话 key就是id
+        if(!notice.id) notice.id = notice.key;
 
         if(!temp){
             // 不存在重复的 添加
@@ -36,16 +44,12 @@ class Notification extends React.Component {
     }
     remove (key) {
         // 根据key删除对应
-        this.setState(previousState => {
-            return {
-                notices: previousState.notices.filter(notice => notice.key !== key),
-            };
-        });
+        this.setState(previousState => ({notices: previousState.notices.filter(notice => notice.key !== key)}));
     }
     getNoticeDOM () {
         const _this = this;
         const {notices} = this.state;
-        let result = [];
+        const result = [];
 
         notices.map((notice)=>{
             // 每个Notice onClose的时候 删除掉notices中对应key的notice
@@ -57,8 +61,8 @@ class Notification extends React.Component {
 
             result.push(
                 <Notice
-key={notice.key} {...notice}
-onClose={closeCallback}
+                    key={notice.key} {...notice}
+                    onClose={closeCallback}
                 />
             );
         });
@@ -69,14 +73,15 @@ onClose={closeCallback}
         const {notices, hasMask} = this.state;
         // notices为空的时候 不显示蒙版
         // 始终只有一个蒙版
-        if(notices.length > 0 && hasMask == true) return <div className="zby-mask" />;
+        if(notices.length > 0 && hasMask === true) return <div className="zby-mask" />;
     }
     render () {
+        const {prefixCls} = this.props;
         const noticesDOM = this.getNoticeDOM();
         const maskDOM = this.getMaskDOM();
 
         return (
-            <div className="zby-notification-box">
+            <div className={prefixCls}>
                 {maskDOM}
                 {noticesDOM}
             </div>

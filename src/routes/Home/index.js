@@ -2,7 +2,6 @@
  * Created by Aus on 2017/10/13.
  */
 import React from 'react'
-import ListTitle from '../../components/DataDisplay/ListTitle/'
 import List from '../../components/DataDisplay/List/'
 import Tools from '../../components/Tools/Tools'
 
@@ -12,8 +11,7 @@ const Home = () => {
     return (
         <div className="page home">
             <h1 className="title">React 组件库</h1>
-            <ListTitle title="数据输入" />
-            <List>
+            <List renderHeader="数据输入">
                 <Item
                     extra="Button" arrow="horizontal"
                     onClick={()=>{Tools.linkTo('/data-entry/button')}}
@@ -47,12 +45,12 @@ const Home = () => {
                 {/*>上传预览*/}
                 {/*</Item>*/}
             </List>
-            <ListTitle title="数据展示" />
-            <List>
+            <List renderHeader="数据展示">
                 <Item
                     extra="List" arrow="horizontal"
                     onClick={()=>{Tools.linkTo('/data-display/list')}}
-                >列表项
+                >
+                    列表项
                 </Item>
                 {/*<Item*/}
                     {/*subtitle="Carousel" icon="horizontal"*/}
@@ -64,6 +62,15 @@ const Home = () => {
                     {/*onClick={()=>{Tools.linkTo('/data-display/tag')}}*/}
                 {/*>标签*/}
                 {/*</Item>*/}
+            </List>
+
+            <List renderHeader="操作反馈">
+                <Item
+                    extra="Toast" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/feedback/toast')}}
+                >
+                    提示
+                </Item>
             </List>
             {/*<ListTitle title="表单组件" />*/}
             {/*<List>*/}
@@ -111,19 +118,6 @@ const Home = () => {
                     {/*subtitle="Form" icon="horizontal"*/}
                     {/*onClick={()=>{Tools.linkTo('/form/form')}}*/}
                 {/*>表单*/}
-                {/*</Item>*/}
-            {/*</List>*/}
-            {/*<ListTitle title="操作反馈" />*/}
-            {/*<List>*/}
-                {/*<Item*/}
-                    {/*subtitle="Toast" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/feedback/list')}}*/}
-                {/*>提示*/}
-                {/*</Item>*/}
-                {/*<Item*/}
-                    {/*subtitle="Popover" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/feedback/popover')}}*/}
-                {/*>气泡提示*/}
                 {/*</Item>*/}
             {/*</List>*/}
         </div>

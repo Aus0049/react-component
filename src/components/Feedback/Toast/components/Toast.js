@@ -1,10 +1,7 @@
 /**
  * Created by Aus on 2017/6/13.
  */
-import React from 'react'
-import classNames from 'classnames'
 import Notification from './Notification'
-import '../style/index.scss'
 
 // Toast组件比较特殊
 // 因为<Toast />不会被直接渲染在DOM中
@@ -23,38 +20,15 @@ const getNewNotification = () => {
 };
 
 // notice方法实际上就是集合参数 完成对Notification的改变
-const notice = (content, type, icon, duration = 3000, onClose, mask = true) => {
+const notice = (type, content, mask = false, iconClass, onClose, duration) => {
     let notificationInstance = getNewNotification();
 
     notificationInstance.notice({
         duration,
-        mask: mask,
-        content: !!icon ? (
-            <div className={
-                classNames(['zby-toast-box',
-                    {'info': type === 'info'},
-                    {'success': type === 'success'},
-                    {'warning': type === 'warning'},
-                    {'error': type === 'error'}
-                ])
-            }
-            >
-                <div className="zby-toast-icon"><i className={'fa ' + icon} /></div>
-                <div className="zby-toast-content">{content}</div>
-            </div>
-        ) : (
-            <div className={
-                classNames(['zby-toast-box',
-                    {'info': type === 'info'},
-                    {'success': type === 'success'},
-                    {'warning': type === 'warning'},
-                    {'error': type === 'error'}
-                ])
-            }
-            >
-                <div className="zby-toast-content">{content}</div>
-            </div>
-        ),
+        type,
+        mask,
+        iconClass,
+        content,
         onClose: () => {
             if (onClose) onClose();
         },
@@ -63,25 +37,17 @@ const notice = (content, type, icon, duration = 3000, onClose, mask = true) => {
 
 export default {
     // 无动画
-    show(content, duration, icon, mask, onClose) {
-        return notice(content, undefined, icon, duration, onClose, mask);
-    },
+    show: (content, mask, iconClass, onClose, duration) => (notice(undefined, content, mask, iconClass, onClose, duration)),
     // 翻转效果
-    info(content, duration, icon, mask, onClose) {
-        return notice(content, 'info', icon, duration, onClose, mask);
-    },
+    info: (content, mask, iconClass, onClose, duration) => (notice('info', content, mask, iconClass, onClose, duration)),
     // 缩放效果
-    success(content, duration, icon, mask, onClose) {
-        return notice(content, 'success', icon, duration, onClose, mask);
-    },
+    success: (content, mask, iconClass, onClose, duration) => (notice('success', content, mask, iconClass, onClose, duration)),
     // 从下方滑入
-    warning(content, duration, icon, mask, onClose) {
-        return notice(content, 'warning', icon, duration, onClose, mask);
-    },
+    warning: (content, mask, iconClass, onClose, duration) => (notice('warning', content, mask, iconClass, onClose, duration)),
     // 抖动
-    error(content, duration, icon, mask, onClose) {
-        return notice(content, 'error', icon, duration, onClose, mask);
-    },
+    error: (content, mask, iconClass, onClose, duration) => (notice('error', content, mask, iconClass, onClose, duration)),
+    // loading
+    loading: (content) => (notice(undefined, content || '加载中...', true, 'fa-circle-o-notch fa-spin', undefined, 0)),
     // 销毁
     hide() {
         if (newNotification) {
