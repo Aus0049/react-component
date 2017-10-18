@@ -30,8 +30,6 @@ class Notification extends React.Component {
         const key = notice.key ? notice.key : notice.key = getUuid();
         const mask = notice.mask ? notice.mask : false;
         const temp = notices.filter((item) => item.key === key).length;
-        // 没有id的话 key就是id
-        if(!notice.id) notice.id = notice.key;
 
         if(!temp){
             // 不存在重复的 添加

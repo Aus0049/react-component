@@ -15,7 +15,6 @@ function empty() {}
 
 class Notice extends React.Component {
     static propTypes = {
-        id: React.PropTypes.string.isRequired, // 唯一id
         duration: React.PropTypes.number.isRequired, // Notice显示时间
         prefixCls: React.PropTypes.string, // 前缀class
         type: React.PropTypes.oneOf(['info', 'success', 'warning', 'error']), // notice类型
