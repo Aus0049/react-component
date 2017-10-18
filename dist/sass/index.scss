@@ -1,0 +1,89 @@
+@charset "UTF-8";
+
+// px2rem并没有自动实现该功能 还是手动加上吧
+@mixin font-dpr($font-size){
+  font-size: $font-size;
+
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+  }
+
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+  }
+}
+
+body {
+  overflow: hidden;
+  background-color: #f8f8fb;
+  color: #666;
+
+  &:after {
+    content: '';
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #f8f8fb;
+    z-index: -1;
+  }
+}
+
+// 首页样式
+.page {
+  padding-bottom: 40px;
+
+  .title {
+    padding-left: 40px;
+
+    .fa {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+}
+
+.button-box {
+  padding: 0 40px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+// 进出场动画
+// 飞入
+.slide-in-appear {
+  transform: translate3D(100%, 0, 0);
+  transition: all 300ms linear;
+
+  &.slide-in-appear-active {
+    transform: translate3D(0, 0, 0);
+  }
+}
+
+.slide-in-enter {
+  transform: translate3D(100%, 0, 0);
+  transition: all 300ms linear;
+
+  &.slide-in-enter-active {
+    transform: translate3D(0, 0, 0);
+  }
+}
+
+// 向左滑出
+.slide-in-leave {
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 1;
+  transform: translate3D(0, 0, 0);
+  transition: all 300ms linear;
+
+  &.slide-in-leave-active {
+    opacity: 0.01;
+    transform: translate3D(-100%, 0, 0);
+  }
+}

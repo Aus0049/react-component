@@ -1,0 +1,46 @@
+@charset "UTF-8";
+
+$viColor: #00b4a5;
+$darkViColor: #009486;
+$linearViColor: linear-gradient(to right, #31D5A1, #00B4A5);
+$lightGray: #ddd;
+$darkGray: #bbb;
+
+// px2rem并没有自动实现该功能 还是手动加上吧
+@mixin font-dpr($font-size){
+  font-size: $font-size;
+
+  [data-dpr="2"] & {
+    font-size: $font-size * 2;
+  }
+
+  [data-dpr="3"] & {
+    font-size: $font-size * 3;
+  }
+}
+
+// *
+a {
+  background: transparent;
+  text-decoration: none;
+
+  &:focus {
+    outline: none;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+// Mask
+.zby-mask {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 100;
+  opacity: .3;
+}
+
