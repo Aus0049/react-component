@@ -101,6 +101,7 @@ $prefixCls: 'zby-switch';
     }
 
     .attachedTextFalse {
+      opacity: .8;
       transform: translateX(0);
     }
   }
@@ -124,6 +125,7 @@ $prefixCls: 'zby-switch';
     }
 
     .attachedTextTrue {
+      opacity: .8;
       transform: translateX(0);
     }
   }
@@ -147,7 +149,7 @@ $prefixCls: 'zby-switch';
     font-size: 26px;
     text-align: center;
     line-height: 60px;
-    opacity: .8;
+    opacity: 0;
 
     transition: all .3s;
   }
@@ -160,7 +162,7 @@ $prefixCls: 'zby-switch';
 
   .attachedTextFalse {
     right: 0;
-    color: #000;
+    color: $textGray;
     transform: translate3D(100%, 0, 0);
   }
 }

@@ -21,7 +21,7 @@ const ListPage = () => {
                 <Item extra="onLongPress" onLongPress={()=>{alert('long-press')}}>长按事件</Item>
                 <Item extra="disabled" disabled>禁止点击</Item>
                 <Item
-                    thumb={<img src='https://avatars1.githubusercontent.com/u/12423008?s=460&v=4' />}
+                    thumb={<img src='http://wx.qlogo.cn/mmopen/PDJMZVNsTwzBqeH9x1Zt5btKXNI1icPyLPDttubVlShj39JHoUibqD45edrqYnEyOhbhdqGRJWShhHHlmtCVwtoTIQZlHJqJdv/0' />}
                     arrow="horizontal"
                     subtitle="前端工程师 💻&🎧️️"
                 >
