@@ -66,11 +66,10 @@ class Notice extends React.Component {
     }
     render () {
         const {shouldClose} = this.state;
-        const {id, prefixCls, type, iconClass, content} = this.props;
+        const {prefixCls, type, iconClass, content} = this.props;
 
         return (
             <div
-                id={id}
                 className={classNames([prefixCls,
                     {'info': type === 'info'},
                     {'success': type === 'success'},
