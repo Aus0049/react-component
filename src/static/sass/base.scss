@@ -156,3 +156,27 @@ $textGray: #888;
     transform: translate(-40%, -50%);
   }
 }
+
+@keyframes scaleIn {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  100% {
+    width: 160px;
+    height: 160px;
+  }
+}
+
+@keyframes scaleOut {
+  0% {
+    width: 160px;
+    height: 160px;
+    opacity: 1;
+  }
+  100% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+}

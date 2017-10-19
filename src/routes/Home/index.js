@@ -39,11 +39,12 @@ const Home = () => {
                     {/*onClick={()=>{Tools.linkTo('/data-entry/picker-view')}}*/}
                 {/*>选择器*/}
                 {/*</Item>*/}
-                {/*<Item*/}
-                    {/*subtitle="Uploader" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/data-entry/uploader')}}*/}
-                {/*>上传预览*/}
-                {/*</Item>*/}
+                <Item
+                    extra="Uploader" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-entry/uploader')}}
+                >
+                    上传预览
+                </Item>
             </List>
             <List renderHeader="数据展示">
                 <Item

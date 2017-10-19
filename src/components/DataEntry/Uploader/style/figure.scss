@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+@import '../../../../static/sass/base.scss';
+
+$prefixCls: 'zby-figure';
+
+.#{$prefixCls}-with-preview {
+  position: relative;
+  display: inline-block;
+  margin-right: 15px;
+  margin-bottom: 15px;
+
+  .#{$prefixCls} {
+    box-sizing: border-box;
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 5px;
+    border: 2px solid #d9d9d9;
+    background: rgba(0,0,0, .7);
+    animation: scaleIn .3s;
+    vertical-align: top;
+
+    transition: all .3s;
+    transform-origin: left top;
+
+    &.loading, &.error {
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        background: rgba(0,0,0, .7);
+        z-index: 10;
+      }
+    }
+
+    &.loaded {
+      .progress-text {
+        display: none;
+      }
+    }
+
+    &.error {
+      border-color: red;
+    }
+
+    &.deleted {
+      margin: 0;
+      padding: 0;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      border: none;
+      animation: scaleOut .3s;
+    }
+
+    .img-box {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+
+      img {
+        height: 100%;
+        margin-top: 50%;
+        margin-left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    .uploading {
+      width: 200px;
+      height: 100%;
+      text-align: center;
+
+      .fa {
+        font-size: 80px;
+        line-height: 176px;
+        color: #999;
+      }
+    }
+
+    .progress-text {
+      font-size: 32px;
+      color: #fff;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+      transform: translate(-50%, -50%);
+      z-index: 10;
+
+      .fa {
+        font-size: 48px;
+      }
+    }
+
+    .close {
+      position: absolute;
+      right: -16px;
+      top: -16px;
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border-radius: 50%;
+      font-size: 32px;
+      line-height: 32px;
+      text-align: center;
+      z-index: 10;
+    }
+  }
+}
+
+// 预览
+.#{$prefixCls}-preview-container {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  overflow: hidden;
+  z-index: 20;
+
+  transition: all .3s;
+
+  &.scale {
+    position: fixed;
+  }
+
+  img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 90%;
+    transform: translate(-50%, -50%);
+  }
+}

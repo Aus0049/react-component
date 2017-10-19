@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+$prefixCls: 'zby-uploader';
+
+// Uploader
+.#{$prefixCls} {
+  width: 100%;
+  padding: 20px;
+  background: #fff;
+
+  .#{$prefixCls}-button {
+    display: inline-block;
+    width: 160px;
+    height: 160px;
+    border-radius: 5px;
+    border: 2px dashed #d9d9d9;
+    vertical-align: top;
+    text-align: center;
+    color: #999;
+
+    box-sizing: border-box;
+
+    .fa {
+      display: inline-block;
+      margin-top: 10px;
+      font-size: 60px;
+      line-height: 90px;
+    }
+
+    .text {
+      font-size: 28px;
+    }
+  }
+
+  .file-input {
+    display: none;
+  }
+}

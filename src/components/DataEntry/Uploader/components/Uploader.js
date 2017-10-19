@@ -2,11 +2,9 @@
  * Created by Aus on 2017/7/4.
  */
 import React from 'react'
-import classNames from 'classnames'
-import Touchable from 'rc-touchable'
 import Figure from './Figure'
-import Toast from '../../../Feedback/Toast/components/Toast'
-import '../style/index.scss'
+import Toast from 'components/Feedback/Toast/'
+import '../style/uploader.scss'
 
 // 统计img总数 防止重复
 let imgNumber = 0;
@@ -16,6 +14,9 @@ const getUuid = () => {
     return 'img-' + new Date().getTime() + '-' + imgNumber++;
 };
 
+// 内置的一个获取图片key的format方法
+const getImgKey = (item) => (item.imgKey);
+
 class Uploader extends React.Component{
     constructor (props) {
         super(props);
@@ -23,6 +24,8 @@ class Uploader extends React.Component{
             imgArray: [] // 图片已上传 显示的数组
         };
         this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleReUpload = this.handleReUpload.bind(this);
         this.compress = this.compress.bind(this);
         this.processData = this.processData.bind(this);
     }
@@ -34,6 +37,23 @@ class Uploader extends React.Component{
             this.setState({imgArray: data});
         }
     }
+    componentWillUnmount () {
+        this._isMounted = true;
+    }
+    handleReUpload (id) {
+        // 根据id重新上传
+        const {imgArray} = this.state;
+
+        const errorItem = imgArray.filter((item)=>{
+            if(item.id === id) return true;
+        })[0];
+
+        // set新的state
+        errorItem.status = 1;
+        this.setState({imgArray});
+
+        this.processFormData(errorItem);
+    }
     handleDelete(id) {
         this.setState((previousState)=>{
             previousState.imgArray = previousState.imgArray.filter((item)=>(item.id !== id));
@@ -44,15 +64,31 @@ class Uploader extends React.Component{
         // 监听上传进度 操作DOM 显示进度
         const number = Number.parseInt((e.loaded / e.total) * 100) + '%';
         const text = document.querySelector('#text-'+id);
-        const progress = document.querySelector('#progress-'+id);
 
-        text.innerHTML = number;
-        progress.style.width = number;
+        if(text) text.innerHTML = number;
     }
-    handleUploadEnd (data, status) {
+    handleUploadEnd (data, response, status) {
+        // 隐藏进度
+        const text = document.querySelector('#text-'+ data.uuid);
+        if(text) text.innerHTML = '';
+
+        // 处理页面卸载的情况
+        if(this._isMounted) return;
+
         // 准备一条标准数据
         const _this = this;
-        const obj = {id: data.uuid, imgKey: '', imgUrl: '', name: data.file.name, dataUrl: data.dataUrl, status: status};
+        const obj = {
+            id: data.uuid,
+            uuid: data.uuid,
+            imgKey: '',
+            imgUrl: '',
+            name: data.file.name,
+            dataUrl: data.dataUrl,
+            compressedDataUrl: data.compressedDataUrl,
+            blob: data.blob,
+            file: data.file,
+            status: status
+        };
 
         // 更改状态
         this.setState((previousState)=>{
@@ -70,13 +106,14 @@ class Uploader extends React.Component{
         const nextUpload = this.uploadGen.next();
         if(!nextUpload.done){
             nextUpload.value.map((item)=>{
-                _this.transformFileToDataUrl(item, _this.compress, _this.processData);
+                _this.compress(item, _this.processData);
             });
         }
     }
     handleInputChange (event) {
         const {typeArray, max, maxSize} = this.props;
         const {imgArray} = this.state;
+        const _this = this;
         const uploadedImgArray = []; // 真正在页面显示的图片数组
         const uploadQueue = []; // 图片上传队列 这个队列是在图片选中到上传之间使用的 上传完成则清除
 
@@ -104,16 +141,19 @@ class Uploader extends React.Component{
 
             // 为图片加上位移id
             const uuid = getUuid();
-            // 上传队列加入该数据
-            uploadQueue.push({uuid: uuid, file: item});
             // 页面显示加入数据
-            uploadedImgArray.push({ // 显示在页面的数据的标准格式
-                id: uuid, // 图片唯一id
-                dataUrl: '', // 图片的base64编码
-                imgKey: '', // 图片的key 后端上传保存使用
-                imgUrl: '', // 图片真实路径 后端返回的
-                name: item.name, // 图片的名字
-                status: 1 // status表示这张图片的状态 1：上传中，2上传成功，3：上传失败
+            this.transformFileToDataUrl(item, (data)=>{
+                // 上传队列加入该数据
+                uploadQueue.push({uuid: uuid, file: item, dataUrl: data});
+
+                uploadedImgArray.push({ // 显示在页面的数据的标准格式
+                    id: uuid, // 图片唯一id
+                    dataUrl: data, // 图片的base64编码
+                    imgKey: '', // 图片的key 后端上传保存使用
+                    imgUrl: '', // 图片真实路径 后端返回的
+                    name: item.name, // 图片的名字
+                    status: 1 // status表示这张图片的状态 1：上传中，2上传成功，3：上传失败
+                });
             });
         });
 
@@ -128,30 +168,35 @@ class Uploader extends React.Component{
             return;
         }
 
-        // 没错误准备上传
-        // 页面先显示一共上传图片个数
-        this.setState({imgArray: imgArray.concat(uploadedImgArray)});
+        const timer = setInterval(function () {
+            if(uploadedImgArray.length === selectedFiles.length){
+                clearInterval(timer);
 
-        // 通过该函数获取每次要上传的数组
-        this.uploadGen = this.uploadGenerator(uploadQueue);
-        // 第一次要上传的数量
-        const firstUpload = this.uploadGen.next();
+                // 没错误准备上传
+                // 页面先显示一共上传图片个数
+                _this.setState({imgArray: imgArray.concat(uploadedImgArray)});
 
+                // 通过该函数获取每次要上传的数组
+                _this.uploadGen = _this.uploadGenerator(uploadQueue);
+                // 第一次要上传的数量
+                const firstUpload = _this.uploadGen.next();
 
-        // 真正开始上传流程
-        firstUpload.value.map((item)=>{
-            /**
-             * 图片上传分成5步
-             * 图片转dataUrl
-             * 压缩
-             * 处理数据格式
-             * 准备数据上传
-             * 上传
-             *
-             * 前两步是回调的形式 后面是同步的形式
-             */
-            this.transformFileToDataUrl(item, this.compress, this.processData);
-        });
+                // 真正开始上传流程
+                firstUpload.value.map((item)=>{
+                    /**
+                     * 图片上传分成5步
+                     * 图片转dataUrl
+                     * 压缩
+                     * 处理数据格式
+                     * 准备数据上传
+                     * 上传
+                     *
+                     * 前两步是回调的形式 后面是同步的形式
+                     */
+                    _this.compress(item, _this.processData);
+                });
+            }
+        }, 20);
     }
     *uploadGenerator (uploadQueue) {
         /**
@@ -161,9 +206,8 @@ class Uploader extends React.Component{
          * 保证最大只有这个数量的上传请求
          *
          */
-
-        // 最多只有三个请求在上传
-        const maxUploadSize = 3;
+            // 最多只有三个请求在上传
+        const {maxUploadSize} = this.props;
 
         if(uploadQueue.length > maxUploadSize){
 
@@ -186,36 +230,22 @@ class Uploader extends React.Component{
             yield uploadQueue.map((item)=>(item));
         }
     }
-    transformFileToDataUrl (data, callback, compressCallback) {
+    transformFileToDataUrl (file, callback) {
         /**
          * 图片上传流程的第一步
-         * @param data file文件 该数据会一直向下传递
-         * @param callback 下一步回调
-         * @param compressCallback 回调的回调
+         * @param data file文件
          */
-        const {compress} = this.props;
-        const imgCompassMaxSize = 200 * 1024; // 超过 200k 就压缩
-
-        // 封装好的函数
+            // 封装好的函数
         const reader = new FileReader();
 
         // ⚠️ 这是个回调过程 不是同步的
         reader.onload = function(e) {
             const result = e.target.result;
-            data.dataUrl = result;
 
-            if(compress && result.length > imgCompassMaxSize){
-                data.compress = true;
-
-                callback(data, compressCallback); // 图片压缩
-            } else {
-                data.compress = false;
-
-                callback(data, compressCallback); // 图片不压缩
-            }
+            callback(result);
         };
 
-        reader.readAsDataURL(data.file);
+        reader.readAsDataURL(file);
     }
     compress (data, callback) {
         /**
@@ -223,7 +253,8 @@ class Uploader extends React.Component{
          * @param data file文件 数据会一直向下传递
          * @param callback 下一步回调
          */
-        const {compressionRatio} = this.props;
+        const {compressionRatio, compress} = this.props;
+        const imgCompassMaxSize = 200 * 1024; // 超过 200k 就压缩
         const imgFile = data.file;
         const img = new window.Image();
 
@@ -240,7 +271,7 @@ class Uploader extends React.Component{
 
             let compressedDataUrl;
 
-            if(data.compress){
+            if(compress && imgFile.length > imgCompassMaxSize){
                 compressedDataUrl = canvas.toDataURL(imgFile.type, (compressionRatio / 100));
             } else {
                 compressedDataUrl = canvas.toDataURL(imgFile.type, 1);
@@ -284,6 +315,7 @@ class Uploader extends React.Component{
         }
 
         data.blob = blob;
+
         this.processFormData(data);
     }
     processFormData (data) {
@@ -312,12 +344,13 @@ class Uploader extends React.Component{
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
+                // const result = JSON.parse(xhr.responseText);
                 if (xhr.status === 200 || xhr.status === 201) {
                     // 上传成功
-                    _this.handleUploadEnd(data, 2);
+                    _this.handleUploadEnd(data, undefined, 2);
                 } else {
                     // 上传失败
-                    _this.handleUploadEnd(data, 3);
+                    _this.handleUploadEnd(data, undefined, 3);
                 }
             }
         };
@@ -325,9 +358,37 @@ class Uploader extends React.Component{
         xhr.open('POST', uploadUrl , true);
         xhr.send(formData);
     }
+    getImgArray (format = getImgKey) {
+        // 获取图片数据，供使用者调用
+        const {imgArray} = this.state;
+
+        return imgArray.map(format);
+    }
+    getUploadStatus () {
+        // 获取目前上传状态
+        // 1 全部上传成功 2 有图片正在上传 3 有图片上传失败
+        const {imgArray} = this.state;
+        let uploadingArray = 0;
+        let errorArray = 0;
+
+        imgArray.map((item)=>{
+            switch (item.status) {
+                case 1: {
+                    uploadingArray++;
+                    break;
+                }
+                case 3: {
+                    errorArray++;
+                    break;
+                }
+            }
+        });
+
+        return (uploadingArray || errorArray) > 0 ? errorArray > 0 ? 3 : 2 : 1 ;
+    }
     getImagesListDOM () {
         // 处理显示图片的DOM
-        const {max} = this.props;
+        const {max, prefixCls} = this.props;
         const _this = this;
         const result = [];
         const uploadingArray = [];
@@ -336,8 +397,9 @@ class Uploader extends React.Component{
         imgArray.map((item)=>{
             result.push(
                 <Figure
-key={item.id} {...item}
-onDelete={_this.handleDelete.bind(_this)}
+                    key={item.id} {...item}
+                    onDelete={_this.handleDelete}
+                    onError={_this.handleReUpload}
                 />
             );
 
@@ -360,36 +422,32 @@ onDelete={_this.handleDelete.bind(_this)}
         // 简单的显示文案逻辑判断
         let text = '上传图片';
 
-        if(uploadingArray.length > 0){
-            text = (imgArray.length - uploadingArray.length) + '/' + imgArray.length;
+        if(imgArray.length > 0){
+            // 上传成功 / 上传总数
+            text = (imgArray.filter((item)=>{if(item.status === 2) return true}).length) + '/' + imgArray.length;
         }
 
         result.push(
-            <Touchable
-                key="add"
-                activeClassName={'zby-upload-img-active'}
-                onPress={onPress}
-            >
-                <div className="zby-upload-img">
-                    <span key="icon" className="fa fa-camera" />
-                    <p className="text">{text}</p>
-                </div>
-            </Touchable>
+            <div key="button" className={`${prefixCls}-button`} onClick={onPress}>
+                <span key="icon" className="fa fa-camera" />
+                <p className="text">{text}</p>
+            </div>
         );
 
         return result;
     }
     render () {
+        const {prefixCls} = this.props;
         const imagesList = this.getImagesListDOM();
-            
+
         return (
-            <div className="zby-uploader-box">
+            <div className={prefixCls}>
                 {imagesList}
                 <input
-ref="input" type="file"
-className="file-input" name="image"
-accept="image/*" multiple="multiple"
-onChange={this.handleInputChange}
+                    ref="input" type="file"
+                    className="file-input" name="image"
+                    accept="image/*" multiple="multiple"
+                    onChange={this.handleInputChange}
                 />
             </div>
         )
@@ -398,20 +456,24 @@ onChange={this.handleInputChange}
 
 Uploader.propTypes = {
     uploadUrl: React.PropTypes.string.isRequired, // 图上传路径
+    prefixCls: React.PropTypes.string, // class前缀
     compress: React.PropTypes.bool, // 是否进行图片压缩
     compressionRatio: React.PropTypes.number, // 图片压缩比例 单位：%
     data: React.PropTypes.array, // 初始化数据 其中的每个元素必须是标准化数据格式
     max: React.PropTypes.number, // 最大上传图片数
     maxSize: React.PropTypes.number, // 图片最大体积 单位：KB
+    maxUploadSize: React.PropTypes.number, // 最大同时上传数目
     typeArray: React.PropTypes.array, // 支持图片类型数组
 };
 
 Uploader.defaultProps = {
+    prefixCls: 'zby-uploader',
     compress: true,
     compressionRatio: 20,
     data: [],
     max: 9,
     maxSize: 5 * 1024, // 5MB
+    maxUploadSize: 3,
     typeArray: ['jpeg', 'jpg', 'png', 'gif'],
 };
 

@@ -8,6 +8,7 @@ export default () => ({
             callback(null, [
                 require('./containers/Button/index').default(),
                 require('./containers/Switch/index').default(),
+                require('./containers/Uploader/index').default(),
             ]);
         }, 'data-entry')
     },
