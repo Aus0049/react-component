@@ -1,10 +1,10 @@
 /**
- * Created by Aus on 2017/5/6.
+ * Created by Aus on 2017/10/20.
  */
 import React from 'react'
-import ListTitle from '../../components/DataDisplay/ListTitle/'
-import PickerView from '../../components/DataEntry/PickerView/'
-import Tools from '../../components/Tools/Tools'
+import ListTitle from 'components/DataDisplay/ListTitle/'
+import PickerView from 'components/DataEntry/PickerView/'
+import Tools from 'components/Tools/Tools'
 
 class PickerViewPage extends React.Component {
     constructor (props) {
@@ -59,12 +59,11 @@ class PickerViewPage extends React.Component {
         return (
             <div className="page picker-view">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
+                    <span className="fa fa-home" onClick={()=>{Tools.linkTo('/')}} />
                     PickerView
                 </h1>
 
                 <ListTitle title="默认级联" />
-
                 <PickerView
                     col={2}
                     data={array1}
@@ -73,7 +72,6 @@ class PickerViewPage extends React.Component {
                 />
 
                 <ListTitle title="不级联" />
-
                 <PickerView
                     col={3}
                     data={array2}

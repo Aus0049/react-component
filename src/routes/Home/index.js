@@ -34,10 +34,12 @@ const Home = () => {
                     {/*onClick={()=>{Tools.linkTo('/data-entry/picker')}}*/}
                 {/*>选择器*/}
                 {/*</Item>*/}
-                {/*<Item*/}
-                    {/*subtitle="PickerView" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/data-entry/picker-view')}}*/}
-                {/*>选择器*/}
+                <Item
+                    extra="PickerView" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-entry/picker-view')}}
+                >
+                    选择器
+                </Item>
                 {/*</Item>*/}
                 <Item
                     extra="Uploader" arrow="horizontal"

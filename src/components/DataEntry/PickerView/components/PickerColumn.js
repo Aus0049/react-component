@@ -4,6 +4,7 @@
 import React from 'react'
 import ZScroller from 'zscroller'
 import classNames from 'classnames'
+import '../style/picker-column.scss'
 
 // picker-view 中的列
 class PickerColumn extends React.Component {
@@ -65,7 +66,7 @@ class PickerColumn extends React.Component {
             selectedValue = data[currentIndex].value;
         }
 
-        if(selectedValue && selectedValue != value){
+        if(selectedValue && selectedValue !== value){
             // 值发生变化 通知父组件
             onValueChange(selectedValue, index);
         }
@@ -74,12 +75,12 @@ class PickerColumn extends React.Component {
         // 滚动到选中的位置
         const {data, value} = this.props;
 
-        data.map((item)=>{
-            if(item.value === value){
-                this.selectByIndex();
-                return;
-            }
-        });
+        // data.map((item)=>{
+        //     if(item.value === value){
+        //         this.selectByIndex();
+        //         return;
+        //     }
+        // });
 
         for(let i = 0; i < data.length; i++){
             if(data[i].value === value){
@@ -98,24 +99,20 @@ class PickerColumn extends React.Component {
     }
     getCols () {
         // 根据value 和 index 获取到对应的data
-        const {data, value, index} = this.props;
-        const result = [];
+        const {data, value, index, prefixCls} = this.props;
 
-        for(let i = 0; i < data.length; i++){
-            result.push(<div key={index + '-' + i} className={classNames(['zby-picker-view-col', {'selected': data[i].value === value}])}>{data[i].label}</div>);
-        }
-
-        return result;
+        return data.map((item, i)=>(<div key={index + '-' + i} className={classNames([`${prefixCls}-col`, {'selected': data[i].value === value}])}>{data[i].label}</div>));
     }
     render () {
+        const {prefixCls} = this.props;
         const cols = this.getCols();
 
         return (
-            <div className="zby-picker-view-item">
-                <div className="zby-picker-view-list">
-                    <div className="zby-picker-view-window" />
-                    <div className="zby-picker-view-indicator" ref="indicator" />
-                    <div className="zby-picker-view-content" ref="content">
+            <div className={prefixCls}>
+                <div className={`${prefixCls}-list`}>
+                    <div className={`${prefixCls}-window`} />
+                    <div className={`${prefixCls}-indicator`} ref='indicator' >&nbsp;</div>
+                    <div className={`${prefixCls}-content`} ref='content'>
                         {cols}
                     </div>
                 </div>
@@ -124,11 +121,20 @@ class PickerColumn extends React.Component {
     }
 }
 
+function empty() {}
+
 PickerColumn.propTypes = {
+    prefixCls: React.PropTypes.string, // 前缀class
     index: React.PropTypes.number.isRequired,
     data: React.PropTypes.array.isRequired,
     value: React.PropTypes.string,
     onValueChange: React.PropTypes.func
+};
+
+PickerColumn.defaultProps = {
+    prefixCls: 'zby-picker-column',
+    value: '',
+    onValueChange: empty
 };
 
 export default PickerColumn;

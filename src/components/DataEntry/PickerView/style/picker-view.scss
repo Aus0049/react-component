@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+$prefixCls: 'zby-picker-view';
+
+// PickerView
+.#{$prefixCls} {
+  display: flex;
+  align-items: center;
+}

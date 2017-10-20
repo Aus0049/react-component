@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+$prefixCls: 'zby-picker-column';
+
+.#{$prefixCls} {
+  flex: 1;
+
+  &-list {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+
+    .#{$prefixCls}-window {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      background-image:
+              linear-gradient(to bottom, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4)),
+              linear-gradient(to top, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.4));
+      background-position: top, bottom;
+      background-size: 100% 166px;
+      background-repeat: no-repeat;
+      z-index: 3;
+    }
+
+    .#{$prefixCls}-indicator {
+      box-sizing: border-box;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 68px;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      transform: translate3D(0, -50%, 0);
+      z-index: 3;
+    }
+
+    .#{$prefixCls}-content {
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      padding: 166px 0;
+      transform: translate3D(0, 0, 0);
+      z-index: 1;
+
+      .#{$prefixCls}-col {
+        height: 68px;
+        padding: 0 10px;
+        font-size: 34px;
+        color: #000;
+        text-align: center;
+        line-height: 68px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space:nowrap;
+
+        &.selected {
+          font-size: 38px;
+        }
+      }
+    }
+  }
+}
