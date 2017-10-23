@@ -12,7 +12,8 @@ class PickerViewPage extends React.Component {
         this.state = {
             value1: ['fruit', 'watermelon'],
             value2: ['一', '4', '貮']
-        }
+        };
+        this.handleChange = this.handleChange.bind(this);
     }
     handleChange (newValue) {
         console.log(newValue);
@@ -68,7 +69,7 @@ class PickerViewPage extends React.Component {
                     col={2}
                     data={array1}
                     value={value1}
-                    onChange={this.handleChange.bind(this)}
+                    onChange={this.handleChange}
                 />
 
                 <ListTitle title="不级联" />
@@ -77,7 +78,7 @@ class PickerViewPage extends React.Component {
                     data={array2}
                     value={value2}
                     cascade={false}
-                    onChange={this.handleChange.bind(this)}
+                    onChange={this.handleChange}
                 />
             </div>
         );

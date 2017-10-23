@@ -13,6 +13,7 @@ class PickerColumn extends React.Component {
         this.state = {};
     }
     componentDidMount () {
+        // TODO 这里有个问题 必须要等到渲染结束才能绑定事件 不然获取元素高度有bug 待优化
         window.setTimeout(()=>{
             // 绑定事件
             this.bindScrollEvent();
@@ -80,13 +81,6 @@ class PickerColumn extends React.Component {
     scrollToPosition () {
         // 滚动到选中的位置
         const {data, value} = this.props;
-
-        // data.map((item)=>{
-        //     if(item.value === value){
-        //         this.selectByIndex();
-        //         return;
-        //     }
-        // });
 
         for(let i = 0; i < data.length; i++){
             if(data[i].value === value){
