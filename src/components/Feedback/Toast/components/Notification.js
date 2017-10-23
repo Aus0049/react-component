@@ -10,12 +10,6 @@ import ReactDOM from 'react-dom'
 import Notice from './Notice'
 
 class Notification extends React.Component {
-    static propTypes = {
-        prefixCls: React.PropTypes.string, // 组件class前缀
-    };
-    static defaultProps = {
-        prefixCls: 'zby-notification',
-    };
     constructor (props) {
         super(props);
         this.state = {
@@ -120,6 +114,14 @@ Notification.reWrite = function (properties) {
         },
         component: notification
     }
+};
+
+Notification.propTypes = {
+    prefixCls: React.PropTypes.string, // 组件class前缀
+};
+
+Notification.defaultProps = {
+    prefixCls: 'zby-notification',
 };
 
 export default Notification

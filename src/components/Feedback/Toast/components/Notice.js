@@ -15,17 +15,10 @@ function empty() {}
 
 class Notice extends React.Component {
     static propTypes = {
-        duration: React.PropTypes.number.isRequired, // Notice显示时间
-        prefixCls: React.PropTypes.string, // 前缀class
-        type: React.PropTypes.oneOf(['info', 'success', 'warning', 'error']), // notice类型
-        iconClass: React.PropTypes.string, // icon的class
-        content: React.PropTypes.any, // Notice显示的内容
-        onClose: React.PropTypes.func // 显示结束回调
+
     };
     static defaultProps = {
-        prefixCls: 'zby-notice',
-        duration: 3000,
-        onClose: empty
+
     };
     constructor (props) {
         super(props);
@@ -84,5 +77,20 @@ class Notice extends React.Component {
         )
     }
 }
+
+Notice.propTypes = {
+    duration: React.PropTypes.number.isRequired, // Notice显示时间
+    prefixCls: React.PropTypes.string, // 前缀class
+    type: React.PropTypes.oneOf(['info', 'success', 'warning', 'error']), // notice类型
+    iconClass: React.PropTypes.string, // icon的class
+    content: React.PropTypes.any, // Notice显示的内容
+    onClose: React.PropTypes.func // 显示结束回调
+};
+
+Notice.defaultProps = {
+    prefixCls: 'zby-notice',
+    duration: 3000,
+    onClose: empty
+};
 
 export default Notice
