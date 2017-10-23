@@ -5,6 +5,29 @@ import React from 'react'
 import PickerColumn from './PickerColumn'
 import '../style/picker-view.scss'
 
+// 递归寻找value
+function getNewValue (tree, oldValue, newValue, deep) {
+    // 遍历tree
+    let has;
+
+    tree.map((item, i)=>{
+        if(item.value === oldValue[deep]) {
+            newValue.push(item.value);
+            has = i;
+        }
+    });
+
+    if(has === undefined) {
+        has = 0;
+        newValue.push(tree[has].value);
+    }
+
+    if(tree[has].children) getNewValue(tree[has].children, oldValue, newValue, deep+1);
+
+    return newValue;
+}
+
+// 根据value找索引
 function getColumnsData (tree, value, hasFind, deep) {
     // 遍历tree
     let has;
@@ -28,26 +51,6 @@ function getColumnsData (tree, value, hasFind, deep) {
     return hasFind;
 }
 
-function getNewValue (tree, oldValue, newValue, deep) {
-    // 遍历tree
-    let has;
-
-    tree.map((item, i)=>{
-        if(item.value === oldValue[deep]) {
-            newValue.push(item.value);
-            has = i;
-        }
-    });
-
-    if(has === undefined) {
-        has = 0;
-        newValue.push(tree[has].value);
-    }
-
-    if(tree[has].children) getNewValue(tree[has].children, oldValue, newValue, deep+1);
-
-    return newValue;
-}
 
 // 选择器组件
 class PickerView extends React.Component {
@@ -75,8 +78,7 @@ class PickerView extends React.Component {
             oldValue[index] = newValue;
 
             if(cascade) {
-                const newState = getNewValue(data, oldValue, [], 0);
-                onChange(newState);
+                onChange(getNewValue(data, oldValue, [], 0));
             } else {
                 onChange(oldValue);
             }
@@ -127,7 +129,6 @@ class PickerView extends React.Component {
         }
 
         for(let i = 0; i < col; i++){
-            console.log(controlled ? value[i] : defaultSelectedValue[i]);
             result.push(
                 <PickerColumn
                     key={i}

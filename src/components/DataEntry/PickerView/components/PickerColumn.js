@@ -13,10 +13,12 @@ class PickerColumn extends React.Component {
         this.state = {};
     }
     componentDidMount () {
-        // 绑定事件
-        this.bindScrollEvent();
-        // 列表滚到对应位置
-        this.scrollToPosition();
+        window.setTimeout(()=>{
+            // 绑定事件
+            this.bindScrollEvent();
+            // 列表滚到对应位置
+            this.scrollToPosition();
+        }, 100);
     }
     componentDidUpdate() {
         this.zscroller.reflow();
@@ -30,7 +32,6 @@ class PickerColumn extends React.Component {
         const content = this.refs.content;
         // getBoundingClientRect js原生方法
         this.itemHeight = this.refs.indicator.getBoundingClientRect().height;
-        // console.log(this.refs.indicator.getBoundingClientRect().height);
 
         // 最后还是用了何一鸣的zscroll插件
         // 但是这个插件并没有太多的文档介绍 gg
