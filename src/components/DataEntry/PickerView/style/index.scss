@@ -7,20 +7,20 @@ $lightGray: #ddd;
 $darkGray: #bbb;
 
 // PickerView
-.zby-picker-view-box {
+.zby-picker-view {
   display: flex;
   align-items: center;
   //background-color: #000;
 
-  .zby-picker-view-item {
+  .zby-picker-column {
     flex: 1;
 
-    .zby-picker-view-list {
+    .zby-picker-column-list {
       position: relative;
       height: 400px;
       overflow: hidden;
 
-      .zby-picker-view-window {
+      .zby-picker-column-window {
         position: absolute;
         left: 0;
         right: 0;
@@ -35,7 +35,7 @@ $darkGray: #bbb;
         z-index: 3;
       }
 
-      .zby-picker-view-indicator {
+      .zby-picker-column-indicator {
         box-sizing: border-box;
         position: absolute;
         top: 50%;
@@ -48,7 +48,7 @@ $darkGray: #bbb;
         z-index: 3;
       }
 
-      .zby-picker-view-content {
+      .zby-picker-column-content {
         position: absolute;
         left: 0;
         top: 0;
@@ -58,7 +58,7 @@ $darkGray: #bbb;
 
         transform: translateY(0);
 
-        .zby-picker-view-col {
+        .zby-picker-column-col {
           height: 68px;
           padding: 0 10px;
           font-size: 34px;

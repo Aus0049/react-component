@@ -298,6 +298,7 @@ class Uploader extends React.Component{
 
         let blob;
 
+        /* eslint-disable */
         try {
             blob = new Blob(fileData, { type: imgFile.type });
         } catch (error) {
@@ -313,6 +314,7 @@ class Uploader extends React.Component{
                 throw new Error('版本过低，不支持上传图片');
             }
         }
+        /* eslint-disable */
 
         data.blob = blob;
 

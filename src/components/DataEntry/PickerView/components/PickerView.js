@@ -127,6 +127,7 @@ class PickerView extends React.Component {
         }
 
         for(let i = 0; i < col; i++){
+            console.log(controlled ? value[i] : defaultSelectedValue[i]);
             result.push(
                 <PickerColumn
                     key={i}

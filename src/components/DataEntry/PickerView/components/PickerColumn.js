@@ -8,6 +8,10 @@ import '../style/picker-column.scss'
 
 // picker-view 中的列
 class PickerColumn extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {};
+    }
     componentDidMount () {
         // 绑定事件
         this.bindScrollEvent();
@@ -26,6 +30,7 @@ class PickerColumn extends React.Component {
         const content = this.refs.content;
         // getBoundingClientRect js原生方法
         this.itemHeight = this.refs.indicator.getBoundingClientRect().height;
+        // console.log(this.refs.indicator.getBoundingClientRect().height);
 
         // 最后还是用了何一鸣的zscroll插件
         // 但是这个插件并没有太多的文档介绍 gg
@@ -111,7 +116,7 @@ class PickerColumn extends React.Component {
             <div className={prefixCls}>
                 <div className={`${prefixCls}-list`}>
                     <div className={`${prefixCls}-window`} />
-                    <div className={`${prefixCls}-indicator`} ref='indicator' >&nbsp;</div>
+                    <div className={`${prefixCls}-indicator`} ref='indicator' />
                     <div className={`${prefixCls}-content`} ref='content'>
                         {cols}
                     </div>
