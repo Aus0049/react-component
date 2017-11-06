@@ -16,7 +16,7 @@ $prefixCls: 'zby-figure';
     width: 160px;
     height: 160px;
     border-radius: 5px;
-    border: 2px solid #d9d9d9;
+    border: 2px solid $viColor;
     background: rgba(0,0,0, .7);
     animation: scaleIn .3s;
     vertical-align: top;
@@ -108,6 +108,7 @@ $prefixCls: 'zby-figure';
       font-size: 32px;
       line-height: 32px;
       text-align: center;
+      color: $viColor;
       z-index: 10;
     }
   }
@@ -122,7 +123,7 @@ $prefixCls: 'zby-figure';
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
   overflow: hidden;
-  z-index: 20;
+  z-index: 200;
 
   transition: all .3s;
 
