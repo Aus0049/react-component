@@ -577,7 +577,7 @@ class Uploader extends React.Component{
 
         if(imgArray.length > 0){
             // 上传成功 / 上传总数
-            text = (imgArray.filter((item)=>{if(item.status === 2) return true}).length) + '/9';
+            text = (imgArray.filter((item)=>{if(item.status === 2) return true}).length) + '/' + imgArray.length;
         }
 
         result.push(

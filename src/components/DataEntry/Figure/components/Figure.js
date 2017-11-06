@@ -71,7 +71,7 @@ class Figure extends React.Component {
                         onClick={this.handlePreview}
                     >
                         <div className="img-box"><img src={src}/></div>
-                        <div className="progress-text" id={`text-${id}`} >0%</div>
+                        <div className="progress-text" id={`text-${id}`} />
                         {canDelete ? <div className="close" onClick={this.handleDelete}><span className="fa fa-times" /></div> : null}
                     </div>
                 );
