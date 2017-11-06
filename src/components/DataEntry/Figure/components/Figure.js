@@ -6,54 +6,73 @@ import classNames from 'classnames'
 import '../style/figure.scss'
 
 // Figure就是每个图片的容器 以及实现预览的容器
-const Figure = (props) => {
-    const {id, prefixCls, status, canPreview, imgUrl, dataUrl, canDelete, onDelete, onError} = props;
-    const src = imgUrl ? imgUrl : dataUrl;
-    const handleReUpload = function () {onError(id);};
+class Figure extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+        this.handlePreview = this.handlePreview.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.handleReUpload = this.handleReUpload.bind(this);
+        this.handleClosePreview = this.handleClosePreview.bind(this);
+    }
+    componentWillUnmount () {
+        const {id} = this.props;
+        const mask = document.getElementById('preview-' + id);
 
-    const handlePreview = function () {
+        if(mask) mask.remove();
+    }
+    handlePreview () {
+        const {prefixCls, id, imgUrl, dataUrl, canPreview} = this.props;
+        const src = imgUrl ? imgUrl : dataUrl;
         // 打开预览
         if(!canPreview) return;
 
         // 动态插入dom
         const img = document.createElement('img');
         img.src = src;
+        img.onclick = this.handleClosePreview;
         const mask = document.createElement('div');
         mask.id = 'preview-' + id;
         mask.className = `${prefixCls}-preview-container`;
-        mask.onclick = handleClosePreview;
+        mask.onclick = this.handleClosePreview;
         mask.appendChild(img);
 
         document.body.appendChild(mask);
-    };
-
-    const handleClosePreview = function () {
-        document.getElementById('preview-' + id).remove();
-    };
-
-    const handleDelete = function (e) {
-
+    }
+    handleDelete (e) {
+        const {id, onDelete} = this.props;
         e.stopPropagation();
-
         document.getElementById(id).className += ' deleted';
-        const timer = setTimeout(function () {
+        const timer = setTimeout(() => {
             clearTimeout(timer);
             onDelete(id);
         }, 300);
-    };
+    }
+    handleReUpload () {
+        const {id, onError} = this.props;
+        onError(id);
+    }
+    handleClosePreview (e) {
+        const {id} = this.props;
+        document.getElementById('preview-' + id).remove();
+        e.stopPropagation();
+    }
+    getPreviewBoxDOM () {
+        const {prefixCls, id, status, imgUrl, dataUrl, canDelete} = this.props;
+        const src = imgUrl ? imgUrl : dataUrl;
 
-    const previewBoxDOM = function () {
         switch (status) {
             case 1: {
                 // 上传中
                 return (
                     <div
                         id={id}
-                        className={classNames([prefixCls, 'loading'])}
-                        onClick={handlePreview}
+                        className={`${prefixCls}-preview-box loading`}
+                        onClick={this.handlePreview}
                     >
                         <div className="img-box"><img src={src}/></div>
-                        <div className="progress-text" id={`text-${id}`} />
+                        <div className="progress-text" id={`text-${id}`} >0%</div>
+                        {canDelete ? <div className="close" onClick={this.handleDelete}><span className="fa fa-times" /></div> : null}
                     </div>
                 );
             }
@@ -62,12 +81,12 @@ const Figure = (props) => {
                 return (
                     <div
                         id={id}
-                        className={classNames([prefixCls, 'loaded'])}
-                        onClick={handlePreview}
+                        className={`${prefixCls}-preview-box loaded`}
+                        onClick={this.handlePreview}
                     >
                         <div className="img-box"><img src={src}/></div>
                         <div className="progress-text" id={`text-${id}`} />
-                        {canDelete ? <div className="close" onClick={handleDelete}><span className="fa fa-times" /></div> : null}
+                        {canDelete ? <div className="close" onClick={this.handleDelete}><span className="fa fa-times" /></div> : null}
                     </div>
                 );
             }
@@ -76,24 +95,30 @@ const Figure = (props) => {
                 return (
                     <div
                         id={id}
-                        className={classNames([prefixCls, 'error'])}
-                        onClick={handleReUpload}
+                        className={`${prefixCls}-preview-box error`}
+                        onClick={this.handleReUpload}
                     >
                         <div className="img-box"><img src={src}/></div>
                         <div className="progress-text" id={`text-${id}`} ><span className="fa fa-refresh" /></div>
-                        {canDelete ? <div className="close" onClick={handleDelete}><span className="fa fa-times" /></div> : null}
+                        {canDelete ? <div className="close" onClick={this.handleDelete}><span className="fa fa-times" /></div> : null}
                     </div>
                 );
             }
+            default:
+                break;
         }
-    }();
+    }
+    render() {
+        const {prefixCls} = this.props;
+        const previewBoxDOM = this.getPreviewBoxDOM();
 
-    return (
-        <div className={`${prefixCls}-with-preview`}>
-            {previewBoxDOM}
-        </div>
-    );
-};
+        return (
+            <div className={classNames([prefixCls, `${prefixCls}-with-preview`])}>
+                {previewBoxDOM}
+            </div>
+        );
+    }
+}
 
 function empty() {}
 

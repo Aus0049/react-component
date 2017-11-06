@@ -2,7 +2,8 @@
  * Created by Aus on 2017/7/4.
  */
 import React from 'react'
-import Figure from './Figure'
+import EXIF from 'exif-js'
+import Figure from 'components/DataEntry/Figure/'
 import Toast from 'components/Feedback/Toast/'
 import '../style/uploader.scss'
 
@@ -52,7 +53,19 @@ class Uploader extends React.Component{
         errorItem.status = 1;
         this.setState({imgArray});
 
-        this.processFormData(errorItem);
+        // 检查是否是ios ios图片使用canvas压缩之后图片size为0 原因未知
+        // 解决办法更改服务端使用base64上传图片
+        let canCompress = true;
+        // ios
+        if(!!window.navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+            canCompress = false;
+        }
+
+        if(canCompress){
+            this.compress(errorItem, this.processData);
+        } else {
+            this.processFormDataForIos(errorItem);
+        }
     }
     handleDelete(id) {
         this.setState((previousState)=>{
@@ -80,13 +93,14 @@ class Uploader extends React.Component{
         const obj = {
             id: data.uuid,
             uuid: data.uuid,
-            imgKey: '',
+            imgKey: response ? response.data.key : '',
             imgUrl: '',
             name: data.file.name,
             dataUrl: data.dataUrl,
             compressedDataUrl: data.compressedDataUrl,
             blob: data.blob,
             file: data.file,
+            formData: data.formData,
             status: status
         };
 
@@ -105,8 +119,21 @@ class Uploader extends React.Component{
         // 上传下一个
         const nextUpload = this.uploadGen.next();
         if(!nextUpload.done){
+
+            // 检查是否是ios ios图片使用canvas压缩之后图片size为0 原因未知
+            // 解决办法更改服务端使用base64上传图片
+            let canCompress = true;
+            // ios
+            if(!!window.navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+                canCompress = false;
+            }
+
             nextUpload.value.map((item)=>{
-                _this.compress(item, _this.processData);
+                if(canCompress){
+                    _this.compress(item, _this.processData);
+                } else {
+                    _this.processFormDataForIos(item);
+                }
             });
         }
     }
@@ -122,7 +149,9 @@ class Uploader extends React.Component{
 
         // 检查文件个数 页面显示的图片个数不能超过限制
         if(imgArray.length + selectedFiles.length > max){
-            Toast.error('文件数量超出最大值', 2000, undefined, false);
+            Toast.error('最多只能选择'+max+'张图片', 2000, undefined, false);
+            // 清空input
+            this.refs.input.value = null;
             return;
         }
 
@@ -142,9 +171,9 @@ class Uploader extends React.Component{
             // 为图片加上位移id
             const uuid = getUuid();
             // 页面显示加入数据
-            this.transformFileToDataUrl(item, (data)=>{
+            this.transformFileToDataUrl(item, (data, orientation = 1)=>{
                 // 上传队列加入该数据
-                uploadQueue.push({uuid: uuid, file: item, dataUrl: data});
+                uploadQueue.push({uuid: uuid, file: item, dataUrl: data, orientation: orientation});
 
                 uploadedImgArray.push({ // 显示在页面的数据的标准格式
                     id: uuid, // 图片唯一id
@@ -152,6 +181,7 @@ class Uploader extends React.Component{
                     imgKey: '', // 图片的key 后端上传保存使用
                     imgUrl: '', // 图片真实路径 后端返回的
                     name: item.name, // 图片的名字
+                    orientation: orientation, // 图片旋转
                     status: 1 // status表示这张图片的状态 1：上传中，2上传成功，3：上传失败
                 });
             });
@@ -160,12 +190,21 @@ class Uploader extends React.Component{
         // 有错误跳出
         if(imgPass.typeError){
             Toast.error('不支持文件类型', 2000, undefined, false);
+            this.refs.input.value = null;
             return;
         }
 
         if(imgPass.sizeError){
             Toast.error('文件大小超过限制', 2000, undefined, false);
+            this.refs.input.value = null;
             return;
+        }
+
+        // 检查是否是ios ios图片使用canvas压缩之后图片size为0 原因未知
+        let canCompress = true;
+        // ios
+        if(!!window.navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+            canCompress = false;
         }
 
         const timer = setInterval(function () {
@@ -180,6 +219,8 @@ class Uploader extends React.Component{
                 _this.uploadGen = _this.uploadGenerator(uploadQueue);
                 // 第一次要上传的数量
                 const firstUpload = _this.uploadGen.next();
+                // 清空input
+                _this.refs.input.value = null;
 
                 // 真正开始上传流程
                 firstUpload.value.map((item)=>{
@@ -193,7 +234,11 @@ class Uploader extends React.Component{
                      *
                      * 前两步是回调的形式 后面是同步的形式
                      */
-                    _this.compress(item, _this.processData);
+                    if(canCompress){
+                        _this.compress(item, _this.processData);
+                    } else {
+                        _this.processFormDataForIos(item);
+                    }
                 });
             }
         }, 20);
@@ -235,14 +280,21 @@ class Uploader extends React.Component{
          * 图片上传流程的第一步
          * @param data file文件
          */
-            // 封装好的函数
+        let orientation;
+
+        // 封装好的函数
         const reader = new FileReader();
 
         // ⚠️ 这是个回调过程 不是同步的
         reader.onload = function(e) {
             const result = e.target.result;
 
-            callback(result);
+            EXIF.getData(file, function() {
+                EXIF.getAllTags(this);
+                orientation = EXIF.getTag(this, 'Orientation');
+                callback(result, orientation);
+            });
+
         };
 
         reader.readAsDataURL(file);
@@ -256,18 +308,82 @@ class Uploader extends React.Component{
         const {compressionRatio, compress} = this.props;
         const imgCompassMaxSize = 200 * 1024; // 超过 200k 就压缩
         const imgFile = data.file;
+        const orientation = data.orientation;
         const img = new window.Image();
 
         img.src = data.dataUrl;
 
         img.onload = function () {
+
+            let drawWidth, drawHeight, width, height;
+
+            drawWidth = this.naturalWidth;
+            drawHeight = this.naturalHeight;
+
+            // 改变一下图片大小
+            let maxSide = Math.max(drawWidth, drawHeight);
+
+            if (maxSide > 1024) {
+                let minSide = Math.min(drawWidth, drawHeight);
+                minSide = minSide / maxSide * 1024;
+                maxSide = 1024;
+                if (drawWidth > drawHeight) {
+                    drawWidth = maxSide;
+                    drawHeight = minSide;
+                } else {
+                    drawWidth = minSide;
+                    drawHeight = maxSide;
+                }
+            }
+
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
 
-            canvas.width = img.width;
-            canvas.height = img.height;
-
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            canvas.width = width = drawWidth;
+            canvas.height = height = drawHeight;
+            // 判断图片方向，重置 canvas 大小，确定旋转角度，iphone 默认的是 home 键在右方的横屏拍摄方式
+            switch (orientation) {
+                // 1 不需要旋转
+                case 1: {
+                    ctx.drawImage(img, 0, 0, drawWidth, drawHeight);
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+                    break;
+                }
+                // iphone 横屏拍摄，此时 home 键在左侧 旋转180度
+                case 3: {
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.translate(0, 0);
+                    ctx.rotate(Math.PI);
+                    ctx.drawImage(img, -width, -height, width, height);
+                    break;
+                }
+                // iphone 竖屏拍摄，此时 home 键在下方(正常拿手机的方向) 旋转90度
+                case 6: {
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.translate(0, 0);
+                    ctx.rotate(90 * Math.PI / 180);
+                    ctx.drawImage(img, 0, -height, width, height);
+                    break;
+                }
+                // iphone 竖屏拍摄，此时 home 键在上方 旋转270度
+                case 8: {
+                    canvas.width = height;
+                    canvas.height = width;
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.translate(0, 0);
+                    ctx.rotate(-90 * Math.PI / 180);
+                    ctx.drawImage(img, -width, 0, width, height);
+                    break;
+                }
+                default: {
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.drawImage(img, 0, 0, width, height);
+                    break;
+                }
+            }
 
             let compressedDataUrl;
 
@@ -298,7 +414,6 @@ class Uploader extends React.Component{
 
         let blob;
 
-        /* eslint-disable */
         try {
             blob = new Blob(fileData, { type: imgFile.type });
         } catch (error) {
@@ -307,16 +422,17 @@ class Uploader extends React.Component{
                 window.MozBlobBuilder ||
                 window.MSBlobBuilder;
             if (error.name === 'TypeError' && window.BlobBuilder){
-                const builder = new BlobBuilder();
+                const builder = new window.BlobBuilder();
                 builder.append(arrayBuffer);
                 blob = builder.getBlob(imgFile.type);
             } else {
                 throw new Error('版本过低，不支持上传图片');
             }
         }
-        /* eslint-disable */
 
-        data.blob = blob;
+        // blob 转file
+        const fileOfBlob = new File([blob], imgFile.name);
+        data.blob = fileOfBlob;
 
         this.processFormData(data);
     }
@@ -327,29 +443,67 @@ class Uploader extends React.Component{
         const blob = data.blob;
 
         // type
-        formData.append('type', blob.type);
+        formData.append('type', imgFile.type);
         // size
         formData.append('size', blob.size);
+        // name
+        formData.append('name', imgFile.name);
+        // lastModifiedDate
+        formData.append('lastModifiedDate', imgFile.lastModifiedDate);
         // append 文件
-        formData.append('file', blob, imgFile.name);
+        formData.append('file', blob);
 
-        this.uploadImg(data, formData);
+        data.formData = formData;
+
+        this.uploadImg(data);
     }
-    uploadImg (data, formData) {
+    processFormDataForIos(data){
+        const formData = new FormData();
+        const imgFile = data.file;
+
+        // type
+        formData.append('type', imgFile.type || 'image/jpeg"');
+        // size
+        formData.append('size', imgFile.size);
+        // name
+        formData.append('name', imgFile.name);
+        // lastModifiedDate
+        formData.append('lastModifiedDate', imgFile.lastModifiedDate);
+        // append 文件
+        formData.append('file', imgFile);
+
+        data.formData = formData;
+
+        this.uploadImg(data);
+    }
+    uploadImg (data) {
         // 开始发送请求上传
         const _this = this;
         const xhr = new XMLHttpRequest();
         const {uploadUrl} = this.props;
+        const formData = data.formData;
 
         // 进度监听
         xhr.upload.addEventListener('progress', _this.handleProgress.bind(_this, data.uuid), false);
+        // xhr.addEventListener("error", _this.handleUploadEnd(data, undefined, 3), false);
 
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
+                // 根据接口返回不同 处理请求数据不同
+                // 一般来说 后端会返回给你图片的key 提交的时候，也要提交key
                 // const result = JSON.parse(xhr.responseText);
+                const result = {
+                    status: 'ok',
+                    code: 200,
+                    data: {
+                        url: '',
+                        key: 'imgKey'
+                    }
+                };
+
                 if (xhr.status === 200 || xhr.status === 201) {
                     // 上传成功
-                    _this.handleUploadEnd(data, undefined, 2);
+                    _this.handleUploadEnd(data, result, 2);
                 } else {
                     // 上传失败
                     _this.handleUploadEnd(data, undefined, 3);
@@ -383,6 +537,8 @@ class Uploader extends React.Component{
                     errorArray++;
                     break;
                 }
+                default:
+                    break;
             }
         });
 
@@ -390,7 +546,7 @@ class Uploader extends React.Component{
     }
     getImagesListDOM () {
         // 处理显示图片的DOM
-        const {max, prefixCls} = this.props;
+        const {max, labelName, prefixCls} = this.props;
         const _this = this;
         const result = [];
         const uploadingArray = [];
@@ -416,17 +572,12 @@ class Uploader extends React.Component{
 
         let onPress = ()=>{_this.refs.input.click();};
 
-        //  或者有正在上传的图片的时候 不可再上传图片
-        if(uploadingArray.length > 0) {
-            onPress = undefined;
-        }
-
         // 简单的显示文案逻辑判断
-        let text = '上传图片';
+        let text = labelName;
 
         if(imgArray.length > 0){
             // 上传成功 / 上传总数
-            text = (imgArray.filter((item)=>{if(item.status === 2) return true}).length) + '/' + imgArray.length;
+            text = (imgArray.filter((item)=>{if(item.status === 2) return true}).length) + '/9';
         }
 
         result.push(
@@ -466,6 +617,7 @@ Uploader.propTypes = {
     maxSize: React.PropTypes.number, // 图片最大体积 单位：KB
     maxUploadSize: React.PropTypes.number, // 最大同时上传数目
     typeArray: React.PropTypes.array, // 支持图片类型数组
+    labelName: React.PropTypes.string, // 上传图片按钮提示文案
 };
 
 Uploader.defaultProps = {
@@ -474,9 +626,10 @@ Uploader.defaultProps = {
     compressionRatio: 20,
     data: [],
     max: 9,
-    maxSize: 5 * 1024, // 5MB
+    maxSize: 10 * 1024, // 10MB
     maxUploadSize: 3,
     typeArray: ['jpeg', 'jpg', 'png', 'gif'],
+    labelName: '上传图片'
 };
 
 export default Uploader

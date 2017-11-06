@@ -1,6 +1,6 @@
 @charset "UTF-8";
 
-@import '../../../../static/sass/base.scss';
+@import '../../../../static/sass/base';
 
 $prefixCls: 'zby-figure';
 
@@ -10,7 +10,7 @@ $prefixCls: 'zby-figure';
   margin-right: 15px;
   margin-bottom: 15px;
 
-  .#{$prefixCls} {
+  .#{$prefixCls}-preview-box {
     box-sizing: border-box;
     position: relative;
     width: 160px;
