@@ -26,7 +26,7 @@ const Item = (props) => {
                         {subtitle ? <div className={`${prefixCls}-subtitle`}>{subtitle}</div> : null}
                     </div>
                 }
-                {extra ? <div className={`${prefixCls}-extra`}>{extra}</div> : null}
+                {extra ? <div className={classNames([`${prefixCls}-extra`, {'wrap': wrap}])}>{extra}</div> : null}
                 {arrow ?
                     <div className={`${prefixCls}-arrow`}>{arrow !== 'empty' ?
                         <span className={classNames(['fa', {

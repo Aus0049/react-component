@@ -1,11 +1,11 @@
 /**
- * Created by Aus on 2017/5/27.
+ * Created by Aus on 2017/11/7.
  */
 import React from 'react'
-import ListTitle from '../../components/DataDisplay/ListTitle/'
-import List from '../../components/DataDisplay/List/'
-import Picker from '../../components/DataEntry/Picker/'
-import Tools from '../../components/Tools/Tools'
+import ListTitle from 'components/DataDisplay/ListTitle/'
+import List from 'components/DataDisplay/List/'
+import Picker from 'components/DataEntry/Picker/'
+import Tools from 'components/Tools/Tools'
 
 const Item = List.Item;
 
@@ -15,7 +15,10 @@ class PickerPage extends React.Component {
         this.state = {
             areaValue: ['辽宁省', '本溪市', '桓仁满族自治县'],
             numberValue: ['一', '4', '貮']
-        }
+        };
+        this.handleChange = this.handleChange.bind(this);
+        this.handlePickerChange = this.handlePickerChange.bind(this);
+        this.handleNumberChange = this.handleNumberChange.bind(this);
     }
     handleChange (newValue) {
         console.log('value change');
@@ -89,7 +92,7 @@ class PickerPage extends React.Component {
         return (
             <div className="page picker">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
+                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/')}} />
                     Picker
                 </h1>
 
@@ -101,19 +104,19 @@ class PickerPage extends React.Component {
                         data={areaArray}
                         value={areaValue}
                         title="选择地区"
-                        onChange={this.handleChange.bind(this)}
-                        onPickerChange={this.handlePickerChange.bind(this)}
+                        onChange={this.handleChange}
+                        onPickerChange={this.handlePickerChange}
                     >
-                        <Item subtitle={areaValue.join('')} icon="horizontal">级联选择</Item>
+                        <Item extra={areaValue.join('')} arrow="horizontal">级联选择</Item>
                     </Picker>
                     <Picker
                         col={3}
                         data={numberArray}
                         value={numberValue}
                         cascade={false}
-                        onChange={this.handleNumberChange.bind(this)}
+                        onChange={this.handleNumberChange}
                     >
-                        <Item subtitle={numberValue.join(' ')} icon="horizontal">不级联选择</Item>
+                        <Item extra={numberValue.join(' ')} arrow="horizontal">不级联选择</Item>
                     </Picker>
                 </List>
             </div>

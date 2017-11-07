@@ -29,11 +29,12 @@ const Home = () => {
                     {/*onClick={()=>{Tools.linkTo('/data-entry/date-picker')}}*/}
                 {/*>日期选择器*/}
                 {/*</Item>*/}
-                {/*<Item*/}
-                    {/*subtitle="Picker" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/data-entry/picker')}}*/}
-                {/*>选择器*/}
-                {/*</Item>*/}
+                <Item
+                    extra="Picker" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-entry/picker')}}
+                >
+                    选择器
+                </Item>
                 <Item
                     extra="PickerView" arrow="horizontal"
                     onClick={()=>{Tools.linkTo('/data-entry/picker-view')}}

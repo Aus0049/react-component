@@ -1,14 +1,12 @@
 @charset "UTF-8";
 
-$viColor: #00b4a5;
-$darkViColor: #009486;
-$linearViColor: linear-gradient(to right, #31D5A1, #00B4A5);
-$lightGray: #ddd;
-$darkGray: #bbb;
+@import '../../../../static/sass/base.scss';
+
+$prefixCls: 'zby-picker';
 
 // Picker
-.zby-picker-box {
-  .zby-picker-popup-mask {
+.#{$prefixCls} {
+  .#{$prefixCls}-popup-mask {
     position: fixed;
     left: 0;
     right: 0;
@@ -24,7 +22,7 @@ $darkGray: #bbb;
     }
   }
 
-  .zby-picker-popup-wrap {
+  .#{$prefixCls}-popup-wrap {
     position: fixed;
     left: 0;
     right: 0;
@@ -37,11 +35,11 @@ $darkGray: #bbb;
       bottom: 0;
     }
 
-    .zby-picker-popup-header {
+    .#{$prefixCls}-popup-header {
       display: flex;
       border-bottom: 1px solid #ddd;
 
-      .zby-picker-popup-item {
+      .#{$prefixCls}-popup-item {
         padding: 10px 30px;
         height: 60px;
         font-size: 34px;
@@ -49,12 +47,12 @@ $darkGray: #bbb;
         color: #000;
         text-align: center;
 
-        &.zby-header-title {
+        &.#{$prefixCls}-header-title {
           flex: 1;
         }
 
-        &.zby-header-left,
-        &.zby-header-right {
+        &.#{$prefixCls}-header-left,
+        &.#{$prefixCls}-header-right {
           color: $viColor;
         }
       }

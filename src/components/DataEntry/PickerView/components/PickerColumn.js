@@ -19,7 +19,7 @@ class PickerColumn extends React.Component {
             this.bindScrollEvent();
             // 列表滚到对应位置
             this.scrollToPosition();
-        }, 100);
+        }, 0);
     }
     componentDidUpdate() {
         this.zscroller.reflow();

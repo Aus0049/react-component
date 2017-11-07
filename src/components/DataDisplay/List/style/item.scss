@@ -74,6 +74,12 @@ $prefixCls: 'zby-item';
     color: $textGray;
     font-size: 28px;
     text-align: right;
+
+    &.wrap {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 
   // 右侧箭头

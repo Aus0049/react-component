@@ -37,6 +37,7 @@ $itemPrefixCls: 'zby-item';
     }
 
     div:not(:last-child) {
+      .#{$itemPrefixCls}:after,
       &.#{$itemPrefixCls}:after {
         @include list-item-bottom-line();
       }
