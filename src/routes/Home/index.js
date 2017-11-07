@@ -24,11 +24,12 @@ const Home = () => {
                 >
                     滑动按钮
                 </Item>
-                {/*<Item*/}
-                    {/*subtitle="DatePicker" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/data-entry/date-picker')}}*/}
-                {/*>日期选择器*/}
-                {/*</Item>*/}
+                <Item
+                    extra="DatePicker" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-entry/date-picker')}}
+                >
+                    日期选择器
+                </Item>
                 <Item
                     extra="Picker" arrow="horizontal"
                     onClick={()=>{Tools.linkTo('/data-entry/picker')}}
@@ -41,7 +42,6 @@ const Home = () => {
                 >
                     选择器
                 </Item>
-                {/*</Item>*/}
                 <Item
                     extra="Uploader" arrow="horizontal"
                     onClick={()=>{Tools.linkTo('/data-entry/uploader')}}

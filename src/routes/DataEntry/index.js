@@ -8,6 +8,7 @@ export default () => ({
             callback(null, [
                 require('./containers/Button/index').default(),
                 require('./containers/Switch/index').default(),
+                require('./containers/DatePicker/index').default(),
                 require('./containers/Picker/index').default(),
                 require('./containers/PickerView/index').default(),
                 require('./containers/Uploader/index').default(),

@@ -106,7 +106,7 @@ class Picker extends React.Component {
                             </Touchable>
                             <span className={`${prefixCls}-popup-item ${prefixCls}-header-title`}>{title}</span>
                             <Touchable onPress={this.handleConfirm}>
-                                <span className={`${prefixCls}-popup-item ${prefixCls}-header-right`}>{confirmText}</span>
+                                <span className={`${prefixCls}-popup-item zby-header-right`}>{confirmText}</span>
                             </Touchable>
                         </div>
                         <div className={`${prefixCls}-popup-body`}>

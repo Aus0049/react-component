@@ -1,0 +1,61 @@
+@charset "UTF-8";
+
+@import '../../../../static/sass/base.scss';
+
+$prefixCls: 'zby-picker';
+
+// Picker
+.#{$prefixCls} {
+  .#{$prefixCls}-popup-mask {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 1000;
+    background-color: rgba(0,0,0,.4);
+    transition: all .3s;
+
+    &.hide {
+      z-index: -1;
+      background-color: rgba(0,0,0,0);
+    }
+  }
+
+  .#{$prefixCls}-popup-wrap {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: -100%;
+    z-index: 1000;
+    background-color: #fff;
+    transition: all .3s;
+
+    &.popup {
+      bottom: 0;
+    }
+
+    .#{$prefixCls}-popup-header {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+
+      .#{$prefixCls}-popup-item {
+        padding: 10px 30px;
+        height: 60px;
+        font-size: 34px;
+        line-height: 60px;
+        color: #000;
+        text-align: center;
+
+        &.#{$prefixCls}-header-title {
+          flex: 1;
+        }
+
+        &.#{$prefixCls}-header-left,
+        &.#{$prefixCls}-header-right {
+          color: $viColor;
+        }
+      }
+    }
+  }
+}
