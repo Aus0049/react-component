@@ -13,13 +13,23 @@ class PickerColumn extends React.Component {
         this.state = {};
     }
     componentDidMount () {
+        // getBoundingClientRect js原生方法
+        // 根据变量判断dom是否渲染完毕
+        this.itemHeight = this.refs.indicator.getBoundingClientRect().height;
+        if(this.itemHeight !== 0){
+            // 绑定事件
+            this.bindScrollEvent();
+            // 列表滚到对应位置
+            this.scrollToPosition();
+            return;
+        }
         // TODO 这里有个问题 必须要等到渲染结束才能绑定事件 不然获取元素高度有bug 待优化
         window.setTimeout(()=>{
             // 绑定事件
             this.bindScrollEvent();
             // 列表滚到对应位置
             this.scrollToPosition();
-        }, 0);
+        }, 100);
     }
     componentDidUpdate() {
         this.zscroller.reflow();
