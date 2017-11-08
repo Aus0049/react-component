@@ -25,7 +25,8 @@
     "dev": "better-npm-run dev",
     "deploy": "better-npm-run deploy",
     "deploy:dev": "better-npm-run deploy:dev",
-    "deploy:prod": "better-npm-run deploy:prod"
+    "deploy:prod": "better-npm-run deploy:prod",
+    "online": "better-npm-run online"
   },
   "betterScripts": {
     "compile": {
@@ -64,6 +65,14 @@
     "start": {
       "command": "node bin/server",
       "env": {
+        "DEBUG": "app:*"
+      }
+    },
+    "online": {
+      "command": "node bin/product",
+      "env": {
+        "NODE_ENV": "production",
+        "PORT": 8080,
         "DEBUG": "app:*"
       }
     }
