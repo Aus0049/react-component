@@ -72,7 +72,7 @@
       "command": "node bin/online",
       "env": {
         "NODE_ENV": "production",
-        "PORT": 8080,
+        "PORT": 3000,
         "DEBUG": "app:*"
       }
     }
