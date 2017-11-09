@@ -3,7 +3,7 @@
 移动端react组件库，参考Antd-mobile制作。
 
 效果图：
-!(效果图)[./src/static/img/screen-shot-20171109.png]
+![效果图](https://github.com/Aus0049/react-component/blob/master/src/static/img/screen-shot-20171109.png)
 
 [在线预览地址](http://45.77.244.137:3000/)， 外网速度较慢，请耐心等待。
 
