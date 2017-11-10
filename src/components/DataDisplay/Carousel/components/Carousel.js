@@ -4,7 +4,8 @@
 import React from 'react'
 import Hammer from 'hammerjs'
 import classNames from 'classnames'
-import '../style/index.scss'
+import {animationFunc} from '../util/'
+import '../style/carousel.scss'
 
 class Carousel extends React.Component {
     constructor (props) {
@@ -28,13 +29,9 @@ class Carousel extends React.Component {
         this.carouselWidth = this.refs.box.getBoundingClientRect().width;
 
         // 初始化手势事件
-        if(swipe){
-            this.bindGestureEvent();
-        }
+        if (swipe) this.bindGestureEvent();
 
-        if (autoplay) {
-            this.bindAutoPlay();
-        }
+        if (autoplay) this.bindAutoPlay();
     }
     componentWillUnmount() {
         clearInterval(this.intervalPlay);
@@ -52,7 +49,7 @@ class Carousel extends React.Component {
         const list = this.refs.list;
         const listHammer = new Hammer(list);
 
-        let positionX, currentMarginLeft, _this = this;
+        let positionX, currentMarginLeft;
 
         if(animation){
             // 拖动开始记下当前位置
@@ -64,76 +61,80 @@ class Carousel extends React.Component {
             // 拖动中
             listHammer.on('panmove', (e)=>{
                 // 拖动
-                list.style.marginLeft = _this.getMovePosition(e.deltaX - positionX, currentMarginLeft) + 'px';
+                list.style.marginLeft = this.getMovePosition(e.deltaX - positionX, currentMarginLeft) + 'px';
             });
 
             // 拖动结束 判断是否翻页
             listHammer.on('panend', (e)=>{
                 // 拖动结束 判断归位
                 if(loopFromStart){
-                    const currentIndex = _this.getCurrentIndex();
+                    const currentIndex = this.getCurrentIndex();
                     currentMarginLeft = - (currentIndex * this.carouselWidth) + 'px';
                     // 滑动动画 滑到对应位置
-                    _this.animation(list, {marginLeft: currentMarginLeft}, 300, ()=>{
+                    animationFunc(list, {marginLeft: currentMarginLeft}, 300, ()=>{
                         // 改变当前index
-                        _this.setState({currentFigureIndex: currentIndex});
+                        this.setState({currentFigureIndex: currentIndex});
                         if(onFigureChange) onFigureChange(currentIndex);
                     });
-                } else {
-                    let [move, nextIndex] = _this.limitMove(e.deltaX - positionX, currentMarginLeft);
 
-                    _this.animation(list, {marginLeft: move}, 300, ()=>{
-                        // 改变当前index
-                        list.style.marginLeft = -_this.carouselWidth + 'px';
-                        _this.setState({
-                            loopData: _this.getLoopData(true, nextIndex),
-                            currentFigureIndex: nextIndex
-                        });
-                        if(onFigureChange) onFigureChange(nextIndex);
+                    return;
+                }
+
+                let [move, nextIndex] = this.limitMove(e.deltaX - positionX, currentMarginLeft);
+
+                animationFunc(list, {marginLeft: move}, 300, ()=>{
+                    // 改变当前index
+                    list.style.marginLeft = -this.carouselWidth + 'px';
+                    this.setState({
+                        loopData: this.getLoopData(true, nextIndex),
+                        currentFigureIndex: nextIndex
                     });
-                }
-            });
-        } else {
-            // 无动画效果
-            listHammer.on('swiperight', (e)=>{
-                // 滑动超过1/4即可
-                if(Math.abs(e.deltaX) / _this.carouselWidth > 0.25){
-                    let nextIndex = _this.state.currentFigureIndex - 1;
-                    if(nextIndex < 0){
-                        nextIndex = _this.state.data.length - 1;
-                    }
-                    if(loopFromStart){
-                        _this.setState({currentFigureIndex: nextIndex});
-                    } else {
-                        _this.setState({
-                            loopData: _this.getLoopData(true, nextIndex),
-                            currentFigureIndex: nextIndex
-                        });
-                    }
                     if(onFigureChange) onFigureChange(nextIndex);
-                }
+                });
             });
 
-            listHammer.on('swipeleft', (e)=>{
-                // 滑动超过1/4即可
-                if(Math.abs(e.deltaX) / _this.carouselWidth > 0.25){
-                    let nextIndex = _this.state.currentFigureIndex + 1;
-                    if(nextIndex >= _this.state.data.length){
-                        nextIndex = 0;
-                    }
-                    if(loopFromStart){
-                        _this.setState({currentFigureIndex: nextIndex});
-                    } else {
-                        _this.setState({
-                            loopData: _this.getLoopData(true, nextIndex),
-                            currentFigureIndex: nextIndex
-                        });
-                    }
-
-                    if(onFigureChange) onFigureChange(nextIndex);
-                }
-            });
+            return;
         }
+
+        // 无动画效果
+        listHammer.on('swiperight', (e)=>{
+            // 滑动超过1/4即可
+            if(Math.abs(e.deltaX) / this.carouselWidth > 0.25){
+                let nextIndex = this.state.currentFigureIndex - 1;
+                if(nextIndex < 0) nextIndex = this.state.data.length - 1;
+                if(loopFromStart){
+                    this.setState({currentFigureIndex: nextIndex});
+                    if(onFigureChange) onFigureChange(nextIndex);
+                    return;
+                }
+
+                this.setState({
+                    loopData: this.getLoopData(true, nextIndex),
+                    currentFigureIndex: nextIndex
+                });
+                if(onFigureChange) onFigureChange(nextIndex);
+            }
+        });
+
+        listHammer.on('swipeleft', (e)=>{
+            // 滑动超过1/4即可
+            if(Math.abs(e.deltaX) / this.carouselWidth > 0.25){
+                let nextIndex = this.state.currentFigureIndex + 1;
+                if(nextIndex >= this.state.data.length) nextIndex = 0;
+                if(loopFromStart){
+                    this.setState({currentFigureIndex: nextIndex});
+                    if(onFigureChange) onFigureChange(nextIndex);
+                    return;
+                }
+
+                this.setState({
+                    loopData: this.getLoopData(true, nextIndex),
+                    currentFigureIndex: nextIndex
+                });
+
+                if(onFigureChange) onFigureChange(nextIndex);
+            }
+        });
     }
     changeFigure () {
         const {loopFromStart, animation, onFigureChange} = this.props;
@@ -142,37 +143,22 @@ class Carousel extends React.Component {
         if(loopFromStart){
             let {currentFigureIndex} = this.state;
             let nextIndex = currentFigureIndex + 1;
-            if(currentFigureIndex == this.state.data.length - 1){
-                nextIndex = 0;
-            }
+            if(currentFigureIndex === this.state.data.length - 1) nextIndex = 0;
 
             if(animation){
-                this.animation(list, {'marginLeft': -nextIndex * this.carouselWidth + 'px'}, 300, ()=>{
+                animationFunc(list, {'marginLeft': -nextIndex * this.carouselWidth + 'px'}, 300, ()=>{
                     this.setState({currentFigureIndex: nextIndex});
                 });
-            } else {
-                this.setState({currentFigureIndex: nextIndex});
+                if(onFigureChange) onFigureChange(nextIndex);
+                return;
             }
+
+            this.setState({currentFigureIndex: nextIndex});
             if(onFigureChange) onFigureChange(nextIndex);
-        } else {
-            if(animation){
-                this.animation(list, {'marginLeft': - 2 * this.carouselWidth + 'px'}, 300, ()=>{
-                    let nextIndex = this.state.currentFigureIndex + 1;
+        }
 
-                    if(nextIndex < 0){
-                        nextIndex = this.state.data.length - 1;
-                    } else if (nextIndex > this.state.data.length - 1) {
-                        nextIndex = 0;
-                    }
-
-                    list.style.marginLeft = -this.carouselWidth + 'px';
-                    this.setState({
-                        loopData: this.getLoopData(true, nextIndex),
-                        currentFigureIndex: nextIndex
-                    });
-                    if(onFigureChange) onFigureChange(nextIndex);
-                });
-            } else {
+        if(animation){
+            animationFunc(list, {'marginLeft': - 2 * this.carouselWidth + 'px'}, 300, ()=>{
                 let nextIndex = this.state.currentFigureIndex + 1;
 
                 if(nextIndex < 0){
@@ -187,36 +173,24 @@ class Carousel extends React.Component {
                     currentFigureIndex: nextIndex
                 });
                 if(onFigureChange) onFigureChange(nextIndex);
-            }
-        }
-    }
-    animation (obj, style, time, callback) {
-        // 简易实现jq animate
-        const currentStyle = obj.style;
-        const diffObj = {};
-        const step = 20, intervalNum = time / step;
-        let num = 0;
-
-        for(let i in style){
-            diffObj[i] = (Number.parseFloat(style[i]) - Number.parseFloat(currentStyle[i])) / intervalNum;
+            });
+            return;
         }
 
-        // 开始调用
-        let timer = setInterval(()=>{
-            if(num < intervalNum){
-                for(let i in diffObj){
-                    currentStyle[i] = Number.parseFloat(currentStyle[i]) + diffObj[i] + 'px';
-                }
+        let nextIndex = this.state.currentFigureIndex + 1;
 
-                num++;
-            } else {
-                clearInterval(timer);
-                // 回调
-                if(callback){
-                    callback();
-                }
-            }
-        }, step);
+        if(nextIndex < 0){
+            nextIndex = this.state.data.length - 1;
+        } else if (nextIndex > this.state.data.length - 1) {
+            nextIndex = 0;
+        }
+
+        list.style.marginLeft = -this.carouselWidth + 'px';
+        this.setState({
+            loopData: this.getLoopData(true, nextIndex),
+            currentFigureIndex: nextIndex
+        });
+        if(onFigureChange) onFigureChange(nextIndex);
     }
     getLoopData (fromState, newIndex) {
         // 不从头循环的时候 制造对应数组
@@ -233,15 +207,15 @@ class Carousel extends React.Component {
         const length = data.length;
         let result = [];
 
-        if(length == 1){
+        if(length === 1){
             result = [data[0], data[0], data[0]];
-        } else if (length == 2) {
+        } else if (length === 2) {
             result = [data[1 - startIndex], data[2 - startIndex], data[1 - startIndex]];
         } else {
             // length >= 3;
-            if(startIndex == 0){
+            if(startIndex === 0){
                 result = [data[length - 1], data[startIndex], data[startIndex + 1]];
-            } else if (startIndex == length - 1) {
+            } else if (startIndex === length - 1) {
                 result = [data[startIndex - 1], data[startIndex], data[0]];
             } else {
                 result = [data[startIndex - 1], data[startIndex], data[startIndex + 1]];
@@ -288,14 +262,16 @@ class Carousel extends React.Component {
                 // 右边距
                 result = -((length - 1) * this.carouselWidth) + ((result + ((length - 1) * this.carouselWidth)) / 2);
             }
-        } else {
-            // loopFromStart为false的时候 滑屏不能超过一张图大
-            if(moveDistance >= this.carouselWidth){
-                result = this.carouselWidth + currentMarginLeft;
-            } else if (moveDistance <= -this.carouselWidth) {
-                // 右边距
-                result = -this.carouselWidth + currentMarginLeft;
-            }
+
+            return result;
+        }
+
+        // loopFromStart为false的时候 滑屏不能超过一张图大
+        if(moveDistance >= this.carouselWidth){
+            result = this.carouselWidth + currentMarginLeft;
+        } else if (moveDistance <= -this.carouselWidth) {
+            // 右边距
+            result = -this.carouselWidth + currentMarginLeft;
         }
 
         return result;
@@ -317,12 +293,11 @@ class Carousel extends React.Component {
             }
 
             // 最大限制
-            if(currentIndex > data.length - 1){
-                currentIndex = data.length - 1;
-            }
-        } else {
-            currentIndex = 0;
+            if(currentIndex > data.length - 1) currentIndex = data.length - 1;
+            return currentIndex;
         }
+
+        currentIndex = 0;
 
         return currentIndex;
     }
@@ -352,71 +327,61 @@ class Carousel extends React.Component {
     }
     getListDOM () {
         // 分成两种 从头循环和不从头循环
-        const {loopFromStart} = this.props;
+        const {prefixCls, loopFromStart} = this.props;
         const {data, loopData} = this.state;
-        let result = [];
 
         if(loopFromStart){
             // 从头循环
             const width = (100 / data.length) + '%';
 
-            data.map((item, index)=>{
+            return data.map((item, index)=>{
                 const {content, style, ...props} = item;
-                result.push(
+                return (
                     <div
-className="zby-carousel-figure" key={index}
-style={Object.assign({'width': width}, style)} {...props}
-                    >{content}
+                        className={`${prefixCls}-figure`} key={index}
+                        style={Object.assign({'width': width}, style)} {...props}
+                    >
+                        {content}
                     </div>
                 );
             });
-
-            return result;
         }
 
         const width = (100 / loopData.length) + '%';
 
-        loopData.map((item, index)=>{
+        return loopData.map((item, index)=>{
             const {content, style, ...props} = item;
-            result.push(
+            return (
                 <div
-className="zby-carousel-figure" key={index}
-style={Object.assign({'width': width}, style)} {...props}
-                >{content}
+                    className={`${prefixCls}-figure`} key={index}
+                    style={Object.assign({'width': width}, style)} {...props}
+                >
+                    {content}
                 </div>
             );
         });
-
-        return result;
     }
     getDotDOM () {
         const {currentFigureIndex, data} = this.state;
-        const {dots} = this.props;
+        const {prefixCls, dots} = this.props;
 
         if(!dots) return;
 
-        let result = [];
-
-        data.map((item, index)=>{
-            result.push(
-                <span key={index} className={classNames(['zby-carousel-dot', {'active': index == currentFigureIndex}])} />
-            );
-        });
-
         return <div className="zby-carousel-dot-box">
-            {result}
-               </div>;
+            {data.map((item, index)=>(<span key={index} className={classNames([`${prefixCls}-dot`, {'active': index === currentFigureIndex}])} />))}
+        </div>;
     }
     render () {
+        const {prefixCls} = this.props;
         const listStyle = this.getListStyle();
         const listDOM = this.getListDOM();
         const dotDOM = this.getDotDOM();
 
         return (
-            <div className="zby-carousel-box" ref="box">
+            <div className={prefixCls} ref="box">
                 <div
-className="zby-carousel-list" ref="list"
-style={listStyle}
+                    className={`${prefixCls}-list`} ref="list"
+                    style={listStyle}
                 >
                     {listDOM}
                 </div>
@@ -427,6 +392,7 @@ style={listStyle}
 }
 
 Carousel.propTypes = {
+    prefixCls: React.PropTypes.string, // 前缀class
     data: React.PropTypes.array, // 图片源数组
     startIndex: React.PropTypes.number, // 初始位置
     autoplay: React.PropTypes.bool, // 是否自动播放
@@ -439,6 +405,7 @@ Carousel.propTypes = {
 };
 
 Carousel.defaultProps = {
+    prefixCls: 'zby-carousel',
     data: [],
     startIndex: 0,
     autoplay: false,

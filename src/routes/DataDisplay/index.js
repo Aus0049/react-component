@@ -6,7 +6,8 @@ export default () => ({
     getChildRoutes (nextState, callback) {
         require.ensure([], (require) => {
             callback(null, [
-                require('./containers/List/index').default(),
+                require('./containers/List/').default(),
+                require('./containers/Carousel/').default(),
             ]);
         }, 'data-display')
     },

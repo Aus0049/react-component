@@ -56,11 +56,12 @@ const Home = () => {
                 >
                     列表项
                 </Item>
-                {/*<Item*/}
-                    {/*subtitle="Carousel" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/data-display/carousel')}}*/}
-                {/*>轮播图*/}
-                {/*</Item>*/}
+                <Item
+                    extra="Carousel" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-display/carousel')}}
+                >
+                    轮播图
+                </Item>
                 {/*<Item*/}
                     {/*subtitle="Tag" icon="horizontal"*/}
                     {/*onClick={()=>{Tools.linkTo('/data-display/tag')}}*/}

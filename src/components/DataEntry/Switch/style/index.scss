@@ -8,6 +8,7 @@ $prefixCls: 'zby-switch';
 .#{$prefixCls} {
   position: relative;
   display: inline-block;
+  margin: 8px 0;
   width: 120px;
   border-radius: 30px;
   vertical-align: middle;
@@ -27,7 +28,7 @@ $prefixCls: 'zby-switch';
       left: 1px;
       top: 1px;
       background-color: #fff;
-      box-shadow: 0 8px 20px rgba(0,0,0,.3);
+      box-shadow: 0 8px 10px rgba(0,0,0,.3);
     }
 
     &.focus {
