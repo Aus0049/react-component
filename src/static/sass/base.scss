@@ -44,26 +44,11 @@ $textGray: #888;
 // 公共动画库
 @keyframes BombIn {
   0% {
-    transform: translate(-50%, -50%) scale(0, 0);
-    -webkit-transform: translate(-50%, -50%) scale(0, 0);
+    transform: translate(-50%, -50%, 0) scale(0, 0);
+    -webkit-transform: translate(-50%, -50%, 0) scale(0, 0);
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.2, 1.2);
-    -webkit-transform: translate(-50%, -50%) scale(1.2, 1.2);
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1, 1);
-    -webkit-transform: translate(-50%, -50%) scale(1, 1);
-  }
-}
-
-@-webkit-keyframes BombIn {
-  0% {
-    transform: translate(-50%, -50%) scale(0, 0);
-    -webkit-transform: translate(-50%, -50%) scale(0, 0);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2, 1.2);
+    transform: translate(-50%, -50%, 0) scale(1.2, 1.2);
     -webkit-transform: translate(-50%, -50%) scale(1.2, 1.2);
   }
   100% {
@@ -73,25 +58,6 @@ $textGray: #888;
 }
 
 @keyframes Flop {
-  0% {
-    transform: translate(-50%, -50%) rotateY(90deg);
-    -webkit-transform: translate(-50%, -50%) rotateY(90deg);
-  }
-  33% {
-    transform: translate(-50%, -50%) rotateY(0deg);
-    -webkit-transform: translate(-50%, -50%) rotateY(0deg);
-  }
-  67% {
-    transform: translate(-50%, -50%) rotateY(-30deg);
-    -webkit-transform: translate(-50%, -50%) rotateY(-30deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotateY(0deg);
-    -webkit-transform: translate(-50%, -50%) rotateY(0deg);
-  }
-}
-
-@-webkit-keyframes Flop {
   0% {
     transform: translate(-50%, -50%) rotateY(90deg);
     -webkit-transform: translate(-50%, -50%) rotateY(90deg);
@@ -120,23 +86,6 @@ $textGray: #888;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     opacity: 1;
-  }
-}
-
-@-webkit-keyframes shake {
-  from, to {
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  }
-
-  15%, 45%, 75% {
-    -webkit-transform: translate(-60%, -50%);
-    transform: translate(-60%, -50%);
-  }
-
-  30%, 60%, 90% {
-    -webkit-transform: translate(-40%, -50%);
-    transform: translate(-40%, -50%);
   }
 }
 

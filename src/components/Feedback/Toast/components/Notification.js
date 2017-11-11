@@ -8,6 +8,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Notice from './Notice'
+import '../style/notification.scss'
 
 class Notification extends React.Component {
     constructor (props) {
@@ -75,7 +76,9 @@ class Notification extends React.Component {
         return (
             <div className={prefixCls}>
                 {maskDOM}
-                {noticesDOM}
+                <div className={`${prefixCls}-box`}>
+                    {noticesDOM}
+                </div>
             </div>
         )
     }

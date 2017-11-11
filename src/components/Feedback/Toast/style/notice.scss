@@ -6,22 +6,23 @@ $prefixCls: 'zby-notice';
 
 // Notice
 .#{$prefixCls} {
-  position: fixed;
+  position: absolute;
+  box-sizing: border-box;
   left: 50%;
   top: 30%;
+  margin: 0;
+  width: 100%;
   padding: 20px 30px;
-  min-width: 200px;
-  max-width: 60%;
   background: rgba(0,0,0, .7);
   border-radius: 10px;
   text-align: center;
   font-size: 28px;
   line-height: 42px;
   color: #fff;
-  z-index: 110;
+  z-index: 1110;
 
   transition: all .3s;
-  transform: translate3D(-50%, -50%, 0);
+  transform: translate3D(-50%, -50%, 0) scale(1, 1);
 
   &.leave {
     transform: translate3D(-50%, -100%, 0);
