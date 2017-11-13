@@ -1,0 +1,40 @@
+@charset "UTF-8";
+
+@import '../../../../static/sass/base.scss';
+
+$prefixCls: 'zby-tooltip';
+
+// Tooltip
+.#{$prefixCls} {
+  display: block;
+  position: relative;
+
+  &-title {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    max-width: 400px;
+    margin-top: -20px;
+    padding: 10px 20px;
+    background: #000;
+    border: 2px solid #000;
+    border-radius: 10px;
+    transform: translate3D(-50%, -100%, 0);
+    font-size: 32px;
+    color: #fff;
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 100%;
+      width: 0;
+      height: 0;
+      transform: translate3D(-50%, 0, 0);
+      border-top: 12px solid #000;
+      border-left: 12px solid transparent;
+      border-right: 12px solid transparent;
+    }
+  }
+}
+

@@ -62,6 +62,12 @@ const Home = () => {
                 >
                     轮播图
                 </Item>
+                <Item
+                    extra="Tooltip" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-display/tooltip')}}
+                >
+                    文字提示
+                </Item>
                 {/*<Item*/}
                     {/*subtitle="Tag" icon="horizontal"*/}
                     {/*onClick={()=>{Tools.linkTo('/data-display/tag')}}*/}

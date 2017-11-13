@@ -8,6 +8,7 @@ export default () => ({
             callback(null, [
                 require('./containers/List/').default(),
                 require('./containers/Carousel/').default(),
+                require('./containers/Tooltip/').default(),
             ]);
         }, 'data-display')
     },
