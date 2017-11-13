@@ -42,6 +42,7 @@ $textGray: #888;
 }
 
 // 公共动画库
+// 爆炸进入
 @keyframes BombIn {
   0% {
     transform: translate(-50%, -50%, 0) scale(0, 0);
@@ -57,6 +58,7 @@ $textGray: #888;
   }
 }
 
+// 翻转
 @keyframes Flop {
   0% {
     transform: translate(-50%, -50%) rotateY(90deg);
@@ -76,6 +78,7 @@ $textGray: #888;
   }
 }
 
+// 从底部滑入
 @keyframes slideInFromBottom {
   0% {
     transform: translate(-50%, 0%);
@@ -89,6 +92,8 @@ $textGray: #888;
   }
 }
 
+
+// 摇晃
 @keyframes shake {
   from, to {
     -webkit-transform: translate(-50%, -50%);
@@ -106,6 +111,7 @@ $textGray: #888;
   }
 }
 
+// 0-160
 @keyframes scaleIn {
   0% {
     width: 0;
@@ -117,6 +123,7 @@ $textGray: #888;
   }
 }
 
+// 160-0
 @keyframes scaleOut {
   0% {
     width: 160px;
@@ -127,5 +134,15 @@ $textGray: #888;
     width: 0;
     height: 0;
     opacity: 0;
+  }
+}
+
+// weak up
+@keyframes weakUp {
+  0% {
+    transform: translate3D(-50%, -100%, 0) rotateX(90deg);
+  }
+  100% {
+    transform: translate3D(-50%, -100%, 0) rotateX(0);
   }
 }
