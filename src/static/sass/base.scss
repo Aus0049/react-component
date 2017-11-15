@@ -140,9 +140,9 @@ $textGray: #888;
 // weak up
 @keyframes weakUp {
   0% {
-    transform: translate3D(-50%, -100%, 0) rotateX(90deg);
+    transform: translate3D(-50%, -50%, 0) rotateX(90deg);
   }
   100% {
-    transform: translate3D(-50%, -100%, 0) rotateX(0);
+    transform: translate3D(-50%, -50%, 0) rotateX(0);
   }
 }

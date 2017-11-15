@@ -7,19 +7,19 @@ $prefixCls: 'zby-tooltip';
 // Tooltip
 .#{$prefixCls} {
   display: block;
-  position: relative;
+  //position: relative;
 
   &-title {
     position: absolute;
-    left: 50%;
-    top: 0;
+    //left: 50%;
+    //top: 0;
     max-width: 400px;
-    margin-top: -20px;
+    //margin-top: -20px;
     padding: 20px 40px;
     background: #000;
     border: 2px solid #000;
     border-radius: 10px;
-    transform: translate3D(-50%, -100%, 0);
+    transform: translate3D(-50%, -50%, 0);
     transform-origin: center bottom;
     font-size: 32px;
     color: #fff;
@@ -28,6 +28,10 @@ $prefixCls: 'zby-tooltip';
     .fa {
       display: inline-block;
       margin-right: 10px;
+    }
+    
+    &.hidden {
+      display: none;
     }
 
     &:after {
