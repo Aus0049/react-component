@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom'
 import classNames from 'classnames'
 import Hammer from 'hammerjs'
 import StateComponent from './StateComponent'
+import {getTipPosition, getTitleDOMPosition} from '../util/'
 import '../style/tooltip.scss'
 
 let totalZIndex = 100;
@@ -59,10 +60,7 @@ class Tooltip extends React.Component {
     }
     createTipDOM () {
         // 创建
-        const {prefixCls, show, title} = this.props;
-        const {isShow} = this.state;
-        const shouldShow = show !== null ? show : isShow;
-
+        const {prefixCls} = this.props;
         // 创建div
         const tipContainerDOM = document.createElement('div');
         tipContainerDOM.className = prefixCls;
@@ -73,43 +71,33 @@ class Tooltip extends React.Component {
 
         // 获取child真实位置
         this.childDOM = ReactDOM.findDOMNode(this.child);
-        const elementPosition = this.childDOM.getBoundingClientRect();
 
-        const tipContentDOM =
-            <div
-                className={classNames([`${prefixCls}-title`, {hidden: !shouldShow}])}
-                style={{
-                    top: elementPosition.y - (elementPosition.height) / 2,
-                    left: elementPosition.x + (elementPosition.width) / 2
-                }}
+        // 获取child真实位置
+        this.childDOMPostion = this.childDOM.getBoundingClientRect();
 
-            >
-                {title}
-            </div>;
+        this.updateTipDOM();
 
-        ReactDOM.render(tipContentDOM, this.tipContainerDOM);
+        // 隐藏的dom是获取不到宽高的
+        // 克隆dom 将其插入到页面中 然后remove
+        this.titleDOMPosition = getTitleDOMPosition(this.tipDOM);
     }
     updateTipDOM () {
         const {prefixCls, show, title} = this.props;
         const {isShow} = this.state;
         const shouldShow = show !== null ? show : isShow;
 
-        // 获取child真实位置
-        const elementPosition = this.childDOM.getBoundingClientRect();
+        // 这块位置根据屏幕动态计算出来
+        const {direction, position} = getTipPosition(this.childDOMPostion, this.titleDOMPosition);
 
         const tipContentDOM =
             <div
-                className={classNames([`${prefixCls}-title`, {hidden: !shouldShow}])}
-                style={{
-                    top: elementPosition.y - (elementPosition.height) / 2,
-                    left: elementPosition.x + (elementPosition.width) / 2
-                }}
-
+                className={classNames([`${prefixCls}-title`, {hidden: !shouldShow}, direction])}
+                style={position}
             >
                 {title}
             </div>;
 
-        ReactDOM.render(tipContentDOM, this.tipContainerDOM);
+        this.tipDOM = ReactDOM.render(tipContentDOM, this.tipContainerDOM);
     }
     render () {
         // 第一次之后render

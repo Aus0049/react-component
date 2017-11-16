@@ -12,7 +12,7 @@ const Item = List.Item;
 
 const TooltipPage = () => {
 
-    const switchTooltip = <Tooltip title="switch被禁用">
+    const switchTooltip = <Tooltip title="switch被禁用" trigger='click'>
             <Switch disabled />
         </Tooltip>
 

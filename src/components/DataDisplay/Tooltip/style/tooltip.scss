@@ -11,19 +11,13 @@ $prefixCls: 'zby-tooltip';
 
   &-title {
     position: absolute;
-    //left: 50%;
-    //top: 0;
     max-width: 400px;
-    //margin-top: -20px;
     padding: 20px 40px;
     background: #000;
     border: 2px solid #000;
     border-radius: 10px;
-    transform: translate3D(-50%, -50%, 0);
-    transform-origin: center bottom;
     font-size: 32px;
     color: #fff;
-    animation: weakUp .3s;
 
     .fa {
       display: inline-block;
@@ -34,17 +28,75 @@ $prefixCls: 'zby-tooltip';
       display: none;
     }
 
+    &.top {
+      transform: translate3D(0, -10px, 0);
+      transform-origin: center bottom;
+      animation: turnUp .3s;
+
+      &:after {
+        left: 50%;
+        top: 100%;
+        border-top: 12px solid #000;
+        border-left: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        transform: translate3D(-50%, 0, 0);
+      }
+    }
+
+    &.left {
+      transform: translate3D(-10px, 0, 0);
+      transform-origin: right center;
+      animation: turnLeft .3s;
+
+      &:after {
+        left: 100%;
+        top: 50%;
+        border-left: 12px solid #000;
+        border-top: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        transform: translate3D(0, -50%, 0);
+      }
+    }
+
+    &.right {
+      transform: translate3D(10px, 0, 0);
+      transform-origin: left center;
+      animation: turnRight .3s;
+
+      &:after {
+        right: 100%;
+        top: 50%;
+        border-right: 12px solid #000;
+        border-top: 12px solid transparent;
+        border-bottom: 12px solid transparent;
+        border-left: 12px solid transparent;
+        transform: translate3D(0, -50%, 0);
+      }
+    }
+
+    &.bottom {
+      transform: translate3D(0, 10px, 0);
+      transform-origin: center top;
+      animation: turnBottom .3s;
+
+      &:after {
+        left: 50%;
+        bottom: 100%;
+        border-bottom: 12px solid #000;
+        border-top: 12px solid transparent;
+        border-right: 12px solid transparent;
+        border-left: 12px solid transparent;
+        transform: translate3D(0, -50%, 0);
+      }
+    }
+
     &:after {
       content: '';
       position: absolute;
-      left: 50%;
-      top: 100%;
       width: 0;
       height: 0;
-      transform: translate3D(-50%, 0, 0);
-      border-top: 12px solid #000;
-      border-left: 12px solid transparent;
-      border-right: 12px solid transparent;
       z-index: 50;
     }
   }
