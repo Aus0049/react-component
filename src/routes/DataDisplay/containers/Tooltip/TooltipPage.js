@@ -12,9 +12,17 @@ const Item = List.Item;
 
 const TooltipPage = () => {
 
-    const switchTooltip = <Tooltip title="switch被禁用" trigger='click'>
+    const switchTooltipRight = <Tooltip title="switch被禁用" trigger='click'>
             <Switch disabled />
-        </Tooltip>
+        </Tooltip>;
+
+    const switchTooltipLeft = <Tooltip title="switch被禁用" trigger='click'>
+        <Switch defaultChecked={false} disabled />
+    </Tooltip>;
+
+    const switchTooltipAuto = <Tooltip title="switch被禁用" trigger='click'>
+        <Switch disabled />
+    </Tooltip>;
 
     return (
         <div className="page list">
@@ -43,9 +51,15 @@ const TooltipPage = () => {
                 </Tooltip>
             </div>
 
-            <List renderHeader="结合文字使用">
-                <Item extra={switchTooltip}>
-                    自动计算位置
+            <List renderHeader="显示位置">
+                <Item extra={switchTooltipLeft}>
+                    显示在左侧
+                </Item>
+                <Item extra="显示在右侧">
+                    {switchTooltipRight}
+                </Item>
+                <Item extra={switchTooltipAuto}>
+                    自动计算
                 </Item>
             </List>
         </div>

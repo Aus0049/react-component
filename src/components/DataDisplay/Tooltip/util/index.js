@@ -22,9 +22,6 @@ export const getTipPosition = (elementPosition, titlePosition, direct) => {
         left: x - tipWidth,
         top: y + (height / 2) - (tipHeight / 2)
     };
-    console.log(y );
-    console.log(height);
-    console.log(tipHeight);
 
     // 判断显示在右边
     const centerPositionRight = {

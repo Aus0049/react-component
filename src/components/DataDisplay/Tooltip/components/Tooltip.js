@@ -24,6 +24,11 @@ class Tooltip extends React.Component {
             if(this.props.show === null) this.bindTouchEvent();
         }, 10);
     }
+    componentWillUnmount () {
+        // 销毁
+        this.tipContainerDOM.remove();
+        this.tipDOM.remove();
+    }
     bindTouchEvent () {
         // 绑定事件
         const {trigger} = this.props;
@@ -82,12 +87,12 @@ class Tooltip extends React.Component {
         this.titleDOMPosition = getTitleDOMPosition(this.tipDOM);
     }
     updateTipDOM () {
-        const {prefixCls, show, title} = this.props;
+        const {prefixCls, show, title, direct} = this.props;
         const {isShow} = this.state;
         const shouldShow = show !== null ? show : isShow;
 
         // 这块位置根据屏幕动态计算出来
-        const {direction, position} = getTipPosition(this.childDOMPostion, this.titleDOMPosition);
+        const {direction, position} = getTipPosition(this.childDOMPostion, this.titleDOMPosition, direct);
 
         const tipContentDOM =
             <div
@@ -124,6 +129,7 @@ Tooltip.propTypes = {
     prefixCls: React.PropTypes.string, // 前缀class
     trigger: React.PropTypes.oneOf(['touch', 'click', 'long-press']), // 触发方式
     show: React.PropTypes.oneOf([null, true, false]), // 是否显示
+    direct: React.PropTypes.oneOf(['left', 'right', 'right', 'auto']), // 显示方向
     children: React.PropTypes.node, // 被tip的节点
 };
 
@@ -131,6 +137,7 @@ Tooltip.defaultProps = {
     prefixCls: 'zby-tooltip',
     trigger: 'touch',
     show: null,
+    direct: 'auto',
     children: <div />
 };
 

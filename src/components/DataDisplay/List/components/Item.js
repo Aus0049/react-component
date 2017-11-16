@@ -19,7 +19,9 @@ const Item = (props) => {
             <div className={classNames([prefixCls, {disabled: disabled}, className])} {...resProps}>
                 {thumb ? typeof thumb === 'string' ? <span className={`fa fa-thumb ${thumb}`} /> : thumb : null}
                 {typeof children === 'object' ?
-                    children
+                    <div className={classNames([`${prefixCls}-content`, {wrap: wrap}])}>
+                        {children}
+                    </div>
                     :
                     <div className={classNames([`${prefixCls}-content`, {wrap: wrap}])}>
                         {children}
