@@ -77,9 +77,6 @@ class Tooltip extends React.Component {
         // 获取child真实位置
         this.childDOM = ReactDOM.findDOMNode(this.child);
 
-        // 获取child真实位置
-        this.childDOMPostion = this.childDOM.getBoundingClientRect();
-
         this.updateTipDOM();
 
         // 隐藏的dom是获取不到宽高的
@@ -90,6 +87,9 @@ class Tooltip extends React.Component {
         const {prefixCls, show, title, direct} = this.props;
         const {isShow} = this.state;
         const shouldShow = show !== null ? show : isShow;
+
+        // 获取child真实位置
+        this.childDOMPostion = this.childDOM.getBoundingClientRect();
 
         // 这块位置根据屏幕动态计算出来
         const {direction, position} = getTipPosition(this.childDOMPostion, this.titleDOMPosition, direct);
