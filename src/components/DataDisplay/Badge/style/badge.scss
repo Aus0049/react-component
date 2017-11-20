@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+@import '../../../../static/sass/base.scss';
+
+$prefixCls: 'zby-badge';
+
+// Badge
+.#{$prefixCls} {
+  display: inline-block;
+  margin-top: -5px;
+  line-height: 1.5;
+  vertical-align: middle;
+
+  &-text {
+    height: 32px;
+    min-width: 20px;
+    padding: 0 15px;
+    border-radius: 24px;
+    text-align: center;
+    font-size: 24px;
+    color: #fff;
+    background-color: #ff5b05;
+    white-space: nowrap;
+  }
+}

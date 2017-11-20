@@ -68,6 +68,12 @@ const Home = () => {
                 >
                     文字提示
                 </Item>
+                <Item
+                    extra="Badge" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/data-display/badge')}}
+                >
+                    徽章
+                </Item>
                 {/*<Item*/}
                     {/*subtitle="Tag" icon="horizontal"*/}
                     {/*onClick={()=>{Tools.linkTo('/data-display/tag')}}*/}

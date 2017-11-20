@@ -9,6 +9,7 @@ export default () => ({
                 require('./containers/List/').default(),
                 require('./containers/Carousel/').default(),
                 require('./containers/Tooltip/').default(),
+                require('./containers/Badge/').default(),
             ]);
         }, 'data-display')
     },
