@@ -23,6 +23,40 @@ const BadgePage = () => {
                 <Item extra='extra' arrow="horizontal">
                     徽章在左侧 <Badge text='new' />
                 </Item>
+                <Item>
+                    自定义徽章
+                    <Badge text='VIP' style={{
+                        marginLeft: 12,
+                        padding: '0 3px',
+                        backgroundColor: '#fff',
+                        borderRadius: 2,
+                        color: '#f19736',
+                        border: '1px solid #f19736',
+                    }} />
+
+                    <Badge text='优惠' style={{
+                        marginLeft: 12,
+                        padding: '0 3px',
+                        backgroundColor: '#21b68a',
+                        borderRadius: 2
+                    }} />
+                </Item>
+            </List>
+
+            <List renderHeader="其他形式">
+                <Item
+                    thumb={
+                        <Badge type='dot'>
+                            <img src='http://wx.qlogo.cn/mmopen/PDJMZVNsTwzBqeH9x1Zt5btKXNI1icPyLPDttubVlShj39JHoUibqD45edrqYnEyOhbhdqGRJWShhHHlmtCVwtoTIQZlHJqJdv/0' />
+                        </Badge>
+                    }
+                >
+                    <span style={{marginLeft: '20px'}}>dot形式 右上角点表示</span>
+                </Item>
+
+                <Item extra={<Badge type='ribbon' text="团" />}>
+                    右侧角落显示
+                </Item>
             </List>
         </div>
     );

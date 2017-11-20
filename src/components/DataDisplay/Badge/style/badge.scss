@@ -11,6 +11,32 @@ $prefixCls: 'zby-badge';
   line-height: 1.5;
   vertical-align: middle;
 
+  &.dot {
+    position: absolute;
+    display: block;
+    right: -5px;
+    top: -5px;
+    height: 20px;
+    width: 20px;
+    border-radius: 100%;
+    background: #ff5b05;
+    z-index: 10;
+  }
+
+  &.ribbon {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    transform: rotate(45deg);
+    transform-origin: right bottom;
+
+    .#{$prefixCls}-text {
+      display: inline-block;
+      width: 80px;
+      border-radius: 0;
+    }
+  }
+
   &-text {
     height: 32px;
     min-width: 20px;
@@ -22,4 +48,8 @@ $prefixCls: 'zby-badge';
     background-color: #ff5b05;
     white-space: nowrap;
   }
+}
+
+.#{$prefixCls}-wrap {
+  position: relative;
 }
