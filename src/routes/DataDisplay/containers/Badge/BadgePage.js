@@ -33,11 +33,16 @@ const BadgePage = () => {
                         color: '#f19736',
                         border: '1px solid #f19736',
                     }} />
-
                     <Badge text='优惠' style={{
                         marginLeft: 12,
                         padding: '0 3px',
                         backgroundColor: '#21b68a',
+                        borderRadius: 2
+                    }} />
+                    <Badge text='v1.0' style={{
+                        marginLeft: 12,
+                        padding: '0 3px',
+                        backgroundColor: '#f19736',
                         borderRadius: 2
                     }} />
                 </Item>
