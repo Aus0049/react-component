@@ -5,7 +5,7 @@ import React from 'react'
 import Picker from '../../DataEntry/Picker/'
 import List from '../../DataDisplay/List/'
 import classNames from 'classnames'
-import '../style/index.scss'
+import '../style/form.scss'
 
 const Select = (props) => {
     const {required, labelName, value, data, readOnly, error, onChange} = props;

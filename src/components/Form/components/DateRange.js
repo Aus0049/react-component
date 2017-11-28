@@ -6,7 +6,7 @@ import classNames from 'classnames'
 import DatePicker from '../../DataEntry/DataPicker/'
 import List from '../../DataDisplay/List/'
 import moment from 'moment'
-import '../style/index.scss'
+import '../style/form.scss'
 
 const DateRange = (props) => {
     const {required, startLabelName, endLabelName, startValue, endValue, readOnly, rangeLabelName, kind, format, onChange} = props;

@@ -4,7 +4,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { default as Sw } from '../../DataEntry/Switch/'
-import '../style/index.scss'
+import '../style/form.scss'
 
 const Switch = (props) => {
     const {required, labelName, readOnly, value, controlled, attachedText, theme, onChange} = props;

@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import classNames from 'classnames'
-import '../style/index.scss'
+import '../style/form.scss'
 
 const Number = (props) => {
     const {required, labelName, readOnly, controlled, value, placeHolder, unit, onChange} = props;

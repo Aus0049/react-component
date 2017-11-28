@@ -17,9 +17,7 @@ class InputPage extends React.Component {
         };
     }
     handleChange (type, value) {
-        this.setState({
-            [type]: value.value
-        });
+        this.setState({[type]: value.value});
     }
     render () {
         const {value1, value2, value3, value4} = this.state;

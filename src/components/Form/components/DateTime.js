@@ -5,7 +5,7 @@ import React from 'react'
 import classNames from 'classnames'
 import DatePicker from '../../DataEntry/DataPicker/'
 import List from '../../DataDisplay/List/'
-import '../style/index.scss'
+import '../style/form.scss'
 
 const DateTime = (props) => {
     const {required, labelName, value, readOnly, kind, onChange} = props;

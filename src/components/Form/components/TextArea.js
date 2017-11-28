@@ -3,7 +3,7 @@
  */
 import React from 'react'
 import classNames from 'classnames'
-import '../style/index.scss'
+import '../style/form.scss'
 import {showError, clearError} from './Func'
 
 const TextArea = (props) => {

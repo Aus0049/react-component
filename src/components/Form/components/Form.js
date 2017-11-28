@@ -4,7 +4,7 @@
 import React from 'react'
 import {Input, TextArea, Switch, DateRange,
     DateTime, Select, Checkbox, Validate} from '../index'
-import '../style/index.scss'
+import '../style/form.scss'
 
 // Form为非受控组件
 // 无法动态删除增加表单项

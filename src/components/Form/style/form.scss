@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+@import '../../../static/sass/base.scss';
+
+$prefixCls: 'zby-form-line';
+$formPrefixCls: 'zby-form-box';
+
+textarea {
+  box-sizing: border-box;
+}
+
+.#{$formPrefixCls} {
+  margin-bottom: 30px;
+  padding: 0 20px;
+  background: #fff;
+}
+
+.#{$prefixCls} {
+  overflow: hidden;
+  border-bottom: #eee solid 2px;
+
+  .title {
+    position: relative;
+    padding: 0;
+    width: 230px;
+    float: left;
+    left: 0;
+    top: 0;
+
+    // 必填符号
+    .fa-asterisk {
+      display: inline-block;
+      font-size: 26px;
+      line-height: 100px;
+      color: red;
+      visibility: hidden;
+
+      &.required {
+        visibility: visible;
+      }
+    }
+
+    .label-name {
+      display: inline-block;
+      max-width: 200px;
+      height: 100px;
+      padding-left: 20px;
+      color: #999;
+      font-size: 26px;
+      line-height: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: top;
+    }
+  }
+
+  .content {
+    box-sizing: border-box;
+    margin-left: 230px;
+
+    &.has-feedback {
+      position: relative;
+
+      input {
+        padding-right: 10px;
+      }
+
+      .fa {
+        position: absolute;
+        top: 50%;
+        right: 60px;
+        margin-top: -20px;
+        font-size: 40px;
+
+        &.fa-check-circle {
+          color: $viColor;
+        }
+
+        &.fa-exclamation-circle {
+          color: #ffbf00;
+        }
+
+        &.fa-times-circle {
+          color: #f04134;
+        }
+
+        &.fa-circle-o-notch {
+          color: #108ee9;
+        }
+      }
+    }
+
+    input {
+      width: 100%;
+      padding: 30px 0 30px 20px;
+      font-size: 26px;
+      line-height: 40px;
+      color: #333;
+      border: none;
+
+      box-sizing: border-box;
+    }
+
+    .input-readonly {
+      padding-left: 20px;
+      font-size: 26px;
+      line-height: 100px;
+      color: #999;
+    }
+
+    .connection {
+      float: left;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+  }
+}
+
