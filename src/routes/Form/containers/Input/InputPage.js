@@ -1,10 +1,10 @@
 /**
- * Created by Aus on 2017/7/17.
+ * Created by Aus on 2017/11/28.
  */
 import React from 'react'
-import ListTitle from '../../components/DataDisplay/ListTitle/'
-import {Input} from '../../components/Form/'
-import Tools from '../../components/Tools/Tools'
+import ListTitle from 'components/DataDisplay/ListTitle/'
+import {Input} from 'components/Form/'
+import Tools from 'components/Tools/Tools'
 
 class InputPage extends React.Component {
     constructor (props) {
@@ -27,7 +27,7 @@ class InputPage extends React.Component {
         return (
             <div className="page input">
                 <h1 className="title">
-                    <i className="fa fa-home" onClick={()=>{Tools.linkTo('/index')}} />
+                    <span className="fa fa-home" onClick={()=>{Tools.linkTo('/')}} />
                     Input
                 </h1>
 
@@ -35,22 +35,22 @@ class InputPage extends React.Component {
 
                 <div className='zby-form-box'>
                     <Input
-labelName="受控组件" value={value1}
-required placeHolder="受控组件"
-onChange={this.handleChange.bind(this, 'value1')}
+                        labelName="受控组件" value={value1}
+                        required placeHolder="受控组件"
+                        onChange={this.handleChange.bind(this, 'value1')}
                     />
                     <Input
-labelName="不受控组件" value={value2}
-placeHolder="不受控组件" controlled={false}
+                        labelName="不受控组件" value={value2}
+                        placeHolder="不受控组件" controlled={false}
                     />
                     <Input
-labelName="readOnly" value={value3}
-readOnly placeHolder="readOnly"
+                        labelName="readOnly" value={value3}
+                        readOnly placeHolder="readOnly"
                     />
                     <Input
-labelName="操作反馈" value={value4}
-placeHolder="操作反馈icon" controlled={false}
-feedbackIcon='loading'
+                        labelName="操作反馈" value={value4}
+                        placeHolder="操作反馈icon" controlled={false}
+                        feedbackIcon='loading'
                     />
                 </div>
             </div>

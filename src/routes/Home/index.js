@@ -89,13 +89,18 @@ const Home = () => {
                     提示
                 </Item>
             </List>
+
+            <List renderHeader="表单组件">
+                <Item
+                    extra="Input" arrow="horizontal"
+                    onClick={()=>{Tools.linkTo('/form/input')}}
+                >
+                    单行文本
+                </Item>
+            </List>
             {/*<ListTitle title="表单组件" />*/}
             {/*<List>*/}
-                {/*<Item*/}
-                    {/*subtitle="Input" icon="horizontal"*/}
-                    {/*onClick={()=>{Tools.linkTo('/form/input')}}*/}
-                {/*>单行文本*/}
-                {/*</Item>*/}
+
                 {/*<Item*/}
                     {/*subtitle="TextArea" icon="horizontal"*/}
                     {/*onClick={()=>{Tools.linkTo('/form/textarea')}}*/}
