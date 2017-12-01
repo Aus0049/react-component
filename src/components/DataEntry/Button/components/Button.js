@@ -31,7 +31,7 @@ const Button = (props) => {
         >
             <a className={cn}>
                 {iconDOM}
-                <span className="zby-button-text">{children}</span>
+                <span className={`${prefixCls}-text`}>{children}</span>
             </a>
         </Touchable>
     )
