@@ -11,13 +11,27 @@ textarea {
 
 .#{$formPrefixCls} {
   margin-bottom: 30px;
-  padding: 0 20px;
   background: #fff;
 }
 
 .#{$prefixCls} {
   overflow: hidden;
   border-bottom: #eee solid 2px;
+
+  &.error {
+    border-bottom-color: red;
+
+    .title {
+      .label-name {
+        color: red;
+      }
+    }
+    .content {
+      input {
+        color: red;
+      }
+    }
+  }
 
   .title {
     position: relative;
@@ -30,10 +44,13 @@ textarea {
     // 必填符号
     .fa-asterisk {
       display: inline-block;
+      width: 40px;
       font-size: 26px;
       line-height: 100px;
+      text-align: center;
       color: red;
       visibility: hidden;
+      margin: 0;
 
       &.required {
         visibility: visible;
@@ -44,9 +61,8 @@ textarea {
       display: inline-block;
       max-width: 200px;
       height: 100px;
-      padding-left: 20px;
       color: #999;
-      font-size: 26px;
+      font-size: 32px;
       line-height: 100px;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -94,7 +110,7 @@ textarea {
     input {
       width: 100%;
       padding: 30px 0 30px 20px;
-      font-size: 26px;
+      font-size: 32px;
       line-height: 40px;
       color: #333;
       border: none;
@@ -104,7 +120,7 @@ textarea {
 
     .input-readonly {
       padding-left: 20px;
-      font-size: 26px;
+      font-size: 32px;
       line-height: 100px;
       color: #999;
     }
