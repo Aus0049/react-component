@@ -167,24 +167,6 @@ class Uploader extends React.Component{
             if(item.size > maxSize * 1024){
                 imgPass.sizeError = true;
             }
-
-            // 为图片加上位移id
-            const uuid = getUuid();
-            // 页面显示加入数据
-            this.transformFileToDataUrl(item, (data, orientation = 1)=>{
-                // 上传队列加入该数据
-                uploadQueue.push({uuid: uuid, file: item, dataUrl: data, orientation: orientation});
-
-                uploadedImgArray.push({ // 显示在页面的数据的标准格式
-                    id: uuid, // 图片唯一id
-                    dataUrl: data, // 图片的base64编码
-                    imgKey: '', // 图片的key 后端上传保存使用
-                    imgUrl: '', // 图片真实路径 后端返回的
-                    name: item.name, // 图片的名字
-                    orientation: orientation, // 图片旋转
-                    status: 1 // status表示这张图片的状态 1：上传中，2上传成功，3：上传失败
-                });
-            });
         });
 
         // 有错误跳出
@@ -200,17 +182,36 @@ class Uploader extends React.Component{
             return;
         }
 
-        // 检查是否是ios ios图片使用canvas压缩之后图片size为0 原因未知
-        let canCompress = true;
-        // ios
-        if(!!window.navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
-            canCompress = false;
-        }
+        const promiseArray = selectedFiles.map((item)=>{
+            // 为图片加上位移id
+            const uuid = getUuid();
+            // 页面显示加入数据
+            return _this.transformFileToDataUrl(item)
+                .then((data, orientation = 1)=>{
+                    // 上传队列加入该数据
+                    uploadQueue.push({uuid: uuid, file: item, dataUrl: data, orientation: orientation});
 
-        const timer = setInterval(function () {
-            if(uploadedImgArray.length === selectedFiles.length){
-                clearInterval(timer);
+                    uploadedImgArray.push({ // 显示在页面的数据的标准格式
+                        id: uuid, // 图片唯一id
+                        dataUrl: data, // 图片的base64编码
+                        imgKey: '', // 图片的key 后端上传保存使用
+                        imgUrl: '', // 图片真实路径 后端返回的
+                        name: item.name, // 图片的名字
+                        orientation: orientation, // 图片旋转
+                        status: 1 // status表示这张图片的状态 1：上传中，2上传成功，3：上传失败
+                    });
+                })
+        });
 
+        // 等所有都遍历完成
+        Promise.all(promiseArray)
+            .then(()=>{
+                // 检查是否是ios ios图片使用canvas压缩之后图片size为0 原因未知
+                let canCompress = true;
+                // ios
+                if(!!window.navigator.userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)){
+                    canCompress = false;
+                }
                 // 没错误准备上传
                 // 页面先显示一共上传图片个数
                 _this.setState({imgArray: imgArray.concat(uploadedImgArray)});
@@ -240,8 +241,7 @@ class Uploader extends React.Component{
                         _this.processFormDataForIos(item);
                     }
                 });
-            }
-        }, 20);
+            });
     }
     *uploadGenerator (uploadQueue) {
         /**
@@ -275,29 +275,31 @@ class Uploader extends React.Component{
             yield uploadQueue.map((item)=>(item));
         }
     }
-    transformFileToDataUrl (file, callback) {
+    transformFileToDataUrl (file) {
         /**
          * 图片上传流程的第一步
          * @param data file文件
          */
-        let orientation;
+        return new Promise((resolve, reject)=>{
+            let orientation;
 
-        // 封装好的函数
-        const reader = new FileReader();
+            // 封装好的函数
+            const reader = new FileReader();
 
-        // ⚠️ 这是个回调过程 不是同步的
-        reader.onload = function(e) {
-            const result = e.target.result;
+            // ⚠️ 这是个回调过程 不是同步的
+            reader.onload = function(e) {
+                const result = e.target.result;
 
-            EXIF.getData(file, function() {
-                EXIF.getAllTags(this);
-                orientation = EXIF.getTag(this, 'Orientation');
-                callback(result, orientation);
-            });
+                EXIF.getData(file, function() {
+                    EXIF.getAllTags(this);
+                    orientation = EXIF.getTag(this, 'Orientation');
+                    resolve(result, orientation);
+                });
 
-        };
+            };
 
-        reader.readAsDataURL(file);
+            reader.readAsDataURL(file);
+        });
     }
     compress (data, callback) {
         /**
